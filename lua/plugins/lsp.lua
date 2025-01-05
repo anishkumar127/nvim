@@ -1,3 +1,4 @@
+if true then return {} end
 -- local lspconfig = require("lspconfig")
 -- local mason = require("mason")
 -- local mason_lspconfig = require("mason-lspconfig")
