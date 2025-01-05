@@ -10,14 +10,14 @@ require("conform").setup({
 		typescript = { "prettier" },
 		typescriptreact = { "prettier" }, -- For React (TypeScript)
 		javascriptreact = { "prettier" }, -- For React (JavaScript)
-		-- html = { "prettier" },
-		-- css = { "prettier" },
+		html = { "prettier" },
+		css = { "prettier" },
 		scss = { "prettier" },
 		jsx = { "prettier" }, -- For React (JSX)
 		tsx = { "prettier" }, -- For React (TSX)
 		json = { "prettier" },
-		python = { "black" },
-		go = { "gofmt", "goimports" },
+		-- python = { "black" },
+		-- go = { "gofmt", "goimports" },
 		lua = { "stylua" },
 		proto = { "buf" },
 	},
@@ -268,10 +268,10 @@ require("conform").setup({
 
 -- ////////////////////////////////////////////////////////////////////
 
-require("lspconfig").tailwindcss.setup({
-	cmd = { "tailwindcss-language-server", "--stdio" },
-	filetypes = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" },
-})
+-- require("lspconfig").tailwindcss.setup({
+-- 	cmd = { "tailwindcss-language-server", "--stdio" },
+-- 	filetypes = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" },
+-- })
 
 -- ///////////////////////////////////////////
 --
