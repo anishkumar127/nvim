@@ -1,19 +1,20 @@
 return {
---   {
---     "catppuccin/nvim",
---     event = "BufRead",
---     name = "catppuccin",
---     opts = {
---       -- transparent_background = true,
---     },
---   },
+  -- {
+  --   "catppuccin/nvim",
+  --   event = "BufRead",
+  --   name = "catppuccin",
+  --   opts = {
+  --     -- transparent_background = true,
+  --   },
+  -- },
   {
     "mvllow/modes.nvim",
     enabled = true,
     config = function()
       require("modes").setup({
-        line_opacity = 0.15,
+        line_opacity = 1,
         set_cursorline = false,
+        -- set_cursor = true,
         ignore_filetypes = { "NvimTree", "TelescopePrompt", "dashboard", "minifiles" },
       })
     end,

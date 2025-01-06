@@ -32,3 +32,4 @@ vim.cmd([[cab Wq wq]])
 vim.diagnostic.config({ virtual_text = false })
 
 vim.cmd([[tnoremap <C-A-_> pwd\|wl-copy<CR><C-\><C-n>:cd <C-r>+<CR>]])
+
