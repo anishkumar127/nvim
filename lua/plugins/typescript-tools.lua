@@ -27,6 +27,14 @@ return {
         opts = {
             expose_as_code_action = "all",
             complete_function_calls = false,
+             tsserver_max_memory = "auto",
+              include_completions_with_insert_text = true,
+              -- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
+    -- possible values: ("off"|"all"|"implementations_only"|"references_only")
+              code_lens = "off",
+                -- by default code lenses are displayed on all referencable values and for some of you it can
+    -- be too much this option reduce count of them by removing member references from lenses
+    disable_member_code_lens = true,
             jsx_close_tag = {
                 enable = true,
                 filetypes = { "javascriptreact", "typescriptreact" },
