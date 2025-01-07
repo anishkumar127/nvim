@@ -10,17 +10,18 @@ opt.laststatus = 3
 opt.clipboard = "unnamedplus"
 
 -- Make cursor blink
-opt.guicursor = {
-  "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50",
-  "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
-  "sm:block-blinkwait175-blinkoff150-blinkon175",
-}
+-- opt.guicursor = {
+--   "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50",
+--   "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
+--   "sm:block-blinkwait175-blinkoff150-blinkon175",
+-- }
 
 opt.linebreak = true
 -- Set tab width
 opt.expandtab = false
-opt.tabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.softtabstop = 2 
 opt.autoindent = true
 
 -- Disable highlighting if file is over 10 MB
