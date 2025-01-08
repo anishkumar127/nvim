@@ -20,6 +20,7 @@ return {
     end,
   },
   {
+    -- BUG: need to check this its show inline error when hover to line..
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "LspAttach",
     priority = 1000, -- needs to be loaded in first
@@ -28,7 +29,21 @@ return {
         options = {
           show_source = true,
           use_icons_from_diagnostic = true,
-        },
+              --       overflow = {
+		-- 	-- Manage the overflow of the message.
+		-- 	--    - wrap: when the message is too long, it is then displayed on multiple lines.
+		-- 	--    - none: the message will not be truncated.
+		-- 	--    - oneline: message will be displayed entirely on one line.
+		-- 	mode = "wrap",
+		-- },
+		-- Filter by severity.
+		severity = {
+			vim.diagnostic.severity.ERROR,
+			vim.diagnostic.severity.WARN,
+			vim.diagnostic.severity.INFO,
+			vim.diagnostic.severity.HINT,
+		},
+      },
       })
     end,
   },

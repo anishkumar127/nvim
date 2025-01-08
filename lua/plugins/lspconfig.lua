@@ -1,4 +1,10 @@
 local lspconfig = require("lspconfig")
+
+-- lspconfig.tsserver.setup({
+--   on_attach = function(client)
+--     client.server_capabilities.diagnosticProvider = false
+--   end,
+-- })
 -- for disable right side inline erorr etc
 lspconfig.gdscript.setup({
   cmd = { "nc", "localhost", "6005" }, -- Connect to Godot's language server
@@ -40,7 +46,6 @@ return {
           "javascript.jsx",
           "typescript",
           "typescript.tsx",
-          "vue",
         },
       },
       codelens = {
@@ -54,6 +59,7 @@ return {
     },
   },
   {
+    -- BUG: need to check this its show error bulb.
     "nvimdev/lspsaga.nvim",
     config = function()
       require("lspsaga").setup({

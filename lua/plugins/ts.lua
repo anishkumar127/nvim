@@ -12,12 +12,12 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     enabled = true,
         event = { "BufReadPre *.ts", "BufReadPre *.tsx", "BufReadPre *.js", "BufReadPre *.jsx" }, -- Lazy Loading for Performance only loaded when needed
-    -- ft = {
-    --   "typescript",
-    --   "typescriptreact",
-    --   "javascript",
-    --   "javascriptreact",
-    -- },
+    ft = {
+      "typescript",
+      "typescriptreact",
+      "javascript",
+      "javascriptreact",
+    },
 
     config = function(_, opts)
       local api = require("typescript-tools.api")
@@ -27,7 +27,13 @@ return {
           80001, -- Ignore this might be converted to a ES export
         }),
       }
-
+  -- Disable tsserver diagnostics if needed
+    opts.on_attach = function(client)
+      if client.name == "tsserver" then
+        client.server_capabilities.diagnosticProvider = false
+      end
+    end
+    
       require("typescript-tools").setup(opts)
     end,
     opts = {
