@@ -26,6 +26,16 @@ return {
     priority = 1000, -- needs to be loaded in first
     config = function()
       require("tiny-inline-diagnostic").setup({
+        preset = "modern",
+  --       hi = {
+	-- 	error = "DiagnosticError",
+	-- 	warn = "DiagnosticWarn",
+	-- 	info = "DiagnosticInfo",
+	-- 	hint = "DiagnosticHint",
+	-- 	arrow = "NonText",
+	-- 	background = "CursorLine", -- Can be a highlight or a hexadecimal color (#RRGGBB)
+	-- 	mixing_color = "None", -- Can be None or a hexadecimal color (#RRGGBB). Used to blend the background color with the diagnostic background color with another color.
+	-- },
         options = {
           show_source = true,
           use_icons_from_diagnostic = true,
@@ -37,12 +47,12 @@ return {
 		-- 	mode = "wrap",
 		-- },
 		-- Filter by severity.
-		severity = {
-			vim.diagnostic.severity.ERROR,
-			vim.diagnostic.severity.WARN,
-			vim.diagnostic.severity.INFO,
-			vim.diagnostic.severity.HINT,
-		},
+		-- severity = {
+		-- 	vim.diagnostic.severity.ERROR,
+		-- 	vim.diagnostic.severity.WARN,
+		-- 	vim.diagnostic.severity.INFO,
+		-- 	vim.diagnostic.severity.HINT,
+		-- },
       },
       })
     end,

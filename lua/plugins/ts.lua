@@ -28,11 +28,11 @@ return {
         }),
       }
   -- Disable tsserver diagnostics if needed
-    opts.on_attach = function(client)
-      if client.name == "tsserver" then
-        client.server_capabilities.diagnosticProvider = false
-      end
-    end
+    -- opts.on_attach = function(client)
+    --   if client.name == "tsserver" then
+    --     client.server_capabilities.diagnosticProvider = false
+    --   end
+    -- end
     
       require("typescript-tools").setup(opts)
     end,
