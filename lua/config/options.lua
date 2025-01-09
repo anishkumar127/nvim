@@ -34,3 +34,58 @@ vim.diagnostic.config({ virtual_text = false })
 
 vim.cmd([[tnoremap <C-A-_> pwd\|wl-copy<CR><C-\><C-n>:cd <C-r>+<CR>]])
 
+
+vim.opt.pumblend = 0 -- disable transparency in popup menu
+vim.opt.swapfile = false -- Disable swap file
+
+
+-- Wildmenu {{{
+vim.opt.wildignorecase = true
+
+-- stuff to ignore when tab completing
+vim.opt.wildignore = {
+  "*~",
+  "*.o",
+  "*.obj",
+  "*.so",
+  "*vim/backups*",
+  "*.git/**",
+  "**/.git/**",
+  "*sass-cache*",
+  "*DS_Store*",
+  "vendor/rails/**",
+  "vendor/cache/**",
+  "*.gem",
+  "*.pyc",
+  "log/**",
+  "*.gif",
+  "*.zip",
+  "*.bg2",
+  "*.gz",
+  "*.db",
+  "**/node_modules/**",
+  "**/bin/**",
+  "**/thesaurus/**",
+}
+-- }}}
+
+
+
+-- Set fast matchparen timeouts - for performance issue.
+-- https://vi.stackexchange.com/a/5318/12823
+vim.g.matchparen_timeout = 2
+vim.g.matchparen_insert_timeout = 2
+
+-- just trying to disable it
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
+
+-- Syntax off, spell off, foldenable off - performance
+vim.opt.syntax = "off"
+vim.o.foldenable = false
+vim.o.spell = false
+vim.lsp.set_log_level("off")
+
+-- From time to time rm -rf ~/.cache/nvim ~/.local/share/nvim/ ~/.local/state/nvim

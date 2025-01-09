@@ -1,5 +1,7 @@
 local lspconfig = require("lspconfig")
+local nvim_runtime_file = vim.api.nvim_get_runtime_file("", true)
 
+table.insert(nvim_runtime_file, vim.env.VIMRUNTIME)
 -- lspconfig.tsserver.setup({
 --   on_attach = function(client)
 --     client.server_capabilities.diagnosticProvider = false
@@ -38,7 +40,7 @@ return {
         virtual_text = false,
       },
       inlay_hints = {
-        enabled = true,
+        enabled = false, -- Disable inlay_hints they have a performance cost,
         exclude = {
           "typescriptreact",
           "javascript",
@@ -55,6 +57,32 @@ return {
         vtsls = {
           enabled = false,
         },
+         lua_ls = {
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+              library = nvim_runtime_file,
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            runtime = {
+              version = "LuaJIT",
+            },
+            hint = {
+              enable = true,
+              setType = true,
+            },
+            diagnostics = {
+              globals = { "vim" },
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      },
       },
     },
   },
@@ -80,3 +108,7 @@ return {
     end,
   },
 }
+
+
+
+
