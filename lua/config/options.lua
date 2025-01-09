@@ -4,7 +4,7 @@
 local opt = vim.opt
 
 vim.g.lazygit_config = true
-vim.g.snacks_animate = false
+-- vim.g.snacks_animate = false
 opt.laststatus = 3
 
 opt.clipboard = "unnamedplus"
@@ -89,3 +89,16 @@ vim.o.spell = false
 vim.lsp.set_log_level("off")
 
 -- From time to time rm -rf ~/.cache/nvim ~/.local/share/nvim/ ~/.local/state/nvim
+
+-- // BUG: not working with my current config
+-- vim.o.background = "dark"
+vim.o.termguicolors = true
+
+
+-- You can either toggle it off/on with <leader>uS or disable it with  in your options.lua file (this will disable all animations) or just disable the specific snacks component with 
+vim.g.snacks_animate = false
+opt.scroll.enabled = false
+vim.o.lazyredraw = true -- Optimize screen redrawing
+ 
+vim.o.updatetime = 50 -- Lower the update time for better responsiveness
+ 
