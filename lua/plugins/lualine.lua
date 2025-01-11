@@ -136,10 +136,11 @@ return {
       --   winbar = 1500,
       -- },
       sections = {
-        lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-        lualine_b = { 'filename', 'branch' },
+        -- lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+        lualine_a = { },
+        -- lualine_b = { 'filename', 'branch' },
         lualine_c = {
-          '%=', --[[ add your center compoentnts here in place of this comment ]]
+          -- '%=', --[[ add your center compoentnts here in place of this comment ]]
           {
             "diagnostics",
             symbols = {
@@ -150,57 +151,58 @@ return {
             },
           },
         },
-        lualine_x = {
-        -- stylua: ignore
-        {
-          function() return require("noice").api.status.command.get() end,
-          cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-        },
-        -- stylua: ignore
-        {
-          function() return require("noice").api.status.mode.get() end,
-          cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-        },
-        -- stylua: ignore
-        {
-          function() return "  " .. require("dap").status() end,
-          cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-        },
-        {
-          require("lazy.status").updates,
-          cond = require("lazy.status").has_updates,
-        },
-        {
-          "diff",
-          symbols = {
-            added = icons.git.added,
-            modified = icons.git.modified,
-            removed = icons.git.removed,
-          },
-          source = function()
-            local gitsigns = vim.b.gitsigns_status_dict
-            if gitsigns then
-              return {
-                added = gitsigns.added,
-                modified = gitsigns.changed,
-                removed = gitsigns.removed,
-              }
-            end
-          end,
-        },
-        },
+        -- lualine_x = {
+        -- -- stylua: ignore
+        -- {
+        --   function() return require("noice").api.status.command.get() end,
+        --   cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+        -- },
+        -- -- stylua: ignore
+        -- {
+        --   function() return require("noice").api.status.mode.get() end,
+        --   cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+        -- },
+        -- -- stylua: ignore
+        -- {
+        --   function() return "  " .. require("dap").status() end,
+        --   cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
+        -- },
+        -- -- {
+        -- --   require("lazy.status").updates,
+        -- --   cond = require("lazy.status").has_updates,
+        -- -- },
+        -- {
+        --   "diff",
+        --   symbols = {
+        --     added = icons.git.added,
+        --     modified = icons.git.modified,
+        --     removed = icons.git.removed,
+        --   },
+        --   source = function()
+        --     local gitsigns = vim.b.gitsigns_status_dict
+        --     if gitsigns then
+        --       return {
+        --         added = gitsigns.added,
+        --         modified = gitsigns.changed,
+        --         removed = gitsigns.removed,
+        --       }
+        --     end
+        --   end,
+        -- },
+        -- },
+        lualine_x={},
         lualine_y = {
-          'filetype',
-          'progress',
-            { "progress", separator = " | ", padding = { left = 1, right = 0 } },
-            { "location", padding = { left = 0, right = 1 } },
+          -- 'filetype',
+          -- 'progress',
+          --   { "progress", separator = " | ", padding = { left = 1, right = 0 } },
+          --   { "location", padding = { left = 0, right = 1 } },
         },
         lualine_z = {
-          { 'location', separator = { right = '█' }, left_padding = 2,
-            function()
-              return " " .. os.date("%R")
-            end,
-          },
+          -- { 'location', separator = { right = '█' }, left_padding = 2,
+          --   function()
+          --     return " " .. os.date("%R")
+          --   end,
+          -- },
         },
       },
       inactive_sections = {
@@ -209,10 +211,12 @@ return {
         lualine_c = {},
         lualine_x = {},
         lualine_y = {},
-        lualine_z = { 'location' },
+        lualine_z = {  },
+        -- lualine_z = { 'location' },
       },
       tabline = {},
-      extensions = { "neo-tree", "lazy" },
+      extensions = {  },
+      -- extensions = { "neo-tree", "lazy" },
     }
 ,
   },

@@ -1,6 +1,10 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 -- vim.diagnostic.config({ virtual_text = false })
 vim.lsp.set_log_level("off")
+--vim.env.CC = "cl"
+-- vim.env.CC = "gcc"
+vim.env.CC = "clang" -- Set Clang as the compiler for Tree-sitter
+vim.env.CXX = "clang++" -- Set Clang++ for C++ parsing (if needed)
 
 require("config.lazy")
 -- vim.opt.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
