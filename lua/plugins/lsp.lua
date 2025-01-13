@@ -5,26 +5,26 @@ if true then return {} end
 
 -- Formatter
 -- :lua require('conform').format()
-require("conform").setup({
-	formatters_by_ft = {
-		javascript = { "prettier" },
-		typescript = { "prettier" },
-		typescriptreact = { "prettier" }, -- For React (TypeScript)
-		javascriptreact = { "prettier" }, -- For React (JavaScript)
-		html = { "prettier" },
-		css = { "prettier" },
-		scss = { "prettier" },
-		jsx = { "prettier" }, -- For React (JSX)
-		tsx = { "prettier" }, -- For React (TSX)
-		json = { "prettier" },
-		-- python = { "black" },
-		-- go = { "gofmt", "goimports" },
-		lua = { "stylua" },
-		proto = { "buf" },
-	},
-	debug = true, -- Enable debugging
-	timeout = 20000, -- Timeout in milliseconds (adjust as needed)
-})
+-- require("conform").setup({
+-- 	formatters_by_ft = {
+-- 		javascript = { "prettier" },
+-- 		typescript = { "prettier" },
+-- 		typescriptreact = { "prettier" }, -- For React (TypeScript)
+-- 		javascriptreact = { "prettier" }, -- For React (JavaScript)
+-- 		html = { "prettier" },
+-- 		css = { "prettier" },
+-- 		scss = { "prettier" },
+-- 		jsx = { "prettier" }, -- For React (JSX)
+-- 		tsx = { "prettier" }, -- For React (TSX)
+-- 		json = { "prettier" },
+-- 		-- python = { "black" },
+-- 		-- go = { "gofmt", "goimports" },
+-- 		lua = { "stylua" },
+-- 		proto = { "buf" },
+-- 	},
+-- 	debug = true, -- Enable debugging
+-- 	timeout = 20000, -- Timeout in milliseconds (adjust as needed)
+-- })
 
 -- Autoformat on save
 -- vim.api.nvim_create_autocmd("BufWritePre", {

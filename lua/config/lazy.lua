@@ -15,6 +15,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- rocks = {
+  --   hererocks = true,
+  -- },
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
@@ -23,7 +26,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.dot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    -- { import = "lazyvim.plugins.extras.lang.tailwind" },
     -- { import = "lazyvim.plugins.extras.lang.typescript" }, -- action now im using via typescript tools
     { import = "lazyvim.plugins.extras.lang.yaml" },
     -- { import = "lazyvim.plugins.extras.linting.eslint" }, -- it's giving too much linting not required as of now.
@@ -42,6 +45,8 @@ require("lazy").setup({
     -- new ending
     { import = "plugins" },
   },
+    change_detection = { enabled = false, notify = false },
+  concurrency = 100,
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
@@ -62,10 +67,40 @@ require("lazy").setup({
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
+        -- new disable
+        "2html_plugin",
+				"bugreport",
+				"compiler",
+				"ftplugin",
+				"getscript",
+				"getscriptPlugin",
+				"gzip",
+				"logipat",
+				"matchit",
+				"matchparen",
+				"netrw",
+				"netrwFileHandlers",
+				"netrwPlugin",
+				"netrwSettings",
+				"optwin",
+				"rplugin",
+				"rrhelper",
+				"spellfile_plugin",
+				"synmenu",
+				"syntax",
+				"tar",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"vimball",
+				"vimballPlugin",
+				"zip",
+				"zipPlugin",
+        -- new disable
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",

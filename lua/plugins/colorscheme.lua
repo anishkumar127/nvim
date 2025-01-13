@@ -1,3 +1,5 @@
+-- if true then return {} end
+
 return {
   {
     "scottmckendry/cyberdream.nvim",
@@ -6,11 +8,11 @@ return {
     opts = function(_, opts)
       opts.transparent = true
       opts.italic_comments = true
-      opts.borderless_telescope = false -- its remove border in search.
+      opts.borderless_telescope = true -- its remove border in search.
       -- new adding.
-      -- opts.terminal_colors = true
+      opts.terminal_colors = true
       opts.cache = true
-      -- opts.theme = { variant = "auto" }
+      opts.theme = { variant = "dark" }
     end,
   },
   {
