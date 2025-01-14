@@ -14,6 +14,8 @@ return {
         hide_by_name = {
           ".git",
           ".DS_Store",
+          "CHANGELOG.md",
+          "node_modules"
         },
         always_show = {
           ".env",

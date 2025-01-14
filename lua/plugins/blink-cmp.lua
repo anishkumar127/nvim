@@ -1,6 +1,10 @@
 return {
   "saghen/blink.cmp",
   opts = {
-    signature = { enabled = true },
+    -- sources = {
+    --   default = { 'lsp', 'path', 'buffer' }, -- Exclude 'snippets' from the list
+    -- },
+    signature = { enabled = false },
+    
   },
 }

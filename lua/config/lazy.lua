@@ -46,6 +46,7 @@ require("lazy").setup({
   install = { colorscheme = {} },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
+      cache = {enabled = true},
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
@@ -63,3 +64,8 @@ require("lazy").setup({
 })
 
 vim.cmd("highlight Visual ctermbg=0 guibg=#6441A5")
+
+-- Adjust timeout settings
+vim.o.timeoutlen = 300  -- Wait 500 ms for key sequences (lower than default)
+vim.o.ttimeoutlen = 10  -- Wait 10 ms for terminal key codes (very short timeout)
+
