@@ -3,6 +3,7 @@
 -- Add any additional keymaps here
 local keymap = vim.keymap
 local map = vim.keymap.set
+local keyset = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local Util = require("lazyvim.util")
 local Snacks = require("snacks")
@@ -31,16 +32,16 @@ keymap.del("n", "<C-Down>")
 keymap.del("n", "<C-Up>")
 keymap.del("n", "<C-Right>")
 
-keymap.set("n", "<M-h>", '<Cmd>lua require("tmux").resize_left()<CR>', { silent = true })
-keymap.set("n", "<M-j>", '<Cmd>lua require("tmux").resize_bottom()<CR>', { silent = true })
-keymap.set("n", "<M-k>", '<Cmd>lua require("tmux").resize_top()<CR>', { silent = true })
-keymap.set("n", "<M-l>", '<Cmd>lua require("tmux").resize_right()<CR>', { silent = true })
+-- keymap.set("n", "<M-h>", '<Cmd>lua require("tmux").resize_left()<CR>', { silent = true })
+-- keymap.set("n", "<M-j>", '<Cmd>lua require("tmux").resize_bottom()<CR>', { silent = true })
+-- keymap.set("n", "<M-k>", '<Cmd>lua require("tmux").resize_top()<CR>', { silent = true })
+-- keymap.set("n", "<M-l>", '<Cmd>lua require("tmux").resize_right()<CR>', { silent = true })
 
 local set_keymap = vim.api.nvim_set_keymap
 
 -- Split windows
-keymap.set("n", "ss", ":vsplit<Return>", opts)
-keymap.set("n", "sv", ":split<Return>", opts)
+-- keymap.set("n", "ss", ":vsplit<Return>", opts)
+-- keymap.set("n", "sv", ":split<Return>", opts)
 
 -- Tabs
 keymap.set("n", "te", ":tabedit", opts)
@@ -124,3 +125,36 @@ map("n", "<C-A-j>", "yy]p", { noremap = true, silent = true, desc = "Duplicate l
 map("v", "<C-A-k>", "yP", { noremap = true, silent = true, desc = "Duplicate selection up" })
 map("v", "<C-A-j>", "y]p", { noremap = true, silent = true, desc = "Duplicate selection down" })
 
+
+-- Lspsaga keymaps
+map("n", "<S-r>", "<cmd>Lspsaga hover_doc<CR>", { desc = "show hover doc" })
+map("n", "<leader>ol", "<cmd>Lspsaga outline<CR>", { desc = "show outline" })
+-- map("n", "<C-a>", "<cmd>Lspsaga code_action<CR>", { desc = "code action" })
+map("n", "<C-c>d", "<cmd>Lspsaga peek_definition<CR>", { desc = "peek definition" })
+map("n", "<C-c>t", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "peek type definition" })
+
+-- don't know
+map("n", "<S-A-j>", "<cmd>Treewalker Down<CR>", { noremap = true, desc = "Treewalker Down" })
+map("n", "<S-A-k>", "<cmd>Treewalker Up<CR>", { noremap = true, desc = "Treewalker Up" })
+map("n", "<S-A-h>", "<cmd>Treewalker Left<CR>", { noremap = true, desc = "Treewalker Left" })
+map("n", "<S-A-l>", "<cmd>Treewalker Right<CR>", { noremap = true, desc = "Treewalker Right" })
+
+-- maybe conflict 
+
+-- <Alt-Left> (<M-Left>): Resize the current window wider.
+-- <Alt-Right> (<M-Right>): Resize the current window narrower.
+-- <Alt-Down> (<M-Down>): Resize the current window shorter.
+-- <Alt-Up> (<M-Up>): Resize the current window taller.
+-- Split window
+keyset('n', '<leader>ss', ':split<Return><C-w>w', {desc = 'Split window horizontally'}) -- Horizontal
+keyset('n', '<leader>sv', ':vsplit<Return><C-w>w', {desc = 'Split window vertically'})  -- Vertical
+
+-- Move between qf items
+keyset('n', '<C-p>', '<cmd>cprev<CR>zz', {desc = 'Previous quickfix item'})
+keyset('n', '<C-n>', '<cmd>cnext<CR>zz', {desc = 'Next quickfix item'})
+
+-- Resize splits
+keyset('n', '<M-Left>', '<C-w>5>', {desc = 'Resize window (left)'})
+keyset('n', '<M-Right>', '<C-w>5<', {desc = 'Resize window (right)'})
+keyset('n', '<M-Down>', '<C-w>5-', {desc = 'Resize window (down)'})
+keyset('n', '<M-Up>', '<C-w>5+', {desc = 'Resize window (up)'})

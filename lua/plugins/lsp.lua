@@ -31,12 +31,12 @@ return {
      event = "VeryLazy",  -- Load LSP on demand to improve startup time
     --- @class lspconfig
     opts = {
-       diagnostics = {
-        virtual_text = false, -- Disable inline diagnostic messages
-      },
-      codelens = {
-        enabled = false, -- Disable codelens for performance
-      },
+      --  diagnostics = {
+      --   virtual_text = false, -- Disable inline diagnostic messages
+      -- },
+      -- codelens = {
+      --   enabled = false, -- Disable codelens for performance
+      -- },
       inlay_hints = {
         enabled = false, -- Disable inlay_hints they have a performance cost,
         exclude = {

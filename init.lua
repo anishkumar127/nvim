@@ -35,3 +35,36 @@ vim.opt.grepformat = "%f:%l:%c:%m"
 -- vim.opt.laststatus = 2 -- Only show statusline in the last window
 vim.opt.showcmd = false -- Disable command display
 -- vim.opt.statusline = "%f %y %m %= %p%% %l:%c"
+ 
+-- it's should be inside the autocmd file but for now keeping it here 
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+-- Highlight yanked text
+autocmd('TextYankPost', {
+  desc = 'Highlight yanked text',
+  group = augroup('YankHighlight', {}),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- Disable eslint on node_modules
+autocmd({'BufNewFile', 'BufRead'}, {
+  pattern = {'**/node_modules/**', 'node_modules', '/node_modules/*'},
+  group = augroup('DisableEslintOnNodeModules', {}),
+  callback = function()
+    vim.diagnostic.disable(0)
+  end,
+})
+
+autocmd('FileType', {
+  pattern = '*',
+  group = augroup('diable-new-line-comments', {}),
+  callback = function()
+    vim.opt_local.formatoptions:remove('o')
+    vim.opt_local.formatoptions:remove('r')
+    vim.opt_local.formatoptions:remove('c')
+  end,
+})
