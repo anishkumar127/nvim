@@ -4,21 +4,21 @@ return {
     opts = {
       ensure_installed = {
         "bash",
-        "cmake",
+        -- "cmake",
         "css",
         "diff",
         "gitignore",
         "javascript",
         "jsdoc",
         "json",
-        "jsonc",
+        -- "jsonc",
         "lua",
-        "markdown",
-        "markdown_inline",
-        "sql",
+        -- "markdown",
+        -- "markdown_inline",
+        -- "sql",
         "tsx",
         "typescript",
-        "yaml",
+        -- "yaml",
       },
       config = function(_, opts)
         require("nvim-treesitter.configs").setup(opts)
