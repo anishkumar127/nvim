@@ -1,6 +1,7 @@
 -- Show context of the current function
 return {
   "nvim-treesitter/nvim-treesitter-context",
+  enabled = false,
   event = { "BufReadPost", "BufWritePost", "BufNewFile" },
   opts = function()
     local tsc = require("treesitter-context")
