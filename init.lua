@@ -16,7 +16,8 @@ vim.opt.swapfile = false
 
 -- Reduce Neovim's rendering overhead: -- Disable unused UI elements:
 vim.opt.ruler = false -- Disable the ruler
-vim.opt.showmode = false -- Disable mode display (handled by statusline)
+vim.opt.showmode = false -- Disable mode display (handled by statusline) 
+
 
 
 vim.diagnostic.config({
@@ -26,10 +27,11 @@ vim.diagnostic.config({
 
 -- For smoother scrolling, disable scroll offset or use a plugin
 -- vim.opt.scrolloff = 0 -- Disable extra lines of context
+-- ! comment out - 29 - 1 2025
 
 -- Optimize Search
-vim.opt.grepprg = "rg --vimgrep"
-vim.opt.grepformat = "%f:%l:%c:%m"
+-- vim.opt.grepprg = "rg --vimgrep"
+-- vim.opt.grepformat = "%f:%l:%c:%m"
 
 -- Optimize Statusline
 -- vim.opt.laststatus = 2 -- Only show statusline in the last window
@@ -42,9 +44,20 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Highlight yanked text
-autocmd('TextYankPost', {
-  desc = 'Highlight yanked text',
-  group = augroup('YankHighlight', {}),
+-- autocmd('TextYankPost', {
+--   desc = 'Highlight yanked text',
+--   group = augroup('YankHighlight', {}),
+--   callback = function()
+--     vim.highlight.on_yank()
+--   end,
+-- })
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup(
+    'kickstart-highlight-yank',
+    { clear = true }
+  ),
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -68,7 +81,7 @@ autocmd('FileType', {
     vim.opt_local.formatoptions:remove('c')
   end,
 })
-
+-- TODO: Neovide settings
 if vim.g.neovide then
     vim.o.guifont = "JetBrainsMono Nerd Font:h12" -- Change font as needed
     -- vim.g.neovide_transparency = 0.8

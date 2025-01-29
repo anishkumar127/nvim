@@ -22,16 +22,16 @@ return {
       },
     },
   },
-  {
-    "folke/snacks.nvim",
-    opts = {
-      notifier = {
-        timeout = 500,
-        style = "compact",
-      },
-    },
-  },
-  -- filename
+  -- {
+  --   "folke/snacks.nvim",
+  --   opts = {
+  --     notifier = {
+  --       timeout = 500,
+  --       style = "compact",
+  --     },
+  --   },
+  -- },
+  -- filename show tab small window  - https://github.com/b0o/incline.nvim
   {
     "b0o/incline.nvim",
     event = "BufReadPre",
@@ -60,15 +60,16 @@ return {
     end,
   },
 
+  -- it's vs code like open folder tab show . 
   -- bufferline
-  {
-    "akinsho/bufferline.nvim",
-    opts = {
-      options = {
-        mode = "tabs",
-        show_buffer_close_icons = false,
-        show_close_icon = false,
-      },
-    },
-  },
+  -- {
+  --   "akinsho/bufferline.nvim",
+  --   opts = {
+  --     options = {
+  --       mode = "tabs",
+  --       show_buffer_close_icons = false,
+  --       show_close_icon = false,
+  --     },
+  --   },
+  -- },
 }
