@@ -68,3 +68,9 @@ autocmd('FileType', {
     vim.opt_local.formatoptions:remove('c')
   end,
 })
+
+if vim.g.neovide then
+    vim.o.guifont = "JetBrainsMono Nerd Font:h12" -- Change font as needed
+    -- vim.g.neovide_transparency = 0.8
+    vim.g.neovide_cursor_animation_length = 0.1
+end

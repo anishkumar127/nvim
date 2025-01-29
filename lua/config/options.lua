@@ -73,7 +73,7 @@ vim.o.termguicolors = true
 
 -- You can either toggle it off/on with <leader>uS or disable it with  in your options.lua file (this will disable all animations) or just disable the specific snacks component with 
 -- vim.g.snacks_animate = false
-opt.scroll.enabled = false
+-- opt.scroll.enabled = false
 -- vim.o.lazyredraw = true -- Optimize screen redrawing
  
 vim.o.updatetime = 50 -- Lower the update time for better responsiveness
@@ -97,7 +97,7 @@ vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.smartindent = true -- Makes indenting smart
 
-vim.opt.hlsearch = false -- Highlight on search
+-- vim.opt.hlsearch = false -- Highlight on search
 vim.opt.incsearch = true -- While typing a search command, show where the pattern matches
 vim.opt.ignorecase = true -- Ignore case in search patterns
 vim.opt.smartcase = true -- Better search
