@@ -37,17 +37,17 @@ return {
       -- codelens = {
       --   enabled = false, -- Disable codelens for performance
       -- },
-      -- inlay_hints = {
-      --   enabled = false, -- Disable inlay_hints they have a performance cost,
-      --   exclude = {
-      --     "typescriptreact",
-      --     "javascript",
-      --     "javascriptreact",
-      --     "javascript.jsx",
-      --     "typescript",
-      --     "typescript.tsx",
-      --   },
-      -- },
+      inlay_hints = {
+        enabled = false, -- Disable inlay_hints they have a performance cost,
+        exclude = {
+          "typescriptreact",
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescript.tsx",
+        },
+      },
       servers = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
@@ -83,9 +83,7 @@ return {
             },
             typescript = {
               updateImportsOnFileMove = { enabled = 'always' },
-              suggest = {
-                completeFunctionCalls = true,
-              },
+            
               inlayHints = {
                 -- Disable all inlay hints
                 enumMemberValues = { enabled = false },
@@ -94,10 +92,11 @@ return {
                 parameterTypes = { enabled = false },
                 propertyDeclarationTypes = { enabled = false },
                 variableTypes = { enabled = false },
+                
               },
               -- Additional settings you can disable for performance
               suggest = {
-                autoImports = true,           -- Disable automatic import suggestions
+                autoImports = false,           -- Disable automatic import suggestions
                 completeFunctionCalls = true, -- Disable auto-completion of function arguments
                 names = true,                 -- Disable name suggestions
                 paths = true,                 -- Disable path suggestions
@@ -105,7 +104,7 @@ return {
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
                 importModuleSpecifierEnding = "minimal",      -- Avoid extra file extensions
-                -- disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
               },
             },
           },
