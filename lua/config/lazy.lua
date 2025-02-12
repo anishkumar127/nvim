@@ -13,10 +13,10 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",                                   import = "lazyvim.plugins" },
     -- import any extras modules here
-    { import = "lazyvim.plugins.extras.editor.aerial" },
     -- { import = "lazyvim.plugins.extras.editor.harpoon2" },
-    { import = "lazyvim.plugins.extras.editor.navic" },
-    { import = "lazyvim.plugins.extras.editor.refactoring" },
+    -- { import = "lazyvim.plugins.extras.editor.aerial" },
+    -- { import = "lazyvim.plugins.extras.editor.navic" },
+    -- { import = "lazyvim.plugins.extras.editor.refactoring" },
     { import = "lazyvim.plugins.extras.lang.json" },
     -- ! comment out but maybe in future need to uncomment for working of custom.
     -- { import = "lazyvim.plugins.extras.dap.core" },
@@ -40,27 +40,27 @@ require("lazy").setup({
     -- My new import
     -- custom
     { import = 'plugins.coding.inc-rename' },
-    { import = 'plugins.coding.todo-comments' },
+    -- { import = 'plugins.coding.todo-comments' },
     { import = 'plugins.coding.treesitter' },
     { import = 'plugins.coding.trouble' },
-    { import = 'plugins.linting.core' },
-    { import = 'plugins.test.core' },
-    { import = 'plugins.ui.treesitter-context' },
+    -- { import = 'plugins.linting.core' },
+    -- { import = 'plugins.test.core' },
+    -- { import = 'plugins.ui.treesitter-context' },
     { import = 'plugins.util.mini-hipatterns' },
     { import = 'plugins.dap.core' },
-    { import = 'plugins.editor.snacks' },
+    -- { import = 'plugins.editor.snacks' },
     { import = 'plugins.editor.gitsigns' },
     { import = 'plugins.editor.grug-far' },
-    { import = 'plugins.editor.indent-line' },
+    -- { import = 'plugins.editor.indent-line' },
     { import = 'plugins.editor.lazygit' },
     { import = 'plugins.editor.mini' },
-    { import = 'plugins.editor.overseer' },
-    { import = 'plugins.editor.fzf' },
+    -- { import = 'plugins.editor.overseer' },
+    -- { import = 'plugins.editor.fzf' },
     { import = 'plugins.formatting.conform' },
     { import = 'plugins.formatting.prettier' },
     { import = 'plugins.terminal.toggleterminal' },
-    { import = 'plugins.languages.markdown' },
-    { import = 'plugins.languages.mdx' },
+    -- { import = 'plugins.languages.markdown' },
+    -- { import = 'plugins.languages.mdx' },
     { import = 'plugins.languages.typescript' },
 
     -- import/override with your plugins
@@ -78,7 +78,7 @@ require("lazy").setup({
   install = { colorscheme = {} },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
-    cache = { enabled = true },
+    -- cache = { enabled = true },
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
@@ -112,7 +112,7 @@ require("lazy").setup({
 				"zip",
 				"zipPlugin", ]]
         -- new disable
-        'shada',
+        -- 'shada',
         'spellfile',
         "gzip",
         "matchit",
@@ -127,8 +127,8 @@ require("lazy").setup({
   },
 })
 
-vim.cmd("highlight Visual ctermbg=0 guibg=#6441A5")
+-- vim.cmd("highlight Visual ctermbg=0 guibg=#6441A5")
 
 -- Adjust timeout settings
-vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
-vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)
+-- vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
+-- vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)

@@ -3,9 +3,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "bash",
+        -- "bash",
         -- "cmake",
-        "css",
+        -- "css",
         "diff",
         "gitignore",
         "javascript",
@@ -33,9 +33,9 @@ return {
       end,
     },
   },
-  {
-    "nvim-treesitter/playground",
-  },
+  -- {
+  --   "nvim-treesitter/playground",
+  -- },
   {
     "nvim-treesitter/nvim-treesitter-context",
     enabled = false,

@@ -15,7 +15,7 @@ return {
         -- "ruff-lsp",
         -- "shellcheck",
         -- "shfmt",
-        "stylua",
+        -- "stylua",
         "tailwindcss-language-server",
         -- "vtsls",
         "yaml-language-server",

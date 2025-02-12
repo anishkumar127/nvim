@@ -15,18 +15,11 @@ M.plugin = {
       tailwind = {
         enabled = true,
         ft = {
-          "astro",
           "css",
-          "heex",
-          "html",
-          "html-eex",
           "javascript",
           "javascriptreact",
-          "rust",
-          "svelte",
           "typescript",
           "typescriptreact",
-          "vue",
         },
         -- full: the whole css class will be highlighted
         -- compact: only the color will be highlighted
