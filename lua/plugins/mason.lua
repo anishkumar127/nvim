@@ -1,3 +1,5 @@
+if true then return {} end
+
 return {
   {
     "williamboman/mason.nvim",
@@ -18,7 +20,7 @@ return {
         -- "stylua",
         "tailwindcss-language-server",
         -- "vtsls",
-        "yaml-language-server",
+        -- "yaml-language-server",
       },
     },
   },

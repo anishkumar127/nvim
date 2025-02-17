@@ -1,3 +1,5 @@
+if true then return {} end
+
 ---@param config {type?:string, args?:string[]|fun():string[]?}
 local function get_args(config)
   local args = type(config.args) == 'function' and (config.args() or {})

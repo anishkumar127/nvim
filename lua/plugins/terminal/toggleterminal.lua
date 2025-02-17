@@ -2,21 +2,21 @@ return {
   "akinsho/toggleterm.nvim",
   -- version = "*"
   opts = {
-    size = 20,                                           -- Height of the terminal window
-    open_mapping = [[<C-\>]],                            -- Keybinding to toggle terminal
-    direction = "horizontal",                            -- Can be "horizontal", "vertical", or "float"
-    -- shell = "C:\\Program Files\\Git\\bin\\bash.exe", -- Use Git Bash
-    shading_factor = 2,                                  -- Adjust terminal shading
-    persist_size = true,                                 -- Remember terminal size
-    persist_mode = true,                                 -- Remember terminal mode
+    size = 20,                -- Height of the terminal window
+    open_mapping = [[<C-\>]], -- Keybinding to toggle terminal
+    direction = "float",      -- Can be "horizontal", "vertical", or "float"
+    shading_factor = 2,       -- Adjust terminal shading
+    persist_size = true,      -- Remember terminal size
+    persist_mode = true,      -- Remember terminal mode
     -- log_level = "debug",:
+    start_in_insert = true,
 
   },
   keys = {
     { "<C-\\>",     "<cmd>ToggleTerm<CR>", desc = "Toggle Terminal" }, -- Default terminal
-    { "<leader>t1", ":ToggleTerm 1<CR>",   desc = "Open Terminal 1" },
-    { "<leader>t2", ":ToggleTerm 2<CR>",   desc = "Open Terminal 2" },
-    { "<leader>t3", ":ToggleTerm 3<CR>",   desc = "Open Terminal 3" },
+    { "<leader>t1", "<cmd>ToggleTerm direction=float id=1<CR>",  desc = "Open Floating Terminal 1" },
+    { "<leader>t2", "<cmd>ToggleTerm direction=horizontal id=2<CR>", desc = "Open Horizontal Terminal 2" },
+    { "<leader>t3", "<cmd>ToggleTerm direction=vertical id=3<CR>", desc = "Open Vertical Terminal 3" },
   },
 }
 

@@ -28,7 +28,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.ui.treesitter-context" },
     -- { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- { import = "lazyvim.plugins.extras.test.core" },
-    { import = "lazyvim.plugins.extras.lang.yaml" },
+    -- { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.util.dot" },
     { import = "lazyvim.plugins.extras.vscode" },
@@ -47,7 +47,7 @@ require("lazy").setup({
     -- { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
     { import = 'plugins.util.mini-hipatterns' },
-    { import = 'plugins.dap.core' },
+    -- { import = 'plugins.dap.core' },
     -- { import = 'plugins.editor.snacks' },
     { import = 'plugins.editor.gitsigns' },
     { import = 'plugins.editor.grug-far' },
@@ -56,8 +56,8 @@ require("lazy").setup({
     { import = 'plugins.editor.mini' },
     -- { import = 'plugins.editor.overseer' },
     -- { import = 'plugins.editor.fzf' },
-    { import = 'plugins.formatting.conform' },
-    { import = 'plugins.formatting.prettier' },
+    -- { import = 'plugins.formatting.conform' },
+    -- { import = 'plugins.formatting.prettier' },
     { import = 'plugins.terminal.toggleterminal' },
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
@@ -75,7 +75,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = {} },
+    install = {colorscheme = {} },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
     -- cache = { enabled = true },
@@ -130,5 +130,5 @@ require("lazy").setup({
 -- vim.cmd("highlight Visual ctermbg=0 guibg=#6441A5")
 
 -- Adjust timeout settings
--- vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
--- vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)
+vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
+vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)

@@ -41,7 +41,10 @@ vim.opt.wildignore = {
   "*.db",
   "**/node_modules/**",
   "**/bin/**",
-  "**/thesaurus/**",
+    "**/thesaurus/**",
+    "drizzle",
+    "drizzle/**",
+    "CHANGELOG.md"
 }
 
 vim.o.spell = false
@@ -146,3 +149,5 @@ vim.filetype.add({
 })
 
 vim.api.nvim_set_hl(0, 'Cursor', { bg = 'NONE' })
+
+vim.g.snacks_animate = false
