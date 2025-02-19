@@ -5,9 +5,9 @@ require("config.lazy")
 -- vim.o.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
 -- vim.o.shellcmdflag = "-s"
  -- improve file handling on Windows:
---  vim.opt.shell = "powershell"
--- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
--- vim.opt.shellxquote = ""
+ vim.opt.shell = "powershell"
+vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+vim.opt.shellxquote = ""
 
 -- vim.opt.shell = "pwsh"
 -- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
@@ -17,8 +17,8 @@ require("config.lazy")
 -- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 
 
-vim.cmd [[let &shell = '"C:\Program Files\Git\bin\bash.exe"']]
-vim.cmd [[let &shellcmdflag = '-s']]
+-- vim.cmd [[let &shell = '"C:\Program Files\Git\bin\bash.exe"']]
+-- vim.cmd [[let &shellcmdflag = '-s']]
 --- Disable backup and swap files for faster editing
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -97,3 +97,6 @@ if vim.g.neovide then
     -- vim.g.neovide_transparency = 0.8
     -- vim.g.neovide_cursor_animation_length = 0.1
 end
+
+
+-- vim.cmd.colorscheme("catppuccin")

@@ -151,3 +151,5 @@ vim.filetype.add({
 vim.api.nvim_set_hl(0, 'Cursor', { bg = 'NONE' })
 
 vim.g.snacks_animate = false
+
+

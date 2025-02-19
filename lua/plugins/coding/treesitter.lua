@@ -36,10 +36,10 @@ return {
   -- {
   --   "nvim-treesitter/playground",
   -- },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    enabled = false,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  --   enabled = false,
+  -- },
 }
 -- return {
 --   { -- Highlight, edit, and navigate code
