@@ -56,7 +56,7 @@ require("lazy").setup({
     { import = 'plugins.editor.mini' },
     -- { import = 'plugins.editor.overseer' },
     -- { import = 'plugins.editor.fzf' },
-    -- { import = 'plugins.formatting.conform' },
+    { import = 'plugins.formatting.conform' },
     -- { import = 'plugins.formatting.format-ts' },
     -- { import = 'plugins.formatting.prettier' },
     { import = 'plugins.terminal.toggleterminal' },

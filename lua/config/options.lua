@@ -153,3 +153,7 @@ vim.api.nvim_set_hl(0, 'Cursor', { bg = 'NONE' })
 vim.g.snacks_animate = false
 
 
+-- turn off swapfile
+opt.swapfile = false
+
+opt.updatetime = 50
