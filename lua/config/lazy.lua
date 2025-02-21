@@ -31,7 +31,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.lang.yaml" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.util.dot" },
-    { import = "lazyvim.plugins.extras.vscode" },
+    -- { import = "lazyvim.plugins.extras.vscode" },
     -- { import = 'plugins.editor.lazygit' },
     -- { import = 'plugins.editor.gitsigns' },
     -- { import = 'plugins.editor.grug-far' },
