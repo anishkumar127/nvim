@@ -19,7 +19,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.editor.refactoring" },
     { import = "lazyvim.plugins.extras.lang.json" },
     -- ! comment out but maybe in future need to uncomment for working of custom.
-    -- { import = "lazyvim.plugins.extras.dap.core" },
+    { import = "lazyvim.plugins.extras.dap.core" },
     -- { import = "lazyvim.plugins.extras.editor.fzf" },
     -- { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- { import = "lazyvim.plugins.extras.lang.markdown" },
@@ -44,7 +44,7 @@ require("lazy").setup({
     { import = 'plugins.coding.treesitter' },
     { import = 'plugins.coding.trouble' },
     -- { import = 'plugins.linting.core' },
-    -- { import = 'plugins.test.core' },
+    { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
     { import = 'plugins.util.mini-hipatterns' },
     -- { import = 'plugins.dap.core' },
