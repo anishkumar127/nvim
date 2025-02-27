@@ -15,20 +15,21 @@ return {
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 			},
-        },
+			format_on_save = false, -- This disables formatting on save
+		},
 		keys = {
 			{
-			  "<leader>mp",
-			  function()
-				require("conform").format({
-				  lsp_fallback = true,
-				  async = true,
-				})
-			  end,
-			  desc = "Format file or range (in visual mode)",
-			  mode = { "n", "v" },
+				"<leader>mp",
+				function()
+					require("conform").format({
+						lsp_fallback = true,
+						async = true,
+					})
+				end,
+				desc = "Format file or range (in visual mode)",
+				mode = { "n", "v" },
 			},
-		  },
+		},
 
 	},
 }

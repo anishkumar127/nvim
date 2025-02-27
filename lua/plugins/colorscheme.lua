@@ -89,7 +89,7 @@
 --       },
 --     }
 --     end,
-  
+
 --     {
 --       "LazyVim/LazyVim",
 --       opts = {
@@ -115,7 +115,7 @@ local base = {
 }
 
 local extend_base = function(value)
-    return vim.tbl_extend("force", base, value)
+  return vim.tbl_extend("force", base, value)
 end
 
 return {
@@ -127,43 +127,47 @@ return {
     --   opts.transparent = true
     --   opts.italic_comments = true
     --   opts.borderless_pickers = false
-        -- end,
-        opts = function()
-          ---@type CatppuccinOptions
-          return {
-            background = {
-              dark = "frappe",
-              light = "latte",
-            },
-            color_overrides = {
-              latte = extend_base({
-                text = "#202027",
-                subtext1 = "#263168",
-                subtext0 = "#4c4f69",
-                overlay2 = "#737994",
-                overlay1 = "#838ba7",
-                base = "#fcfcfa",
-                mantle = "#EAEDF3",
-                crust = "#DCE0E8",
-                pink = "#EA7A95",
-                mauve= "#986794",
-                red = "#EC5E66",
-                peach = "#FF8459",
-                yellow = "#CAA75E",
-                green = "#87A35E",
-              }),
-              frappe = extend_base({
-                text = "#fcfcfa",
-                surface2 = "#535763",
-                surface1 = "#3a3d4b",
-                surface0 = "#30303b",
-                base = "#202027",
-                mantle = "#1c1d22",
-                crust = "#171719",
-              }),
-            },
-          }
-        end,
+    -- end,
+    opts = function()
+      ---@type CatppuccinOptions
+      return {
+        background = {
+          dark = "frappe",
+          light = "latte",
+        },
+        color_overrides = {
+          latte = extend_base({
+            text = "#202027",
+            subtext1 = "#263168",
+            subtext0 = "#4c4f69",
+            overlay2 = "#737994",
+            overlay1 = "#838ba7",
+            base = "#fcfcfa",
+            mantle = "#EAEDF3",
+            crust = "#DCE0E8",
+            pink = "#EA7A95",
+            mauve = "#986794",
+            red = "#EC5E66",
+            peach = "#FF8459",
+            yellow = "#CAA75E",
+            green = "#87A35E",
+          }),
+          frappe = extend_base({
+            text = "#fcfcfa",
+            surface2 = "#535763",
+            surface1 = "#3a3d4b",
+            surface0 = "#30303b",
+            base = "#202027",
+            mantle = "#1c1d22",
+            crust = "#171719",
+
+            -- base = "#000000",               -- Make background black
+            -- mantle = "#000000",             -- Make mantle black
+            -- crust = "#000000",              -- Make crust black
+          }),
+        },
+      }
+    end,
   },
   {
     "LazyVim/LazyVim",

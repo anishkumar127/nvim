@@ -103,6 +103,7 @@ if vim.g.neovide then
     vim.g.neovide_refresh_rate_idle = 5
     vim.g.neovide_cursor_antialiasing = true
     vim.g.neovide_cursor_animate_in_insert_mode = true
+    vim.g.neovide_background_color = "#000000" -- Pure black background
 end
 
 
