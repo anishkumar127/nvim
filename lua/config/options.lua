@@ -157,3 +157,66 @@ vim.g.snacks_animate = false
 opt.swapfile = false
 
 opt.updatetime = 50
+
+
+
+------------------ INDENTATION & TABS ------------------
+
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+
+
+------------------ BACKSPACE BEHAVIOR ------------------
+
+vim.opt.backspace = { "start", "eol", "indent" }
+
+------------------ FILE & BACKUP HANDLING ------------------
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
+
+
+------------------ POPUP MENUS & COMPLETION ------------------
+
+vim.opt.pumheight = 10
+vim.opt.completeopt = { "menuone", "noselect" }
+
+
+------------------ COMMAND LINE & STATUS LINE ------------------
+
+vim.opt.cmdheight = 0 -- Hide cmdline unless needed
+vim.opt.showmode = false -- Statusline already shows mode
+vim.opt.laststatus = 3   -- Global statusline (one for all splits)
+
+------------------ DIAGNOSTICS CONFIGURATION ------------------
+
+vim.diagnostic.config({
+	virtual_text = false, -- Removes inline errors
+	signs = true, -- Keep signs in the left gutter
+	underline = true, -- Keeps underline under errors/warnings
+	update_in_insert = false, -- Avoid diagnostics while typing
+	severity_sort = true, -- Sort diagnostics by severity
+	float = {
+		border = "rounded",
+		focusable = false,
+	},
+})
+
+------------------ DISABLED PROVIDERS (PERFORMANCE) ------------------
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+
+------------------ DISABLED BUILTIN PLUGINS ------------------
+
+vim.g.loaded_matchparen = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

@@ -1,36 +1,32 @@
--- Disable "No information available" notification on hover
--- plus define border for hover window
--- vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
---   config = config
---     or {
---       border = {
---         { "╭", "Comment" },
---         { "─", "Comment" },
---         { "╮", "Comment" },
---         { "│", "Comment" },
---         { "╯", "Comment" },
---         { "─", "Comment" },
---         { "╰", "Comment" },
---         { "│", "Comment" },
---       },
---     }
---   config.focus_id = ctx.method
---   if not (result and result.contents) then
---     return
---   end
---   local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
---   if vim.tbl_isempty(markdown_lines) then
---     return
---   end
---   return vim.lsp.util.open_floating_preview(markdown_lines, "markdown", config)
--- end
-
 return {
   {
     "neovim/nvim-lspconfig",
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
     opts = {
+      -- Diagnostic settings
+      diagnostics = {
+        virtual_text = false, -- no inline text
+        signs = true,         -- show left gutter icons
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+        float = {
+          border = "rounded",
+        },
+      },
+
+      -- 2. Some sign icon customization (optional)
+      --    If you prefer different icons, just change them here.
+      -- setup_diagnostic_signs = function()
+      --   local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+      --   for type, icon in pairs(signs) do
+      --     local hl = "DiagnosticSign" .. type
+      --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      --   end
+      -- end,
+
+
       --  diagnostics = {
       --   virtual_text = false, -- Disable inline diagnostic messages
       -- },
@@ -78,12 +74,15 @@ return {
                 maxInlayHintLength = 30,
                 completion = {
                   enableServerSideFuzzyMatch = true,
+                  includePackageJsonAutoImports = 'off',
+                  autoImportFileExcludePatterns = { 'node_modules/*' },
+
                 },
               },
             },
             typescript = {
               updateImportsOnFileMove = { enabled = 'always' },
-            
+
               inlayHints = {
                 -- Disable all inlay hints
                 enumMemberValues = { enabled = false },
@@ -92,78 +91,116 @@ return {
                 parameterTypes = { enabled = false },
                 propertyDeclarationTypes = { enabled = false },
                 variableTypes = { enabled = false },
-                
+
               },
               -- Additional settings you can disable for performance
               suggest = {
-                autoImports = false,           -- Disable automatic import suggestions
+                autoImports = false,          -- Disable automatic import suggestions
                 completeFunctionCalls = true, -- Disable auto-completion of function arguments
                 names = true,                 -- Disable name suggestions
                 paths = true,                 -- Disable path suggestions
               },
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                importModuleSpecifierEnding = "minimal",      -- Avoid extra file extensions
-                disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
+                disableSuggestions              = false,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                quoteStyle                      = "single",
+
+
               },
             },
           },
-          -- keys = {
-          --   {
-          --     'gD',
-          --     function()
-          --       local position_params = vim.lsp.util.make_position_params()
-          --       local params = {
-          --         command = 'typescript.goToSourceDefinition',
-          --         arguments = { position_params.textDocument.uri, position_params.position },
-          --       }
-          --       require("trouble").open({
-          --         mode = "lsp_command",
-          --         params = params,
-          --       })
-          --     end,
-          --     desc = 'Goto Source Definition',
-          --   },
-          --   {
-          --     'gR',
-          --     function()
-          --       local params = {
-          --         command = 'typescript.findAllFileReferences',
-          --         arguments = { vim.uri_from_bufnr(0) },
-          --       }
-          --       require("trouble").open({
-          --         mode = "lsp_command",
-          --         params = params,
-          --       })
-          --     end,
-          --     desc = 'File References',
-          --   },
-          --   {
-          --     '<leader>co',
-          --     '<cmd>VtsExec organize_imports<cr>',
-          --     desc = 'Organize Imports',
-          --   },
-          --   {
-          --     '<leader>cM',
-          --     '<cmd>VtsExec add_missing_imports<cr>',
-          --     desc = 'Add missing imports',
-          --   },
-          --   {
-          --     '<leader>cu',
-          --     '<cmd>VtsExec remove_unused_imports<cr>',
-          --     desc = 'Remove unused imports',
-          --   },
-          --   {
-          --     '<leader>cD',
-          --     '<cmd>VtsExec fix_all<cr>',
-          --     desc = 'Fix all diagnostics',
-          --   },
-          --   {
-          --     '<leader>cV',
-          --     '<cmd>VtsExec select_ts_version<cr>',
-          --     desc = 'Select TS workspace version',
-          --   },
-          -- },
+          keys = {
+            -- {
+            --   'gD',
+            --   function()
+            --     local position_params = vim.lsp.util.make_position_params()
+            --     local params = {
+            --       command = 'typescript.goToSourceDefinition',
+            --       arguments = { position_params.textDocument.uri, position_params.position },
+            --     }
+            --     require("trouble").open({
+            --       mode = "lsp_command",
+            --       params = params,
+            --     })
+            --   end,
+            --   desc = 'Goto Source Definition',
+            -- },
+            -- {
+            --   -- ADD THIS NEW MAPPING
+            --   '<leader>gdd',
+            --   function()
+            --     -- Show a floating diagnostic for the current line
+            --     vim.diagnostic.open_float(nil, {
+            --       scope = 'line',
+            --       border = 'rounded',
+            --       focus = false,
+            --     })
+            --   end,
+            --   desc = 'Show line diagnostics in floating window',
+            -- },
+            {
+              '<leader>gdd',
+              function()
+                -- 1. Open the diagnostic float for the current line
+                local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+                  scope = 'line',
+                  border = 'rounded',
+                  focus = true,             -- Let the float take focus so we can map Esc, n, p, etc.
+                })
+                if not float_winnr then
+                  return
+                end
+
+                -- 2. Helper function: close the float + clear these temporary mappings
+                local function close_float()
+                  if vim.api.nvim_win_is_valid(float_winnr) then
+                    vim.api.nvim_win_close(float_winnr, true)
+                  end
+                  -- Remove our ephemeral keymaps
+                  vim.keymap.del('n', 'n', { buffer = 0 })
+                  vim.keymap.del('n', 'p', { buffer = 0 })
+                  vim.keymap.del('n', 'N', { buffer = 0 })
+                  vim.keymap.del('n', '<esc>', { buffer = 0 })
+                end
+
+                -- 3. Jump to next diagnostic, refresh the float
+                local function goto_next_diag()
+                  vim.diagnostic.goto_next()
+                  -- close + reopen float at the new position
+                  if vim.api.nvim_win_is_valid(float_winnr) then
+                    vim.api.nvim_win_close(float_winnr, true)
+                  end
+                  float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+                    scope = 'line',
+                    border = 'rounded',
+                    focus = true,
+                  })
+                end
+
+                -- 4. Jump to previous diagnostic, refresh the float
+                local function goto_prev_diag()
+                  vim.diagnostic.goto_prev()
+                  -- close + reopen float at the new position
+                  if vim.api.nvim_win_is_valid(float_winnr) then
+                    vim.api.nvim_win_close(float_winnr, true)
+                  end
+                  float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+                    scope = 'line',
+                    border = 'rounded',
+                    focus = true,
+                  })
+                end
+
+                -- 5. Set up ephemeral keymaps *in this buffer* while the float is open
+                vim.keymap.set('n', 'n', goto_next_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set('n', 'N', goto_prev_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set('n', 'p', goto_prev_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set('n', '<esc>', close_float, { buffer = 0, nowait = true, silent = true })
+              end,
+              desc = 'Sticky diagnostics float (next/prev with n/p, close with Esc)',
+            },
+          },
         },
         lua_ls = {
           settings = {

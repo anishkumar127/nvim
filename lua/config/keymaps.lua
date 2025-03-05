@@ -74,3 +74,50 @@ keyset('n', '<M-Left>', '<C-w>5>', { desc = 'Resize window (left)' })
 keyset('n', '<M-Right>', '<C-w>5<', { desc = 'Resize window (right)' })
 keyset('n', '<M-Down>', '<C-w>5-', { desc = 'Resize window (down)' })
 keyset('n', '<M-Up>', '<C-w>5+', { desc = 'Resize window (up)' })
+
+
+
+
+------------------ LSP ------------------
+
+vim.keymap.set("n", "<leader>ci", vim.lsp.buf.hover, { desc = "Code info" })
+-- vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Code definition" })
+-- vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, { desc = "Code references" })
+-- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+vim.keymap.set("n", "<leader>cn", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+-- vim.keymap.set("n", "<leader>gf", function()
+-- 	local bufnr = vim.api.nvim_get_current_buf()
+-- 	local ft = vim.bo.filetype
+-- 	local prefer_none_ls = {
+-- 		"python",
+-- 		"javascript",
+-- 		"lua",
+-- 		"typescript",
+-- 		"markdown",
+-- 		"yaml",
+-- 		"ruby",
+-- 		"html",
+-- 		"css",
+-- 		"json",
+-- 		"go",
+-- 		"rust",
+-- 		"c",
+-- 		"cpp",
+-- 	}
+-- 	local none_ls_clients = vim.tbl_filter(function(client)
+-- 		return client.name == "null-ls"
+-- 	end, vim.lsp.get_active_clients({ bufnr = bufnr }))
+-- 	if vim.tbl_contains(prefer_none_ls, ft) and #none_ls_clients > 0 then
+-- 		vim.notify("⚡ Formatting " .. ft .. " using none-ls", "info", { title = "Formatter" })
+-- 		vim.lsp.buf.format({
+-- 			bufnr = bufnr,
+-- 			filter = function(client)
+-- 				return client.name == "null-ls"
+-- 			end,
+-- 		})
+-- 	else
+-- 		vim.notify("  Formatting " .. ft .. " using LSP", "info", { title = "Formatter" })
+-- 		vim.lsp.buf.format({ bufnr = bufnr })
+-- 	end
+-- end, { desc = "Smart Format File" })
