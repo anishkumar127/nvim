@@ -44,7 +44,7 @@ require("lazy").setup({
     { import = 'plugins.coding.treesitter' },
     { import = 'plugins.coding.trouble' },
     -- { import = 'plugins.linting.core' },
-    { import = 'plugins.test.core' },
+    -- { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
     { import = 'plugins.util.mini-hipatterns' },
     -- { import = 'plugins.dap.core' },

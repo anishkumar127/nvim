@@ -195,17 +195,17 @@ vim.opt.laststatus = 3   -- Global statusline (one for all splits)
 
 ------------------ DIAGNOSTICS CONFIGURATION ------------------
 
-vim.diagnostic.config({
-	virtual_text = false, -- Removes inline errors
-	signs = true, -- Keep signs in the left gutter
-	underline = true, -- Keeps underline under errors/warnings
-	update_in_insert = false, -- Avoid diagnostics while typing
-	severity_sort = true, -- Sort diagnostics by severity
-	float = {
-		border = "rounded",
-		focusable = false,
-	},
-})
+-- vim.diagnostic.config({
+-- 	virtual_text = false, -- Removes inline errors
+-- 	signs = true, -- Keep signs in the left gutter
+-- 	underline = true, -- Keeps underline under errors/warnings
+-- 	update_in_insert = false, -- Avoid diagnostics while typing
+-- 	severity_sort = true, -- Sort diagnostics by severity
+-- 	float = {
+-- 		border = "rounded",
+-- 		focusable = false,
+-- 	},
+-- })
 
 ------------------ DISABLED PROVIDERS (PERFORMANCE) ------------------
 
