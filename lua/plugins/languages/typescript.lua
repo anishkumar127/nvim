@@ -95,7 +95,8 @@ return {
               },
               -- Additional settings you can disable for performance
               suggest = {
-                autoImports = false,          -- Disable automatic import suggestions
+                -- todo: it's should be false i think
+                autoImports = true,           -- Disable automatic import suggestions
                 completeFunctionCalls = true, -- Disable auto-completion of function arguments
                 names = true,                 -- Disable name suggestions
                 paths = true,                 -- Disable path suggestions
@@ -112,13 +113,61 @@ return {
           },
           keys = {
             {
+              "<leader>ct",
+              function()
+                vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })
+              end,
+              desc = "Reload TS Projects",
+            },
+            {
+              "<leader>cM",
+              function()
+                vim.lsp.buf.execute_command({
+                  command = "typescript.addMissingImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                })
+              end,
+              desc = "Add Missing Imports (vtsls)",
+            },
+            {
+              "<leader>co",
+              function()
+                vim.lsp.buf.execute_command({
+                  command = "typescript.organizeImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                })
+              end,
+              desc = "Organize Imports (vtsls)",
+            },
+            {
+              "<leader>cO",
+              function()
+                vim.lsp.buf.execute_command({
+                  command = "typescript.removeUnusedImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                })
+              end,
+              desc = "Remove Unused Imports (vtsls)",
+            },
+            {
+              "<leader>cI",
+              function()
+                vim.lsp.buf.execute_command({
+                  command = "typescript.sortImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                })
+              end,
+              desc = "Sort Imports (vtsls)",
+            },
+
+            {
               '<leader>gdd',
               function()
                 -- 1. Open the diagnostic float for the current line
                 local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
                   scope = 'line',
                   border = 'rounded',
-                  focus = true,             -- Let the float take focus so we can map Esc, n, p, etc.
+                  focus = true, -- Let the float take focus so we can map Esc, n, p, etc.
                 })
                 if not float_winnr then
                   return
@@ -291,78 +340,78 @@ return {
     },
   },
 
-  {
-    'mfussenegger/nvim-dap',
-    optional = true,
-    dependencies = {
-      {
-        'williamboman/mason.nvim',
-        opts = function(_, opts)
-          opts.ensure_installed = opts.ensure_installed or {}
-          table.insert(opts.ensure_installed, 'js-debug-adapter')
-        end,
-      },
-    },
-    opts = function()
-      local dap = require 'dap'
-      if not dap.adapters['pwa-node'] then
-        require('dap').adapters['pwa-node'] = {
-          type = 'server',
-          host = 'localhost',
-          port = '${port}',
-          executable = {
-            command = 'node',
-            args = {
-              vim.env.MASON
-              .. '/packages/'
-              .. 'js-debug-adapter'
-              .. '/js-debug/src/dapDebugServer.js',
-              '${port}',
-            },
-          },
-        }
-      end
-      if not dap.adapters['node'] then
-        dap.adapters['node'] = function(cb, config)
-          if config.type == 'node' then
-            config.type = 'pwa-node'
-          end
-          local nativeAdapter = dap.adapters['pwa-node']
-          if type(nativeAdapter) == 'function' then
-            nativeAdapter(cb, config)
-          else
-            cb(nativeAdapter)
-          end
-        end
-      end
+  -- {
+  --   'mfussenegger/nvim-dap',
+  --   optional = true,
+  --   dependencies = {
+  --     {
+  --       'williamboman/mason.nvim',
+  --       opts = function(_, opts)
+  --         opts.ensure_installed = opts.ensure_installed or {}
+  --         table.insert(opts.ensure_installed, 'js-debug-adapter')
+  --       end,
+  --     },
+  --   },
+  --   opts = function()
+  --     local dap = require 'dap'
+  --     if not dap.adapters['pwa-node'] then
+  --       require('dap').adapters['pwa-node'] = {
+  --         type = 'server',
+  --         host = 'localhost',
+  --         port = '${port}',
+  --         executable = {
+  --           command = 'node',
+  --           args = {
+  --             vim.env.MASON
+  --             .. '/packages/'
+  --             .. 'js-debug-adapter'
+  --             .. '/js-debug/src/dapDebugServer.js',
+  --             '${port}',
+  --           },
+  --         },
+  --       }
+  --     end
+  --     if not dap.adapters['node'] then
+  --       dap.adapters['node'] = function(cb, config)
+  --         if config.type == 'node' then
+  --           config.type = 'pwa-node'
+  --         end
+  --         local nativeAdapter = dap.adapters['pwa-node']
+  --         if type(nativeAdapter) == 'function' then
+  --           nativeAdapter(cb, config)
+  --         else
+  --           cb(nativeAdapter)
+  --         end
+  --       end
+  --     end
 
-      local js_filetypes =
-      { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
+  --     local js_filetypes =
+  --     { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
 
-      local vscode = require 'dap.ext.vscode'
-      vscode.type_to_filetypes['node'] = js_filetypes
-      vscode.type_to_filetypes['pwa-node'] = js_filetypes
+  --     local vscode = require 'dap.ext.vscode'
+  --     vscode.type_to_filetypes['node'] = js_filetypes
+  --     vscode.type_to_filetypes['pwa-node'] = js_filetypes
 
-      for _, language in ipairs(js_filetypes) do
-        if not dap.configurations[language] then
-          dap.configurations[language] = {
-            {
-              type = 'pwa-node',
-              request = 'launch',
-              name = 'Launch file',
-              program = '${file}',
-              cwd = '${workspaceFolder}',
-            },
-            {
-              type = 'pwa-node',
-              request = 'attach',
-              name = 'Attach',
-              processId = require('dap.utils').pick_process,
-              cwd = '${workspaceFolder}',
-            },
-          }
-        end
-      end
-    end,
-  },
+  --     for _, language in ipairs(js_filetypes) do
+  --       if not dap.configurations[language] then
+  --         dap.configurations[language] = {
+  --           {
+  --             type = 'pwa-node',
+  --             request = 'launch',
+  --             name = 'Launch file',
+  --             program = '${file}',
+  --             cwd = '${workspaceFolder}',
+  --           },
+  --           {
+  --             type = 'pwa-node',
+  --             request = 'attach',
+  --             name = 'Attach',
+  --             processId = require('dap.utils').pick_process,
+  --             cwd = '${workspaceFolder}',
+  --           },
+  --         }
+  --       end
+  --     end
+  --   end,
+  -- },
 }

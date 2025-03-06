@@ -12,7 +12,9 @@ return {
           find_left = 'gzF',
           highlight = 'gzh',
           replace = 'gzr',
-          update_n_lines = 'gzn',
+          update_n_lines = 'gsn',
+          suffix_last = 'gzl', -- Suffix to search with "prev" method
+          suffix_next = 'gn',  -- Suffix to search with "next" method
         },
       }
 
@@ -35,18 +37,18 @@ return {
         content = {
           active = function()
             local mode, mode_hl =
-              MiniStatusline.section_mode { trunc_width = 120 }
+                MiniStatusline.section_mode { trunc_width = 120 }
             local git = MiniStatusline.section_git { trunc_width = 40 }
             local diff = MiniStatusline.section_diff { trunc_width = 75 }
             local diagnostics =
-              MiniStatusline.section_diagnostics { trunc_width = 75 }
+                MiniStatusline.section_diagnostics { trunc_width = 75 }
             local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
             local filename =
-              MiniStatusline.section_filename { trunc_width = 140 }
+                MiniStatusline.section_filename { trunc_width = 140 }
             local location =
-              MiniStatusline.section_location { trunc_width = 75 }
+                MiniStatusline.section_location { trunc_width = 75 }
             local search =
-              MiniStatusline.section_searchcount { trunc_width = 75 }
+                MiniStatusline.section_searchcount { trunc_width = 75 }
 
             local dap_status = ''
             if package.loaded['dap'] and require('dap').status() ~= '' then
@@ -54,7 +56,7 @@ return {
             end
 
             return MiniStatusline.combine_groups {
-              { hl = mode_hl, strings = { mode } },
+              { hl = mode_hl,                  strings = { mode } },
               {
                 hl = 'MiniStatuslineDevinfo',
                 strings = { git, diff, diagnostics, lsp },
@@ -63,11 +65,32 @@ return {
               { hl = 'MiniStatuslineFilename', strings = { filename } },
               '%=', -- End left alignment
               { hl = 'MiniStarterItemPrefix', strings = { dap_status } },
-              { hl = mode_hl, strings = { search, location } },
+              { hl = mode_hl,                 strings = { search, location } },
             }
           end,
         },
       }
+
+      -- Transparent backgrounds
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "#d8dee9" })
+      vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none", fg = "#5c6370" })
+      vim.api.nvim_set_hl(0, "StatusLineTerm", { bg = "none", fg = "#d8dee9" })
+      vim.api.nvim_set_hl(0, "StatusLineTermNC", { bg = "none", fg = "#5c6370" })
+
+      -- Mode-specific text colors (text only, no backgrounds)
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeNormal", { fg = "#54C1DB", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeInsert", { fg = "#A9DD48", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeVisual", { fg = "#FD77DD", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeReplace", { fg = "#ff3045", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeCommand", { fg = "#f5dd58", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineModeTerminal", { fg = "#A9DD48", bg = "none", bold = true })
+      -- Transparent center section (filename)
+      vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { fg = "#d8dee9", bg = "none" })
+      -- Inactive window statusline
+      vim.api.nvim_set_hl(0, "MiniStatuslineInactive", { fg = "#100F14", bg = "none" })
+      -- error and warning
+      vim.api.nvim_set_hl(0, "MiniStatuslineError", { fg = "#ff5555", bg = "none", bold = true })
+      vim.api.nvim_set_hl(0, "MiniStatuslineWarn", { fg = "#f5dd58", bg = "none", bold = true })
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
