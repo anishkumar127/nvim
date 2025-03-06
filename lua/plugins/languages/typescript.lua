@@ -111,34 +111,6 @@ return {
             },
           },
           keys = {
-            -- {
-            --   'gD',
-            --   function()
-            --     local position_params = vim.lsp.util.make_position_params()
-            --     local params = {
-            --       command = 'typescript.goToSourceDefinition',
-            --       arguments = { position_params.textDocument.uri, position_params.position },
-            --     }
-            --     require("trouble").open({
-            --       mode = "lsp_command",
-            --       params = params,
-            --     })
-            --   end,
-            --   desc = 'Goto Source Definition',
-            -- },
-            -- {
-            --   -- ADD THIS NEW MAPPING
-            --   '<leader>gdd',
-            --   function()
-            --     -- Show a floating diagnostic for the current line
-            --     vim.diagnostic.open_float(nil, {
-            --       scope = 'line',
-            --       border = 'rounded',
-            --       focus = false,
-            --     })
-            --   end,
-            --   desc = 'Show line diagnostics in floating window',
-            -- },
             {
               '<leader>gdd',
               function()
