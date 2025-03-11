@@ -120,16 +120,6 @@ return {
               desc = "Reload TS Projects",
             },
             {
-              "<leader>cM",
-              function()
-                vim.lsp.buf.execute_command({
-                  command = "typescript.addMissingImports",
-                  arguments = { vim.api.nvim_buf_get_name(0) },
-                })
-              end,
-              desc = "Add Missing Imports (vtsls)",
-            },
-            {
               "<leader>co",
               function()
                 vim.lsp.buf.execute_command({
