@@ -1,6 +1,9 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 vim.lsp.set_log_level("off")
+vim.env.CC = "clang"
+vim.env.CXX = "clang++"
 require("config.lazy")
+-- require("lspconfig").clangd.setup({})
 
 -- vim.o.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
 -- vim.o.shellcmdflag = "-s"

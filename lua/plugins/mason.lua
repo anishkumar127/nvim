@@ -1,4 +1,4 @@
-if true then return {} end
+-- if true then return {} end
 
 return {
   {
@@ -9,18 +9,18 @@ return {
         "chrome-debug-adapter",
         -- "eslint-lsp",
         "js-debug-adapter",
-        -- "json-lsp",
-        -- "lua-language-server",
-        -- "prettier",
+        "json-lsp",
+        "lua-language-server",
+        "prettier",
         -- "prettierd",
         -- "ruff",
         -- "ruff-lsp",
-        -- "shellcheck",
-        -- "shfmt",
-        -- "stylua",
+        "shellcheck",
+        "shfmt",
+        "stylua",
         "tailwindcss-language-server",
-        -- "vtsls",
-        -- "yaml-language-server",
+        "vtsls",
+        "yaml-language-server",
       },
     },
   },
