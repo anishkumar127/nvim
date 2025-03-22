@@ -8,9 +8,9 @@ require("config.lazy")
 -- vim.o.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
 -- vim.o.shellcmdflag = "-s"
  -- improve file handling on Windows:
- vim.opt.shell = "powershell"
-vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
-vim.opt.shellxquote = ""
+--  vim.opt.shell = "powershell"
+-- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+-- vim.opt.shellxquote = ""
 
 -- vim.opt.shell = "pwsh"
 -- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
@@ -23,8 +23,8 @@ vim.opt.shellxquote = ""
 -- vim.cmd [[let &shell = '"C:\Program Files\Git\bin\bash.exe"']]
 -- vim.cmd [[let &shellcmdflag = '-s']]
 --- Disable backup and swap files for faster editing
-vim.opt.backup = false
-vim.opt.writebackup = false
+-- vim.opt.backup = false
+-- vim.opt.writebackup = false
 
 -- Reduce Neovim's rendering overhead: -- Disable unused UI elements:
 vim.opt.ruler = false -- Disable the ruler

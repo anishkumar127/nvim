@@ -116,22 +116,22 @@ vim.opt.wildignore:append { '*/node_modules/*' }            -- Ignore when expan
 -- ! comment out - 29 - 1 2025
 
 
-vim.opt.grepprg = 'rg --vimgrep'   -- Use ripgrep for grepping
-vim.opt.grepformat = '%f:%l:%c:%m' -- Set the grep format
-vim.opt.inccommand = 'split'       -- Show live preview of substitute commands
-vim.opt.backup = false
+-- vim.opt.grepprg = 'rg --vimgrep'   -- Use ripgrep for grepping
+-- vim.opt.grepformat = '%f:%l:%c:%m' -- Set the grep format
+-- vim.opt.inccommand = 'split'       -- Show live preview of substitute commands
+-- vim.opt.backup = false
 
-vim.wo.foldmethod = 'expr' -- Set foldmethod to expr
-vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.wo.foldmethod = 'expr' -- Set foldmethod to expr
+-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-vim.g.markdown_recommended_style = 0 -- Disable default markdown styles (see https://www.reddit.com/r/neovim/comments/z2lhyz/comment/ixjb7je)
-vim.opt.fillchars = {
-  eob = ' ', -- suppress ~ at EndOfBuffer
-  fold = ' ', -- space character used for folding
-  foldopen = '', -- Unfolded text
-  foldsep = ' ', -- Open fold middle marker
-  foldclose = '', -- Folded text
-}
+-- vim.g.markdown_recommended_style = 0 -- Disable default markdown styles (see https://www.reddit.com/r/neovim/comments/z2lhyz/comment/ixjb7je)
+-- vim.opt.fillchars = {
+--   eob = ' ', -- suppress ~ at EndOfBuffer
+--   fold = ' ', -- space character used for folding
+--   foldopen = '', -- Unfolded text
+--   foldsep = ' ', -- Open fold middle marker
+--   foldclose = '', -- Folded text
+-- }
 
 
 vim.filetype.add({
@@ -167,9 +167,9 @@ vim.opt.backspace = { "start", "eol", "indent" }
 
 ------------------ FILE & BACKUP HANDLING ------------------
 
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.writebackup = false
+-- vim.opt.swapfile = false
+-- vim.opt.backup = false
+-- vim.opt.writebackup = false
 
 
 ------------------ POPUP MENUS & COMPLETION ------------------
