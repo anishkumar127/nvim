@@ -40,6 +40,7 @@ require("lazy").setup({
     -- My new import
     -- custom
     { import = 'plugins.coding.inc-rename' },
+    { import = "plugins.ui.incline" },
     -- { import = 'plugins.coding.todo-comments' },
     { import = 'plugins.coding.treesitter' },
     { import = 'plugins.coding.trouble' },
