@@ -213,34 +213,34 @@ return {
             },
           },
         },
-        lua_ls = {
-          settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-                library = nvim_runtime_file,
-                -- library = vim.api.nvim_get_runtime_file("", true), -- Runtime files
+        -- lua_ls = {
+        --   settings = {
+        --     Lua = {
+        --       workspace = {
+        --         checkThirdParty = false,
+        --         library = nvim_runtime_file,
+        --         -- library = vim.api.nvim_get_runtime_file("", true), -- Runtime files
 
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-              runtime = {
-                version = "LuaJIT",
-              },
-              hint = {
-                enable = true,
-                setType = true,
-              },
-              diagnostics = {
-                globals = { "vim" }, -- Recognize `vim` global
-              },
-              telemetry = {
-                enable = false, -- Disable telemetry
-              },
-            },
-          },
-        },
+        --       },
+        --       completion = {
+        --         callSnippet = "Replace",
+        --       },
+        --       runtime = {
+        --         version = "LuaJIT",
+        --       },
+        --       hint = {
+        --         enable = true,
+        --         setType = true,
+        --       },
+        --       diagnostics = {
+        --         globals = { "vim" }, -- Recognize `vim` global
+        --       },
+        --       telemetry = {
+        --         enable = false, -- Disable telemetry
+        --       },
+        --     },
+        --   },
+        -- },
 
       },
       setup = {
