@@ -211,6 +211,17 @@ return {
             },
 
             {
+              "<leader>cM",
+              function()
+                vim.lsp.buf.execute_command({
+                  command = "typescript.AddMissingImports",
+                  arguments = { vim.api.nvim_buf_get_name(0) },
+                })
+              end,
+              desc = "Add missing imports",
+              silent = true,
+            },
+            {
               '<leader>gdd',
               function()
                 -- 1. Open the diagnostic float for the current line
@@ -385,6 +396,7 @@ return {
             opts.settings.typescript,
             opts.settings.javascript or {}
           )
+          
         end,
       },
     },
