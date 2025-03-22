@@ -8,12 +8,62 @@ return {
       diagnostics = {
         virtual_text = false, -- no inline text
         signs = true,         -- show left gutter icons
-        underline = true,
+        
+        underline = false,
         update_in_insert = false,
-        severity_sort = true,
-        float = {
-          border = "rounded",
-        },
+        severity_sort = false,
+        -- float = {
+        --   border = "rounded",
+        -- },
+
+         -- Show diagnostics in the sign column (left gutter)
+        --  signs = {
+        --   -- This can be just a boolean to enable/disable signs,
+        --   -- or a table with detailed configuration per severity, e.g.:
+        --   severity = {
+        --     -- min = vim.diagnostic.severity.WARN, -- Only show for WARN or higher
+        --     -- max = vim.diagnostic.severity.ERROR,
+        --   },
+        --   -- If you want custom symbols for each type, you can set them up like:
+        --   -- Error = " ",
+        --   -- Warn  = " ",
+        --   -- Hint  = " ",
+        --   -- Info  = " ",
+        --   -- Or define them in your sign definitions.
+        -- },
+          --  -- Underline problematic code
+          --  underline = {
+          --   -- Alternatively, just "true" to apply to all severities:
+          --   severity = {
+          --     min = vim.diagnostic.severity.HINT,
+          --   },
+          -- },
+
+                  -- Virtual text (inline text in the buffer)
+        -- virtual_text = {
+        --   -- Just "true" or "false" if you want to enable/disable
+        --   --
+        --   -- For more granular config:
+        --   prefix = "●",        -- Could be "●", "▎", "x"
+        --   spacing = 2,         -- Spaces between diagnostic and code
+        --   source = "if_many",  -- Show source if there’s more than one diagnostic source
+        --   severity = {
+        --     min = vim.diagnostic.severity.HINT,
+        --     -- max = vim.diagnostic.severity.ERROR,
+        --   },
+        -- },
+
+                -- Floating window for diagnostics
+                -- float = {
+                --   show_header = true,
+                --   source = "always",       -- Show diagnostic source in floating window
+                --   border = "rounded",      -- Or "single", "double", "solid", etc.
+                --   focusable = false,
+                --   -- max_width = 80,
+                --   -- max_height = 25,
+                --   -- You can override styling or highlight groups here if needed.
+                -- },
+  
       },
 
       -- 2. Some sign icon customization (optional)
@@ -33,17 +83,17 @@ return {
       -- codelens = {
       --   enabled = false, -- Disable codelens for performance
       -- },
-      inlay_hints = {
-        enabled = false, -- Disable inlay_hints they have a performance cost,
-        exclude = {
-          "typescriptreact",
-          "javascript",
-          "javascriptreact",
-          "javascript.jsx",
-          "typescript",
-          "typescript.tsx",
-        },
-      },
+      -- inlay_hints = {
+      --   enabled = false, -- Disable inlay_hints they have a performance cost,
+      --   exclude = {
+      --     "typescriptreact",
+      --     "javascript",
+      --     "javascriptreact",
+      --     "javascript.jsx",
+      --     "typescript",
+      --     "typescript.tsx",
+      --   },
+      -- },
       servers = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
@@ -51,6 +101,16 @@ return {
           enabled = false,
         },
         ts_ls = {
+          enabled = false,
+        },
+        denols = {
+          enabled = false,
+        },
+        eslint = {
+          enabled = true,
+          update_in_insert = false
+        },
+        angularls = {
           enabled = false,
         },
         vtsls = {                        -- TypeScript server configuration
