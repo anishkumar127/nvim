@@ -19,7 +19,7 @@ return {
         "shfmt",
         "stylua",
         "tailwindcss-language-server",
-        "vtsls",
+        -- "vtsls",
         "yaml-language-server",
       },
     },

@@ -7,21 +7,21 @@ return {
   --     highlight = { "NonText" },
   --   },
   -- },
-  {
-    "folke/noice.nvim",
-    enabled = false,
-  },
-  {
-    "j-hui/fidget.nvim",
-    opts = {
-      notification = {
-        window = {
-          winblend = 0,
-          border = "rounded",
-        },
-      },
-    },
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   enabled = false,
+  -- },
+  -- {
+  --   "j-hui/fidget.nvim",
+  --   opts = {
+  --     notification = {
+  --       window = {
+  --         winblend = 0,
+  --         border = "rounded",
+  --       },
+  --     },
+  --   },
+  -- },
   -- {
   --   "folke/snacks.nvim",
   --   opts = {
