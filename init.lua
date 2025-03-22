@@ -7,7 +7,7 @@ require("config.lazy")
 
 -- vim.o.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
 -- vim.o.shellcmdflag = "-s"
- -- improve file handling on Windows:
+-- improve file handling on Windows:
 --  vim.opt.shell = "powershell"
 -- vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 -- vim.opt.shellxquote = ""
@@ -32,7 +32,7 @@ vim.opt.ruler = false -- Disable the ruler
 
 
 vim.diagnostic.config({
-  virtual_text = false, -- Disable inline diagnostics
+  virtual_text = false,     -- Disable inline diagnostics
   update_in_insert = false, -- Don't update diagnostics while typing
 })
 
@@ -45,7 +45,7 @@ vim.diagnostic.config({
 -- vim.opt.grepformat = "%f:%l:%c:%m"
 
 
--- it's should be inside the autocmd file but for now keeping it here 
+-- it's should be inside the autocmd file but for now keeping it here
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -71,8 +71,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Disable eslint on node_modules
-autocmd({'BufNewFile', 'BufRead'}, {
-  pattern = {'**/node_modules/**', 'node_modules', '/node_modules/*'},
+autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '**/node_modules/**', 'node_modules', '/node_modules/*' },
   group = augroup('DisableEslintOnNodeModules', {}),
   callback = function()
     vim.diagnostic.disable(0)
@@ -91,18 +91,35 @@ autocmd({'BufNewFile', 'BufRead'}, {
 
 -- TODO: Neovide settings
 if vim.g.neovide then
-    vim.o.guifont = "JetBrainsMono Nerd Font:h11" -- Change font as needed
-    -- vim.g.neovide_transparency = 0.8
-    -- vim.g.neovide_cursor_animation_length = 0.1
-    vim.g.neovide_window_blurred = true
-    -- vim.g.neovide_transparency = 0.9
-    vim.g.neovide_scroll_animation_length = 0.3
-    vim.g.neovide_refresh_rate = 120
-    -- vim.g.neovide_refresh_rate_idle = 5
-    vim.g.neovide_cursor_antialiasing = true
-    vim.g.neovide_cursor_animate_in_insert_mode = true
-    vim.g.neovide_background_color = "#000000" -- Pure black background
+  vim.o.guifont = "JetBrainsMono Nerd Font:h11"   -- Change font as needed
+  -- vim.g.neovide_transparency = 0.8
+  -- vim.g.neovide_cursor_animation_length = 0.1
+  -- vim.g.neovide_window_blurred = true
+  -- vim.g.neovide_transparency = 0.9
+  -- vim.g.neovide_scroll_animation_length = 0.3
+  vim.g.neovide_refresh_rate = 120
+  -- vim.g.neovide_refresh_rate_idle = 5
+  -- vim.g.neovide_cursor_antialiasing = true
+  -- vim.g.neovide_cursor_animate_in_insert_mode = true
+  -- vim.g.neovide_background_color = "#000000" -- Pure black background
+
+  ----------- new trying
+  -- vim.g.guifont = font_family .. ':h' .. font_size
+  vim.g.neovide_cursor_animation_length = 0.1
+  vim.g.neovide_cursor_trail_size = 0.2
+  vim.g.neovide_scroll_animation_length = 0.2
+  vim.g.neovide_hide_mouse_when_typing = true
+
+  -- vim.g.neovide_transparency = 0.75
+  -- vim.g.neovide_opacity = 0.75
+  -- vim.g.neovide_text_background_opacity = 1.0
+  -- vim.g.neovide_normal_opacity = 0.75
+
+
+  -- Disable mini.animate with neovide
+  vim.g.minianimate_disable = true
 end
+
 
 
 -- vim.cmd.colorscheme("catppuccin")

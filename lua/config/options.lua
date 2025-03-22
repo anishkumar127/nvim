@@ -170,7 +170,10 @@ vim.opt.shiftwidth = 2
 -- vim.opt.swapfile = false
 -- vim.opt.backup = false
 -- vim.opt.writebackup = false
-
+-- vim.o.undofile = true
+-- vim.o.backup = false
+-- vim.o.writebackup = false
+-- vim.o.swapfile = false
 
 ------------------ POPUP MENUS & COMPLETION ------------------
 
@@ -215,3 +218,6 @@ vim.g.loaded_matchparen = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+
+

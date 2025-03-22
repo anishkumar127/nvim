@@ -43,7 +43,7 @@ require("lazy").setup({
     { import = "plugins.ui.incline" },
     -- { import = 'plugins.coding.todo-comments' },
     { import = 'plugins.coding.treesitter' },
-    { import = 'plugins.coding.trouble' },
+    -- { import = 'plugins.coding.trouble' },
     -- { import = 'plugins.linting.core' },
     -- { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
