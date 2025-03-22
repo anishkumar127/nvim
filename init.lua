@@ -79,15 +79,16 @@ autocmd({'BufNewFile', 'BufRead'}, {
   end,
 })
 
-autocmd('FileType', {
-  pattern = '*',
-  group = augroup('diable-new-line-comments', {}),
-  callback = function()
-    vim.opt_local.formatoptions:remove('o')
-    vim.opt_local.formatoptions:remove('r')
-    vim.opt_local.formatoptions:remove('c')
-  end,
-})
+-- autocmd('FileType', {
+--   pattern = '*',
+--   group = augroup('diable-new-line-comments', {}),
+--   callback = function()
+--     vim.opt_local.formatoptions:remove('o')
+--     vim.opt_local.formatoptions:remove('r')
+--     vim.opt_local.formatoptions:remove('c')
+--   end,
+-- })
+
 -- TODO: Neovide settings
 if vim.g.neovide then
     vim.o.guifont = "JetBrainsMono Nerd Font:h11" -- Change font as needed

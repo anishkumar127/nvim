@@ -370,35 +370,77 @@ return {
           -- }),
           frappe = extend_base({
             -- Main UI “background” layers
-            base = "#1d2021",     -- overall background
-            mantle = "#1d2021",   -- same or slightly darker
-            crust = "#1d2021",    -- same or slightly darker
+            base     = "#1d2021", -- overall background
+            mantle   = "#1d2021", -- same or slightly darker
+            crust    = "#1d2021", -- same or slightly darker
             surface0 = "#282828",
             surface1 = "#3c3836",
             surface2 = "#504945",
 
             -- Text / foreground tints
-            text = "#ebdbb2",     -- main FG
+            text     = "#ebdbb2", -- main FG
             subtext0 = "#a89984",
             subtext1 = "#928374",
             overlay1 = "#665c54",
             overlay2 = "#7c6f64",
 
             -- Accents mapped to Gruvbox
-            red      = "#fb4934", -- try catch const 
-            maroon   = "#cc241d", 
+            red      = "#fb4934", -- try catch const   @keyword,
+            maroon   = "#cc241d",
             green    = "#b8bb26",
             teal     = "#8ec07c",
-            yellow   = "#fabd2f",-- function , typescript ,
-            peach    = "#5d81ab", -- return response status code
-            blue     = "#458588", -- function , typescript , 
+            yellow   = "#fabd2f", -- function , typescript ,
+            peach    = "#5d81ab", -- return response status code  @string
+            blue     = "#458588", -- function , typescript ,   @function
             sapphire = "#458588", -- or pick a different teal/blue you prefer
             sky      = "#83a598",
-            mauve    = "#fb4934", -- try catch const 
+            mauve    = "#fb4934", -- try catch const
             pink     = "#d3869b",
             lavender = "#bdae93",
           }),
         },
+        -- Some other advanced features: -- temporary
+        transparent_background = false, -- or true if you want no background
+        term_colors = true,       -- if you want your `:terminal` to use these colors
+        show_end_of_buffer = false, -- show actual EOB chars or not
+        dim_inactive = {
+          enabled = false,        -- dims background of inactive windows
+          percentage = 0.15,
+        },
+
+        integrations = {
+          treesitter = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = {},
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = {},
+            },
+          },
+          markdown = true,
+          cmp = true,
+          gitsigns = true,
+          telescope = true,
+        },
+
+        styles = {
+          comments = { "italic" },
+          conditionals = { "bold" },
+          loops = {},
+          functions = { "bold" },
+          keywords = {},
+          strings = {},
+          variables = {},
+        },
+        -- temporary
       }
     end,
   },
