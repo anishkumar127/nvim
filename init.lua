@@ -2,6 +2,9 @@
 vim.lsp.set_log_level("off")
 vim.env.CC = "clang"
 vim.env.CXX = "clang++"
+require'lspconfig'.clangd.setup{
+  cmd = { "clangd" },
+}
 require("config.lazy")
 -- require("lspconfig").clangd.setup({})
 
