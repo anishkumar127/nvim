@@ -1,3 +1,5 @@
+if true then return {} end
+
 local js_based_languages = {
     "typescript",
     "javascript",
