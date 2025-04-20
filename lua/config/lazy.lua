@@ -48,8 +48,6 @@ require("lazy").setup({
     -- { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
     { import = 'plugins.util.mini-hipatterns' },
-    -- { import = 'plugins.dap.core' },
-    -- { import = 'plugins.editor.snacks' },
     { import = 'plugins.editor.gitsigns' },
     { import = 'plugins.editor.grug-far' },
     -- { import = 'plugins.editor.indent-line' },

@@ -71,7 +71,6 @@ vim.g.loaded_perl_provider = 0
 
 
 -- You can either toggle it off/on with <leader>uS or disable it with  in your options.lua file (this will disable all animations) or just disable the specific snacks component with
--- vim.g.snacks_animate = false
 -- opt.scroll.enabled = false
 -- vim.o.lazyredraw = true -- Optimize screen redrawing
 
