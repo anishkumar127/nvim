@@ -7,7 +7,7 @@ return {
         -- "cmake",
         -- "css",
         -- "diff",
-        "gitignore",
+        -- "gitignore",
         "javascript",
         -- "jsdoc",
         "json",
