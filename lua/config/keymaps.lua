@@ -86,3 +86,8 @@ vim.keymap.set("n", "<leader>ci", vim.lsp.buf.hover, { desc = "Code info" })
 -- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 vim.keymap.set("n", "<leader>cn", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 vim.keymap.set("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+
+-- vim.keymap.set("v", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+
+-- -- In visual mode, remap `p` to paste without overwriting the default register
+-- vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true, desc = "Visual paste without yank" })
