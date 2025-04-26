@@ -39,7 +39,7 @@ return {
       config = function()
         -- your custom LSP helper (init.lua you moved earlier)
         local my = require("custom.lsp")
-  
+        local U = require("utils")
         -- one-liner to spin up the server
         -- my.setup_server("ts_ls")
       end,

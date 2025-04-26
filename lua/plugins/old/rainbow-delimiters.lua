@@ -1,3 +1,4 @@
+-- if true then return {} end
 return {
     "HiPhish/rainbow-delimiters.nvim",
     enabled = true,

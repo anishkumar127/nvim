@@ -1,3 +1,4 @@
+if true then return {} end
 local lspconfig = require("lspconfig")
 local map = vim.keymap.set
 
@@ -54,75 +55,75 @@ lspconfig.gdscript.setup({
 
 --  LazyVim LSP Configuration
 return {
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      diagnostics = {
-        virtual_text = false,
-      },
-      inlay_hints = {
-        enabled = true,
-        exclude = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
-      },
-      codelens = { enabled = false },
-      servers = {
-        ts_ls = {
-          -- enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
-          enabled = false,
-        },
-        vtsls = { enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1 },
-        eslint = { enabled = false },
-      },
-      setup = {
-        ["typescript-tools"] = function(_, opts)
-          LazyVim.lsp.on_attach(function()
-            opts.handlers = {
-              ["textDocument/publishDiagnostics"] = function(_, result, ctx, _)
-                if not result.diagnostics then
-                  return
-                end
-                local idx = 1
-                while idx <= #result.diagnostics do
-                  local entry = result.diagnostics[idx]
-                  local formatter = require("format-ts-errors")[entry.code]
-                  entry.message = formatter and formatter(entry.message) or entry.message
-                  if entry.code == 80001 then
-                    table.remove(result.diagnostics, idx) -- Remove specific TS diagnostics
-                  else
-                    idx = idx + 1
-                  end
-                end
-                vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
-              end,
-            }
-          end)
-        end,
-        vtsls = function(_, opts)
-          LazyVim.lsp.on_attach(function()
-            opts.handlers = {
-              ["textDocument/publishDiagnostics"] = function(_, result, ctx, _)
-                if not result.diagnostics then
-                  return
-                end
-                local idx = 1
-                while idx <= #result.diagnostics do
-                  local entry = result.diagnostics[idx]
-                  local formatter = require("format-ts-errors")[entry.code]
-                  entry.message = formatter and formatter(entry.message) or entry.message
-                  if entry.code == 80001 then
-                    table.remove(result.diagnostics, idx) -- Remove specific TS diagnostics
-                  else
-                    idx = idx + 1
-                  end
-                end
-                vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
-              end,
-            }
-          end)
-        end,
-      },
-    },
-  },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     diagnostics = {
+  --       virtual_text = false,
+  --     },
+  --     inlay_hints = {
+  --       enabled = true,
+  --       exclude = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue", "lua" },
+  --     },
+  --     codelens = { enabled = false },
+  --     servers = {
+  --       ts_ls = {
+  --         -- enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1,
+  --         enabled = false,
+  --       },
+  --       vtsls = { enabled = vim.fn.filereadable("src/App.vue") == 1 or vim.fn.filereadable("nuxt.config.ts") == 1 },
+  --       eslint = { enabled = false },
+  --     },
+  --     setup = {
+  --       ["typescript-tools"] = function(_, opts)
+  --         LazyVim.lsp.on_attach(function()
+  --           opts.handlers = {
+  --             ["textDocument/publishDiagnostics"] = function(_, result, ctx, _)
+  --               if not result.diagnostics then
+  --                 return
+  --               end
+  --               local idx = 1
+  --               while idx <= #result.diagnostics do
+  --                 local entry = result.diagnostics[idx]
+  --                 local formatter = require("format-ts-errors")[entry.code]
+  --                 entry.message = formatter and formatter(entry.message) or entry.message
+  --                 if entry.code == 80001 then
+  --                   table.remove(result.diagnostics, idx) -- Remove specific TS diagnostics
+  --                 else
+  --                   idx = idx + 1
+  --                 end
+  --               end
+  --               vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
+  --             end,
+  --           }
+  --         end)
+  --       end,
+  --       vtsls = function(_, opts)
+  --         LazyVim.lsp.on_attach(function()
+  --           opts.handlers = {
+  --             ["textDocument/publishDiagnostics"] = function(_, result, ctx, _)
+  --               if not result.diagnostics then
+  --                 return
+  --               end
+  --               local idx = 1
+  --               while idx <= #result.diagnostics do
+  --                 local entry = result.diagnostics[idx]
+  --                 local formatter = require("format-ts-errors")[entry.code]
+  --                 entry.message = formatter and formatter(entry.message) or entry.message
+  --                 if entry.code == 80001 then
+  --                   table.remove(result.diagnostics, idx) -- Remove specific TS diagnostics
+  --                 else
+  --                   idx = idx + 1
+  --                 end
+  --               end
+  --               vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
+  --             end,
+  --           }
+  --         end)
+  --       end,
+  --     },
+  --   },
+  -- },
 
   --  LSP Keymap Tweaks
   {

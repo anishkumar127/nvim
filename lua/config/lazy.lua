@@ -79,8 +79,9 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
--- kanagawa
+-- 
   install = { colorscheme = { "rose-pine" }},
+  -- install = { colorscheme = { "kanagawa" }},
   -- install = {
   --   -- missing = true,
   --   colorscheme = {
