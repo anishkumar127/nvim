@@ -44,6 +44,8 @@ return {
           auto_show_delay_ms = 200,
           window = {
             border = "single",
+            max_width = math.floor(vim.o.columns * 0.4),
+            max_height = math.floor(vim.o.lines * 0.5),
           },
         },
         ghost_text = {
@@ -62,7 +64,7 @@ return {
       --   default = { "lsp", "path", "snippets", "buffer" },
       -- },
       sources = {
-        default = { "snippets", "lsp", "path", "buffer" },
+        default = { "lsp", "path","snippets", "buffer" },
         providers = {
           snippets = {
             min_keyword_length = 1,

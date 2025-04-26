@@ -11,7 +11,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim",                          import = "lazyvim.plugins" },
+    { "LazyVim/LazyVim",                         import = "lazyvim.plugins" },
     -- import any extras modules here
     -- { import = "lazyvim.plugins.extras.editor.harpoon2" },
     -- { import = "lazyvim.plugins.extras.editor.aerial" },
@@ -62,9 +62,13 @@ require("lazy").setup({
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
     -- { import = 'plugins.languages.typescript' },
-
+    { import = 'plugins.old' },
+    { import = 'plugins.try' },
+    
     -- import/override with your plugins
     { import = "plugins" },
+    { import = 'plugins.colorscheme' },
+
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -75,7 +79,8 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "kanagawa" } },
+-- kanagawa
+  install = { colorscheme = { "rose-pine" }},
   -- install = {
   --   -- missing = true,
   --   colorscheme = {
@@ -84,7 +89,7 @@ require("lazy").setup({
   --     -- "habamax",
   --   },
   --  },
-  checker = { enabled = true, notify = true }, -- automatically check for plugin updates
+  checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
     -- cache = { enabled = true },
     rtp = {
@@ -161,10 +166,18 @@ require("lazy").setup({
       },
     },
   },
+--   ui = {
+--     border = "single",
+--     size = {
+--         width = 0.7,
+--         height = 0.7,
+--     },
+-- },
+
 })
 
 -- vim.cmd("highlight Visual ctermbg=0 guibg=#6441A5")
 
 -- Adjust timeout settings
-vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
-vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)
+-- vim.o.timeoutlen = 300 -- Wait 500 ms for key sequences (lower than default)
+-- vim.o.ttimeoutlen = 10 -- Wait 10 ms for terminal key codes (very short timeout)

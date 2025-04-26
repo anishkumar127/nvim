@@ -1,3 +1,4 @@
+if true then return {} end
 return {
     "rebelot/kanagawa.nvim",
     branch="master",

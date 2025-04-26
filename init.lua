@@ -2,6 +2,9 @@
 vim.lsp.set_log_level("off")
 vim.env.CC = "clang"
 vim.env.CXX = "clang++"
+vim.g.blink_enabled = true
+_G.Utils = require("utils")
+
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
@@ -53,8 +56,8 @@ vim.opt.ruler = false -- Disable the ruler
 
 -- it's should be inside the autocmd file but for now keeping it here
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
+-- local augroup = vim.api.nvim_create_augroup
+-- local autocmd = vim.api.nvim_create_autocmd
 
 -- Highlight yanked text
 -- autocmd('TextYankPost', {
@@ -77,13 +80,13 @@ local autocmd = vim.api.nvim_create_autocmd
 -- })
 
 -- Disable eslint on node_modules
-autocmd({ 'BufNewFile', 'BufRead' }, {
-  pattern = { '**/node_modules/**', 'node_modules', '/node_modules/*' },
-  group = augroup('DisableEslintOnNodeModules', {}),
-  callback = function()
-    vim.diagnostic.disable(0)
-  end,
-})
+-- autocmd({ 'BufNewFile', 'BufRead' }, {
+--   pattern = { '**/node_modules/**', 'node_modules', '/node_modules/*' },
+--   group = augroup('DisableEslintOnNodeModules', {}),
+--   callback = function()
+--     vim.diagnostic.disable(0)
+--   end,
+-- })
 
 -- autocmd('FileType', {
 --   pattern = '*',

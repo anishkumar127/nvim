@@ -1,3 +1,5 @@
+
+if true then return {} end
 local map = vim.keymap.set
 -- this file will hold ts stuff
 return {
