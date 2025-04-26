@@ -1,3 +1,5 @@
+
+if true then return {} end
 return {
     {
       "davidosomething/format-ts-errors.nvim",

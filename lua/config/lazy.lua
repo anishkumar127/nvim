@@ -17,7 +17,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.editor.aerial" },
     -- { import = "lazyvim.plugins.extras.editor.navic" },
     -- { import = "lazyvim.plugins.extras.editor.refactoring" },
-    { import = "lazyvim.plugins.extras.lang.json" },
+    -- { import = "lazyvim.plugins.extras.lang.json" },
     -- ! comment out but maybe in future need to uncomment for working of custom.
     -- { import = "lazyvim.plugins.extras.dap.core" },
     -- { import = "lazyvim.plugins.extras.editor.fzf" },
@@ -30,7 +30,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.test.core" },
     -- { import = "lazyvim.plugins.extras.lang.yaml" },
     -- { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.util.dot" },
+    -- { import = "lazyvim.plugins.extras.util.dot" },
     -- { import = "lazyvim.plugins.extras.vscode" },
     -- { import = 'plugins.editor.lazygit' },
     -- { import = 'plugins.editor.gitsigns' },
@@ -61,7 +61,7 @@ require("lazy").setup({
     { import = 'plugins.terminal.toggleterminal' },
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
-    { import = 'plugins.languages.typescript' },
+    -- { import = 'plugins.languages.typescript' },
 
     -- import/override with your plugins
     { import = "plugins" },
