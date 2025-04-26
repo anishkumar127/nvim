@@ -1,3 +1,4 @@
+if true then return {} end
 -- require("incline").setup({
 --     window = {
 --       placement = {
@@ -106,6 +107,7 @@
 
 
 ----------- below working
+--- it's good for status bar on right side top tooltip type 
 return {
     {
         "b0o/incline.nvim",

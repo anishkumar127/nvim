@@ -1,3 +1,5 @@
+if true then return {} end
+-- It's having my own color scheme.
 -- return {
 --   {
 --     "scottmckendry/cyberdream.nvim",

@@ -6,3 +6,5 @@ debug
 foo.*
 *.log
 data
+nvim-from-scratch
+./nvim-from-scratch

@@ -11,7 +11,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim",                                   import = "lazyvim.plugins" },
+    { "LazyVim/LazyVim",                          import = "lazyvim.plugins" },
     -- import any extras modules here
     -- { import = "lazyvim.plugins.extras.editor.harpoon2" },
     -- { import = "lazyvim.plugins.extras.editor.aerial" },
@@ -75,14 +75,15 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-    install = {
-      -- missing = true,
-      colorscheme = {
-        -- "catppuccin",
-        -- -- "tokyonight",
-        -- "habamax",
-      },
-     },
+  install = { colorscheme = { "kanagawa" } },
+  -- install = {
+  --   -- missing = true,
+  --   colorscheme = {
+  --     -- "catppuccin",
+  --     -- -- "tokyonight",
+  --     -- "habamax",
+  --   },
+  --  },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
     -- cache = { enabled = true },
@@ -128,35 +129,35 @@ require("lazy").setup({
         "tarPlugin",
         "tohtml",
         "tutor",
-                "zipPlugin",
-                -- new disable
-        
-                "2html_plugin",
-                "bugreport",
-                "compiler",
-                "ftplugin",
-                "fzf",
-                "getscript",
-                "getscriptPlugin",
-                "gzip",
-                "logipat",
-                "matchit",
-                "optwin",
-                "rplugin",
-                "rrhelper",
-                "spellfile_plugin",
-                "synmenu",
-                "syntax",
-                "tar",
-                "tarPlugin",
-                "tohtml",
-                "tutor",
-                "vimball",
-                "vimballPlugin",
-                "zip",
-                "zipPlugin",
-                "ruby",
-                "gem",
+        "zipPlugin",
+        -- new disable
+
+        "2html_plugin",
+        "bugreport",
+        "compiler",
+        "ftplugin",
+        "fzf",
+        "getscript",
+        "getscriptPlugin",
+        "gzip",
+        "logipat",
+        "matchit",
+        "optwin",
+        "rplugin",
+        "rrhelper",
+        "spellfile_plugin",
+        "synmenu",
+        "syntax",
+        "tar",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "vimball",
+        "vimballPlugin",
+        "zip",
+        "zipPlugin",
+        "ruby",
+        "gem",
       },
     },
   },

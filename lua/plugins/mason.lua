@@ -1,5 +1,5 @@
 -- if true then return {} end
-
+-- it think i need to find the alternative for this.
 return {
   {
     "williamboman/mason.nvim",

@@ -1,4 +1,5 @@
 if true then return {} end
+-- it's better to hide .env files.
 return {
     "philosofonusus/ecolog.nvim",
     event = "VeryLazy",
