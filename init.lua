@@ -3,6 +3,11 @@ vim.lsp.set_log_level("off")
 vim.env.CC = "clang"
 vim.env.CXX = "clang++"
 
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+-- vim.g.mapleader = ","
+-- vim.g.maplocalleader = "\\"
 require("config.lazy")
 -- require("lspconfig").clangd.setup({})
 
@@ -32,10 +37,10 @@ vim.opt.ruler = false -- Disable the ruler
 
 
 
-vim.diagnostic.config({
-  virtual_text = false,     -- Disable inline diagnostics
-  update_in_insert = false, -- Don't update diagnostics while typing
-})
+-- vim.diagnostic.config({
+--   virtual_text = false,     -- Disable inline diagnostics
+--   update_in_insert = false, -- Don't update diagnostics while typing
+-- })
 
 -- For smoother scrolling, disable scroll offset or use a plugin
 -- vim.opt.scrolloff = 0 -- Disable extra lines of context
@@ -60,16 +65,16 @@ local autocmd = vim.api.nvim_create_autocmd
 --   end,
 -- })
 -- Highlight when yanking (copying) text
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup(
-    'kickstart-highlight-yank',
-    { clear = true }
-  ),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+--   desc = 'Highlight when yanking (copying) text',
+--   group = vim.api.nvim_create_augroup(
+--     'kickstart-highlight-yank',
+--     { clear = true }
+--   ),
+--   callback = function()
+--     vim.highlight.on_yank()
+--   end,
+-- })
 
 -- Disable eslint on node_modules
 autocmd({ 'BufNewFile', 'BufRead' }, {

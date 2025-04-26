@@ -84,7 +84,7 @@ require("lazy").setup({
   --     -- "habamax",
   --   },
   --  },
-  checker = { enabled = true, notify = false }, -- automatically check for plugin updates
+  checker = { enabled = true, notify = true }, -- automatically check for plugin updates
   performance = {
     -- cache = { enabled = true },
     rtp = {

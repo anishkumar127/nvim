@@ -6,11 +6,11 @@ return {
     opts = {
       -- Diagnostic settings
       diagnostics = {
-        virtual_text = false, -- no inline text
+        -- virtual_text = false, -- no inline text
         signs = true,         -- show left gutter icons
         
         underline = false,
-        update_in_insert = false,
+        -- update_in_insert = false,
         severity_sort = false,
         -- float = {
         --   border = "rounded",
@@ -210,17 +210,17 @@ return {
               desc = "Sort Imports (vtsls)",
             },
 
-            {
-              "<leader>cM",
-              function()
-                vim.lsp.buf.execute_command({
-                  command = "typescript.AddMissingImports",
-                  arguments = { vim.api.nvim_buf_get_name(0) },
-                })
-              end,
-              desc = "Add missing imports",
-              silent = true,
-            },
+            -- {
+            --   "<leader>cM",
+            --   function()
+            --     vim.lsp.buf.execute_command({
+            --       command = "typescript.AddMissingImports",
+            --       arguments = { vim.api.nvim_buf_get_name(0) },
+            --     })
+            --   end,
+            --   desc = "Add missing imports",
+            --   silent = true,
+            -- },
             {
               '<leader>gdd',
               function()

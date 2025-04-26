@@ -12,7 +12,7 @@ vim.g.lazygit_config = true
 
 --
 -- Disable virtual text
-vim.diagnostic.config({ virtual_text = false })
+-- vim.diagnostic.config({ virtual_text = false })
 
 -- stuff to ignore when tab completing
 vim.opt.wildignore = {
