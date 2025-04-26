@@ -1,3 +1,4 @@
+if true then return {} end
 -- local lspconfig = require("lspconfig")
 
 -- -- Configure GDScript LSP
