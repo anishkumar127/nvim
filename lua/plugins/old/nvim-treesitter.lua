@@ -1,7 +1,7 @@
 -- return {
 --     "nvim-treesitter/nvim-treesitter",
 --     build = ":TSUpdate",
---     config = function () 
+--     config = function ()
 --         local configs = require("nvim-treesitter.configs")
 
 --         configs.setup({
@@ -11,7 +11,7 @@
 --             auto_install = true,
 --             sync_install = false,
 --             highlight = { enable = true },
---             indent = { enable = true },  
+--             indent = { enable = true },
 
 --             incremental_selection = {
 --                 enable = true,
@@ -29,10 +29,10 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-        {"windwp/nvim-ts-autotag", opts = {}},
-        {"nvim-treesitter/nvim-treesitter-context", opts = {enable = false}},
+        { "windwp/nvim-ts-autotag",                  opts = {} },
+        { "nvim-treesitter/nvim-treesitter-context", opts = { enable = false } },
     },
-    cmd = {"TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo"},
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     lazy = vim.fn.argc(-1) == 0,
     config = function()
@@ -70,8 +70,8 @@ return {
                 "vimdoc",
                 "yaml",
             },
-            highlight = {enable = true},
-            indent = {enable = true},
+            highlight = { enable = true },
+            indent = { enable = true },
             context_commentstring = {
                 enable = true,
                 enable_autocmd = false,
@@ -79,16 +79,20 @@ return {
             incremental_selection = {
                 enable = true,
                 keymaps = {
-                    init_selection = "<leader>ti",
-                    scope_incremental = "<leader>ts",
-                    node_incremental = "v",
-                    node_decremental = "V",
+                    -- init_selection = "<leader>ti",
+                    -- scope_incremental = "<leader>ts",
+                    -- node_incremental = "v",
+                    -- node_decremental = "V",
+                    --
+                    init_selection = "<Enter>",          -- set to `false` to disable one of the mappings
+                    node_incremental = "<Enter>",
+                    scope_incremental = false,
+                    node_decremental = "<Backspace>",
                 },
             },
         })
 
         local parser_configs = parsers.get_parser_configs();
-        parser_configs.tsx.filetype_to_parsername = {"javascript", "typescript.tsx"}
+        parser_configs.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
     end,
 }
-

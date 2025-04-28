@@ -107,7 +107,7 @@
 
 
 ----------- below working
---- it's good for status bar on right side top tooltip type 
+--- it's good for status bar on right side top tooltip type
 return {
     {
         "b0o/incline.nvim",

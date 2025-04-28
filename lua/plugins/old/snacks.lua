@@ -16,9 +16,12 @@ opts.terminal = {
 -- Image Configuration
 -- ===============================
 ---@class snacks.image.Config
-opts.image = { enabled = true, doc = {
-  inline = false,
-} }
+opts.image = {
+  enabled = true,
+  doc = {
+    inline = false,
+  }
+}
 
 -- ===============================
 -- Profiler Configuration
@@ -30,8 +33,8 @@ opts.profiler = { enabled = true }
 -- ===============================
 ---@class snacks.picker.Config
 opts.picker = {
-   ignored = true,                               -- respect .gitignore for everything
-   exclude = { ".git/**", "node_modules/**", "dist/**","drizzle/**" ,"migrations/**"},  -- global “never show”
+  ignored = true,                                                                      -- respect .gitignore for everything
+  exclude = { ".git/**", "node_modules/**", "dist/**", "drizzle/**", "migrations/**" }, -- global “never show”
   layout = {
     layout = {
       box = "horizontal",
@@ -43,8 +46,8 @@ opts.picker = {
         box = "vertical",
         border = "single",
         title = "{title} {live} {flags}",
-        { win = "input", height = 1, border = "single" },
-        { win = "list", border = "none" },
+        { win = "input", height = 1,     border = "single" },
+        { win = "list",  border = "none" },
       },
       { win = "preview", title = "{preview}", border = "single", width = 0.6 },
     },
@@ -86,9 +89,9 @@ opts.bigfile = { enabled = true }
 ---@class snacks.dashboard.Config
 opts.dashboard = {
   width = 60,
-  row = nil, -- dashboard position. nil for center
-  col = nil, -- dashboard position. nil for center
-  pane_gap = 4, -- empty columns between vertical panes
+  row = nil,                                                                   -- dashboard position. nil for center
+  col = nil,                                                                   -- dashboard position. nil for center
+  pane_gap = 4,                                                                -- empty columns between vertical panes
   autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", -- autokey sequence
 
   -- Preset settings used by some built-in sections
@@ -111,28 +114,28 @@ opts.dashboard = {
       { icon = " ", key = "q", desc = "Quit", action = ":qa" },
     },
     header = [[
-           ___  __        _  ___  __           _  ___ 
-  /\  |\ |  |  (_  |_|   |_)  |  (_  |_| |\ | / \  |  
- /--\ | \| _|_ __) | |   |_) _|_ __) | | | \| \_/ _|_ 
-                                                                                       
+           ___  __        _  ___  __           _  ___
+  /\  |\ |  |  (_  |_|   |_)  |  (_  |_| |\ | / \  |
+ /--\ | \| _|_ __) | |   |_) _|_ __) | | | \| \_/ _|_
+
     ]],
 
---     _    _   _ ___ ____  _   _   ____ ___ ____  _   _ _   _  ___ ___ 
---     / \  | \ | |_ _/ ___|| | | | | __ )_ _/ ___|| | | | \ | |/ _ \_ _|
---    / _ \ |  \| || |\___ \| |_| | |  _ \| |\___ \| |_| |  \| | | | | | 
---   / ___ \| |\  || | ___) |  _  | | |_) | | ___) |  _  | |\  | |_| | | 
---  /_/   \_\_| \_|___|____/|_| |_| |____/___|____/|_| |_|_| \_|\___/___|
+    --     _    _   _ ___ ____  _   _   ____ ___ ____  _   _ _   _  ___ ___
+    --     / \  | \ | |_ _/ ___|| | | | | __ )_ _/ ___|| | | | \ | |/ _ \_ _|
+    --    / _ \ |  \| || |\___ \| |_| | |  _ \| |\___ \| |_| |  \| | | | | |
+    --   / ___ \| |\  || | ___) |  _  | | |_) | | ___) |  _  | |\  | |_| | |
+    --  /_/   \_\_| \_|___|____/|_| |_| |____/___|____/|_| |_|_| \_|\___/___|
   },
   sections = {
     { section = "header" },
     {
-      pane = 2,
+      pane    = 2,
       section = "terminal",
       -- cmd = "fastfetch --logo none | rg --colors=match:fg:cyan '|||||󰝚|'",
-    --   cmd = "pipes.sh -t 1",
-    cmd     = [[powershell -NoProfile -Command "Get-Date"]],
+      --   cmd = "pipes.sh -t 1",
+      cmd     = [[powershell -NoProfile -Command "Get-Date"]],
 
-      height = 3,
+      height  = 3,
       padding = 2,
     },
     { section = "keys", gap = 1, padding = 1 },
