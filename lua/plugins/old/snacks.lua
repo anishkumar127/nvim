@@ -30,6 +30,8 @@ opts.profiler = { enabled = true }
 -- ===============================
 ---@class snacks.picker.Config
 opts.picker = {
+   ignored = true,                               -- respect .gitignore for everything
+   exclude = { ".git/**", "node_modules/**", "dist/**","drizzle/**" ,"migrations/**"},  -- global “never show”
   layout = {
     layout = {
       box = "horizontal",
