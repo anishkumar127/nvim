@@ -1,18 +1,20 @@
 return {
   "saghen/blink.cmp",
-  opts_extend = {
-    "sources.completion.enabled_providers",
-    "sources.compat",
-    "sources.default",
-    "ecolog",
-  },
-  enabled = function()
-    return not vim.tbl_contains({ "AvanteInput", "minifiles" }, vim.bo.filetype)
-        and vim.bo.buftype ~= "prompt"
-        and vim.b.completion ~= false
-  end,
-  event = "InsertEnter",
+  -- opts_extend = {
+  --   -- "sources.completion.enabled_providers",
+  --   "sources.compat",
+  --   "sources.default",
+  --   -- "ecolog",
+  -- },
+  -- enabled = function()
+  --   return not vim.tbl_contains({  "minifiles" }, vim.bo.filetype)
+  --       and vim.bo.buftype ~= "prompt"
+  --       and vim.b.completion ~= false
+  -- end,
+  opts_extend = { "sources.default" },
   version = '1.*',
+  event = "InsertEnter",
+  enabled = vim.g.blink_enabled,
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
@@ -39,6 +41,9 @@ return {
           enabled = true,
         },
       },
+      trigger = {
+        show_on_accept_on_trigger_character = false,
+      },
       menu = {
         border = "single",
         draw = {
@@ -54,10 +59,10 @@ return {
         },
       },
       list = {
-        selection = { preselect = false, auto_insert = true },
+        selection = { preselect = false, auto_insert = false },
       },
       documentation = {
-        auto_show = true,
+        auto_show = false,
         auto_show_delay_ms = 200,
         window = {
           border = "single",
@@ -81,27 +86,35 @@ return {
     --   default = { "lsp", "path", "snippets", "buffer" },
     -- },
     sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "snippets", "buffer", "lazydev" },
       providers = {
-        snippets = {
-          min_keyword_length = 1,
-          score_offset = 4,
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100, -- show at a higher priority than lsp
         },
         lsp = {
-          min_keyword_length = 0,
-          score_offset = 3,
-          name = "LSP",
-          module = "blink.cmp.sources.lsp",
-          fallbacks = {},
+          fallbacks = { "buffer", "path" },
         },
-        path = {
-          min_keyword_length = 0,
-          score_offset = 2,
-        },
-        buffer = {
-          min_keyword_length = 1,
-          score_offset = 1,
-        },
+        -- snippets = {
+        --   min_keyword_length = 1,
+        --   score_offset = 4,
+        -- },
+        -- lsp = {
+        --   min_keyword_length = 0,
+        --   score_offset = 3,
+        --   name = "LSP",
+        --   module = "blink.cmp.sources.lsp",
+        --   fallbacks = {},
+        -- },
+        -- path = {
+        --   min_keyword_length = 0,
+        --   score_offset = 2,
+        -- },
+        -- buffer = {
+        --   min_keyword_length = 1,
+        --   score_offset = 1,
+        -- },
       },
     },
     cmdline = {

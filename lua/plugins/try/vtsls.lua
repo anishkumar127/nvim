@@ -247,5 +247,69 @@ return {
       "<cmd>TypescriptSelectTypeScriptVersion<cr>",
       desc = desc("Select TypeScript version"),
     },
+    
+     {
+      "<leader>gdd",
+      function()
+        -----------------------------------------------------------------------
+        -- 1. open the diagnostic float for the current line
+        -----------------------------------------------------------------------
+        local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+          scope  = "line",
+          border = "rounded",
+          focus  = true, -- float takes focus so mappings work there
+        })
+        if not float_winnr then
+          return
+        end
+
+        -----------------------------------------------------------------------
+        -- helper: close float + clear temporary mappings
+        -----------------------------------------------------------------------
+        local function close_float()
+          if vim.api.nvim_win_is_valid(float_winnr) then
+            vim.api.nvim_win_close(float_winnr, true)
+          end
+          for _, key in ipairs({ "n", "N", "p", "<esc>" }) do
+            pcall(vim.keymap.del, "n", key, { buffer = 0 })
+          end
+        end
+
+        -----------------------------------------------------------------------
+        -- jump helpers that also refresh the float
+        -----------------------------------------------------------------------
+        local function refresh_float()
+          if vim.api.nvim_win_is_valid(float_winnr) then
+            vim.api.nvim_win_close(float_winnr, true)
+          end
+          float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
+            scope  = "line",
+            border = "rounded",
+            focus  = true,
+          })
+        end
+
+        local function goto_next_diag()
+          vim.diagnostic.goto_next({ wrap = false })
+          refresh_float()
+        end
+
+        local function goto_prev_diag()
+          vim.diagnostic.goto_prev({ wrap = false })
+          refresh_float()
+        end
+
+        -----------------------------------------------------------------------
+        -- 5. ephemeral keymaps valid only while the float is open
+        -----------------------------------------------------------------------
+        local opts = { buffer = 0, nowait = true, silent = true }
+        vim.keymap.set("n", "n",   goto_next_diag, opts)
+        vim.keymap.set("n", "N",   goto_prev_diag, opts)
+        vim.keymap.set("n", "p",   goto_prev_diag, opts)
+        vim.keymap.set("n", "<esc>", close_float,  opts)
+      end,
+      desc = "Sticky diagnostics float (next/prev with n/p, close with Esc)",
+    },
+
   },
 }
