@@ -4,6 +4,8 @@
 
 vim.g.autoformat = false
 
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
 -- 1. Create an autocmd group just for these toggles
 local group = vim.api.nvim_create_augroup("DisableDiagnosticsInsertMode", {})
@@ -24,36 +26,54 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   end,
 })
 
--- autocmd("FileType", {
---   pattern = "*",
---   group = augroup("diable-new-line-comments", {}),
---   callback = function()
---       vim.opt_local.formatoptions:remove("o")
---       vim.opt_local.formatoptions:remove("r")
---       vim.opt_local.formatoptions:remove("c")
---   end,
--- })
+-- Highlight yanked text
+autocmd("TextYankPost", {
+  desc = "Highlight yanked text",
+  group = augroup("YankHighlight", {}),
+  callback = function()
+      vim.highlight.on_yank()
+  end,
+})
+-- Disable eslint on node_modules
+autocmd({"BufNewFile", "BufRead"}, {
+  pattern = {"**/node_modules/**", "node_modules", "/node_modules/*"},
+  group = augroup("DisableEslintOnNodeModules", {}),
+  callback = function()
+      vim.diagnostic.enable(false)
+  end,
+})
+
+
+autocmd("FileType", {
+  pattern = "*",
+  group = augroup("diable-new-line-comments", {}),
+  callback = function()
+      vim.opt_local.formatoptions:remove("o")
+      vim.opt_local.formatoptions:remove("r")
+      vim.opt_local.formatoptions:remove("c")
+  end,
+})
 
 
 
--- autocmd("ColorScheme", {
---   group = augroup("cursor-highlight", {}),
---   callback = function()
---       if vim.o.background == "light" then
---           vim.cmd("highlight! clear Cursor")
---       end
---   end,
--- })
+autocmd("ColorScheme", {
+  group = augroup("cursor-highlight", {}),
+  callback = function()
+      if vim.o.background == "light" then
+          vim.cmd("highlight! clear Cursor")
+      end
+  end,
+})
 
--- autocmd("BufWritePost", {
---   pattern = "*",
---   group = augroup("FileDetect", {}),
---   desc = "Detect filetype on files with on extension after saving the file",
---   callback = function()
---       if vim.bo.filetype == "" then
---           vim.cmd("filetype detect")
---       end
---   end,
--- })
+autocmd("BufWritePost", {
+  pattern = "*",
+  group = augroup("FileDetect", {}),
+  desc = "Detect filetype on files with on extension after saving the file",
+  callback = function()
+      if vim.bo.filetype == "" then
+          vim.cmd("filetype detect")
+      end
+  end,
+})
 
 

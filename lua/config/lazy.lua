@@ -60,8 +60,9 @@ require("lazy").setup({
     { import = 'plugins.terminal.toggleterminal' },
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
-    --{ import = 'plugins.languages.typescript' },
-    { import = 'plugins.languages.vtsls' },
+    -- { import = 'plugins.languages.typescript' },
+    -- { import = 'plugins.languages.vtsls' },
+    { import = 'plugins.languages.lspconfig' },
     { import = 'plugins.util.mini-hipatterns' },
     { import = 'plugins.old' },
 
@@ -92,7 +93,7 @@ require("lazy").setup({
   --  },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
-    -- cache = { enabled = true },
+    cache = { enabled = true },
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {

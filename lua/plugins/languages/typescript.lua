@@ -1,4 +1,4 @@
-if true then return {} end
+-- if true then return {} end
 return {
   {
     "neovim/nvim-lspconfig",
@@ -173,7 +173,7 @@ return {
             },
           },
           keys = {
-            {
+             {
               'gR',
               function()
                 local params = {

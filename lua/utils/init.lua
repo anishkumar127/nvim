@@ -1,10 +1,8 @@
 local M = {
     colors = require("utils.colors"),
     icons = require("utils.icons"),
-    lsp = require("utils.lsp.init"),
-    lsp2 = require("utils.lsp.execute"),
+    lsp = require("utils.lsp"),
 }
-
 -- Merge two tables
 ---@param t1 table
 ---@param t2 table
@@ -48,6 +46,18 @@ function M.get_pkg_path(pkg, path)
     path = path or ""
     local ret = root .. "/packages/" .. pkg .. "/" .. path
     return ret
+end
+
+-- Check if a command-line tool exists
+-- @param cmd string: The command to check
+-- @return boolean: True if the command exists, false otherwise
+function M.check_cmd_exists(cmd)
+    if not cmd or cmd == "" then
+        return false
+    end
+
+    -- Use vim.fn.executable to check if the command exists
+    return vim.fn.executable(cmd) == 1
 end
 
 return M

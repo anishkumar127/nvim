@@ -91,3 +91,10 @@ vim.keymap.set("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous d
 
 -- -- In visual mode, remap `p` to paste without overwriting the default register
 -- vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true, desc = "Visual paste without yank" })
+
+
+---------------------
+-- Pastes copied buffer and keeps it in the register
+keyset("x", "<leader>pp", '"_dP')
+-- Save without formatting
+keyset("n", "<leader>wf", ":noautocmd w<CR>", { desc = "Save without formatting" })

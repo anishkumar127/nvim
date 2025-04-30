@@ -1,4 +1,3 @@
-
 local M = {}
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -19,11 +18,11 @@ local function on_attach(client, bufnr)
     keyset("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
     keyset({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
     keyset("n", "<leader>td", vim.lsp.buf.type_definition, "Type Definition")
-    keyset("n", "<leader>td", vim.lsp.buf.signature_help, "Signature Documentation")
-    keyset("n", "<leader>twa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
-    keyset("n", "<leader>twr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
+    keyset("n", "<leader>sd", vim.lsp.buf.signature_help, "Signature Documentation")
+    keyset("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
+    keyset("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
     keyset("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-    keyset("n", "<leader>cr", vim.lsp.buf.references, "Go to references")
+    keyset("n", "gr", vim.lsp.buf.references, "Go to references")
     keyset("n", "gd", Utils.cmd_center(vim.lsp.buf.definition), "Go to Definition")
     keyset("n", "gD", Utils.cmd_center(vim.lsp.buf.declaration), "Go to Declaration")
     keyset("n", "gi", Utils.cmd_center(vim.lsp.buf.implementation), "Go to Implementation")
@@ -59,7 +58,7 @@ local function on_attach(client, bufnr)
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
     end, "Toggle inlay hints")
     keyset("n", "<leader>fa", function()
-        require("conform").format({ async = true, lsp_fallback = true })
+        require("conform").format({ lsp_format = "fallback", async = true })
     end, "Format current buffer with LSP")
 
     keyset("n", "<leader>lc", function()
@@ -76,7 +75,7 @@ local function on_attach(client, bufnr)
                 ["end"] = { args.line2, end_line:len() },
             }
         end
-        require("conform").format({ async = true, lsp_fallback = true, range = range })
+        require("conform").format({ lsp_format = "fallback", async = true, range = range })
     end, { range = true })
 
     -- Toggle signature help
