@@ -3,7 +3,6 @@ local M = {
     icons = require("utils.icons"),
     lsp = require("utils.lsp.init"),
     lsp2 = require("utils.lsp.execute"),
-    -- eslint = require("utils.eslint"),
 }
 
 -- Merge two tables

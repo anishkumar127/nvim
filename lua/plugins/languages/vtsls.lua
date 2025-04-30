@@ -120,6 +120,11 @@ local ts_settings = {
       os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
       and "project-relative"
       or "auto",
+    -- importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
+    -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
+    -- disableSuggestions              = false,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+    -- quoteStyle                      = "single",
+
   },
   inlayHints = {
     parameterNames            = { enabled = "literals" },
@@ -188,7 +193,7 @@ return {
       complete_function_calls = false,
       vtsls = {
         enableMoveToFileCodeAction = false,
-        autoUseWorkspaceTsdk       = false,
+        autoUseWorkspaceTsdk       = true, -- previously was disabled this.
         experimental = {
           completion = {
             enableServerSideFuzzyMatch = false,

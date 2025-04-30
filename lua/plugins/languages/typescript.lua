@@ -174,6 +174,20 @@ return {
           },
           keys = {
             {
+              'gR',
+              function()
+                local params = {
+                  command = 'typescript.findAllFileReferences',
+                  arguments = { vim.uri_from_bufnr(0) },
+                }
+                require("trouble").open({
+                  mode = "lsp_command",
+                  params = params,
+                })
+              end,
+              desc = 'File References',
+            },
+            {
               "<leader>ct",
               function()
                 vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })

@@ -1,3 +1,4 @@
+-- if true then return {} end
 return {
   "saghen/blink.cmp",
   -- opts_extend = {
@@ -46,6 +47,7 @@ return {
         -- show_on_accept_on_trigger_character = false,
         show_on_keyword           = true,  -- <-- important for `bg-`
         show_on_trigger_character = true,
+        show_on_insert_on_trigger_character = true,
       },
       menu = {
         border = "single",
@@ -98,6 +100,7 @@ return {
           score_offset = 100, -- show at a higher priority than lsp
         },
         lsp = {
+          min_keyword_length = 0,      -- ← allow `bg-`, `text-`, …
           fallbacks = { "buffer", "path" },
         },
         -- snippets = {

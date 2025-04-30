@@ -60,9 +60,9 @@ require("lazy").setup({
     { import = 'plugins.terminal.toggleterminal' },
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
-    -- { import = 'plugins.languages.typescript' },
+    --{ import = 'plugins.languages.typescript' },
+    { import = 'plugins.languages.vtsls' },
     { import = 'plugins.util.mini-hipatterns' },
-    { import = 'plugins.try' },
     { import = 'plugins.old' },
 
     -- import/override with your plugins
