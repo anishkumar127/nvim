@@ -1,3 +1,5 @@
+if true then return {} end
+
 local M = {}
 
 ---@param opts table<string, any>

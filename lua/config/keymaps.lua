@@ -63,7 +63,7 @@ vim.keymap.set("v", "<Leader>j", "yp", opts)
 
 -- Split window
 keyset('n', '<leader>ss', ':split<Return><C-w>w', { desc = 'Split window horizontally' }) -- Horizontal
-keyset('n', '<leader>sv', ':vsplit<Return><C-w>w', { desc = 'Split window vertically' }) -- Vertical
+keyset('n', '<leader>sv', ':vsplit<Return><C-w>w', { desc = 'Split window vertically' })  -- Vertical
 
 -- Move between qf items
 keyset('n', '<C-p>', '<cmd>cprev<CR>zz', { desc = 'Previous quickfix item' })

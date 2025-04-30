@@ -1,3 +1,5 @@
+if true then return {} end
+
 local desc = Utils.plugin_keymap_desc("typescript")
 local settings = {
     updateImportsOnFileMove = { enabled = "always" },

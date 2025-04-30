@@ -23,3 +23,37 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     vim.diagnostic.enable()
   end,
 })
+
+-- autocmd("FileType", {
+--   pattern = "*",
+--   group = augroup("diable-new-line-comments", {}),
+--   callback = function()
+--       vim.opt_local.formatoptions:remove("o")
+--       vim.opt_local.formatoptions:remove("r")
+--       vim.opt_local.formatoptions:remove("c")
+--   end,
+-- })
+
+
+
+-- autocmd("ColorScheme", {
+--   group = augroup("cursor-highlight", {}),
+--   callback = function()
+--       if vim.o.background == "light" then
+--           vim.cmd("highlight! clear Cursor")
+--       end
+--   end,
+-- })
+
+-- autocmd("BufWritePost", {
+--   pattern = "*",
+--   group = augroup("FileDetect", {}),
+--   desc = "Detect filetype on files with on extension after saving the file",
+--   callback = function()
+--       if vim.bo.filetype == "" then
+--           vim.cmd("filetype detect")
+--       end
+--   end,
+-- })
+
+

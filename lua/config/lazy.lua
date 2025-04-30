@@ -62,9 +62,9 @@ require("lazy").setup({
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
     -- { import = 'plugins.languages.typescript' },
-    { import = 'plugins.old' },
     { import = 'plugins.try' },
-    
+    { import = 'plugins.old' },
+
     -- import/override with your plugins
     { import = "plugins" },
     { import = 'plugins.colorscheme' },
@@ -79,8 +79,8 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
--- 
-  install = { colorscheme = { "rose-pine" }},
+  --
+  install = { colorscheme = { "rose-pine" } },
   -- install = { colorscheme = { "kanagawa" }},
   -- install = {
   --   -- missing = true,
@@ -167,13 +167,13 @@ require("lazy").setup({
       },
     },
   },
---   ui = {
---     border = "single",
---     size = {
---         width = 0.7,
---         height = 0.7,
---     },
--- },
+  --   ui = {
+  --     border = "single",
+  --     size = {
+  --         width = 0.7,
+  --         height = 0.7,
+  --     },
+  -- },
 
 })
 

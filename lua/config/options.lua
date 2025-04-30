@@ -38,10 +38,10 @@ vim.opt.wildignore = {
   "*.db",
   "**/node_modules/**",
   "**/bin/**",
-    "**/thesaurus/**",
-    "drizzle",
-    "drizzle/**",
-    "CHANGELOG.md"
+  "**/thesaurus/**",
+  "drizzle",
+  "drizzle/**",
+  "CHANGELOG.md"
 }
 
 -- vim.o.spell = false
@@ -81,17 +81,17 @@ vim.g.loaded_perl_provider = 0
 -- vim.opt.guicursor = 'a:block/,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor'
 -- vim.opt.cursorline = false  -- highlight the current line
 -- vim.opt.list = false        -- Hide characters on tabs and spaces
-vim.opt.scrolloff = 8       -- Minimal number of screen lines to keep above and below the cursor
+vim.opt.scrolloff = 8    -- Minimal number of screen lines to keep above and below the cursor
 -- vim.opt.sidescrolloff = 8   -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
-vim.opt.linebreak = true    -- Wrap long lines at a character in 'breakat'
+vim.opt.linebreak = true -- Wrap long lines at a character in 'breakat'
 -- vim.opt.textwidth = 80      -- Maximum width of text that is being inserted
 -- vim.opt.colorcolumn = '120' -- Highlight the 120th column
-vim.cmd('set fo-=1')        -- Don't break lines after a one-letter word
+vim.cmd('set fo-=1')    -- Don't break lines after a one-letter word
 
-vim.opt.showtabline = 0     -- Always show tabs
+vim.opt.showtabline = 0 -- Always show tabs
 -- vim.opt.tabstop = 2         -- Insert 2 spaces for a tab
 -- vim.opt.softtabstop = 2     -- Number of spaces tabs count for while editing
-vim.opt.shiftwidth = 2      -- the number of spaces inserted for each indentation
+vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 -- vim.opt.expandtab = true    -- convert tabs to spaces
 -- vim.opt.smartindent = true  -- Makes indenting smart
 
@@ -183,13 +183,13 @@ vim.opt.shiftwidth = 2
 
 ------------------ COMMAND LINE & STATUS LINE ------------------
 
-vim.opt.cmdheight = 0 -- Hide cmdline unless needed
+vim.opt.cmdheight = 0    -- Hide cmdline unless needed
 vim.opt.showmode = false -- Statusline already shows mode
 -- vim.opt.laststatus = 3   -- Global statusline (one for all splits)
 
 -- vim.opt.winwidth = 1    -- Allow windows to expand
 -- vim.opt.winminwidth = 1 -- Minimum window width
-vim.opt.wrap = false    -- No wrapping
+vim.opt.wrap = false -- No wrapping
 
 ------------------ DIAGNOSTICS CONFIGURATION ------------------
 
@@ -218,6 +218,3 @@ vim.g.loaded_matchparen = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
-
-
