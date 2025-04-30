@@ -1,3 +1,4 @@
+-- if true then return {} end ;
 -- local Util = require("utils")
 -- local desc = Util.plugin_keymap_desc("typescript")
 -- local settings = {
@@ -136,6 +137,7 @@ return {
     "javascript", "javascriptreact",
     "typescript", "typescriptreact",
     "vue", "svelte", "astro",
+    "typescript.tsx", "javascript.jsx",
   },
   dependencies = { "neovim/nvim-lspconfig" },
 
@@ -154,6 +156,7 @@ return {
         "javascript", "javascriptreact",
         "typescript", "typescriptreact",
         "vue", "svelte", "astro",
+        "typescript.tsx", "javascript.jsx",
       },
 
       -- disable formatting if you use something else (e.g. prettier)
@@ -202,6 +205,26 @@ return {
   -- Useful keymaps
   ---------------------------------------------------------------------------
   keys = {
+    -- new start
+    {
+      "<leader>ct",
+      function()
+        vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })
+      end,
+      desc = "Reload TS Projects",
+    },
+    {
+      "<leader>ti",
+      function()
+        vim.lsp.buf.execute_command({
+          command = "typescript.sortImports",
+          arguments = { vim.api.nvim_buf_get_name(0) },
+        })
+      end,
+      desc = "Sort Imports (vtsls)",
+    },
+
+    -- new end
     {
       "<leader>to",
       function()

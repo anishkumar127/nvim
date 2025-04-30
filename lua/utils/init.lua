@@ -1,7 +1,8 @@
 local M = {
     colors = require("utils.colors"),
     icons = require("utils.icons"),
-    -- lsp = require("utils.lsp"),
+    lsp = require("utils.lsp.init"),
+    lsp2 = require("utils.lsp.execute"),
     -- eslint = require("utils.eslint"),
 }
 

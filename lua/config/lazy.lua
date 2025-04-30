@@ -47,7 +47,6 @@ require("lazy").setup({
     -- { import = 'plugins.linting.core' },
     -- { import = 'plugins.test.core' },
     -- { import = 'plugins.ui.treesitter-context' },
-    { import = 'plugins.util.mini-hipatterns' },
     { import = 'plugins.editor.gitsigns' },
     { import = 'plugins.editor.grug-far' },
     -- { import = 'plugins.editor.indent-line' },
@@ -62,6 +61,7 @@ require("lazy").setup({
     -- { import = 'plugins.languages.markdown' },
     -- { import = 'plugins.languages.mdx' },
     -- { import = 'plugins.languages.typescript' },
+    { import = 'plugins.util.mini-hipatterns' },
     { import = 'plugins.try' },
     { import = 'plugins.old' },
 

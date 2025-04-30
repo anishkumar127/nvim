@@ -20,6 +20,7 @@ M.plugin = {
           "javascriptreact",
           "typescript",
           "typescriptreact",
+          "typescript.tsx", "javascript.jsx",
         },
         -- full: the whole css class will be highlighted
         -- compact: only the color will be highlighted

@@ -36,13 +36,16 @@ return {
       -- -- even when sources request it. The following are the defaults:
       -- show_on_blocked_trigger_characters = { ' ', '\n', '\t' }
       --       },
+      
       accept = {
         auto_brackets = {
           enabled = true,
         },
       },
       trigger = {
-        show_on_accept_on_trigger_character = false,
+        -- show_on_accept_on_trigger_character = false,
+        show_on_keyword           = true,  -- <-- important for `bg-`
+        show_on_trigger_character = true,
       },
       menu = {
         border = "single",
