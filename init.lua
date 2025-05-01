@@ -5,6 +5,13 @@ vim.env.CXX = "clang++"
 vim.g.blink_enabled = true
 _G.Utils = require("utils")
 
+vim.g.clipboard = {
+  name = "win32yank",
+  copy = {["+"] = "win32yank.exe -i --crlf", ["*"] = "win32yank.exe -i --crlf"},
+  paste = {["+"] = "win32yank.exe -o --lf",  ["*"] = "win32yank.exe -o --lf"},
+  cache_enabled = 0,
+}
+
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
