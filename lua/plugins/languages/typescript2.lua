@@ -10,26 +10,33 @@ return {
       -- Diagnostic settings
       diagnostics = {
         virtual_text = true, -- no inline text
-        signs = true,        -- show left gutter icons
-        underline = true,
+        signs = true, -- show left gutter icons
+        underline = false,
         -- update_in_insert = false,
-        severity_sort = true,
+        severity_sort = false,
       },
       servers = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
+
+        eslint = {
+          enabled = true,
+          update_in_insert = false,
+        },
         vtsls = { -- TypeScript server configuration
-          -- flags = {
-          --   debounce_text_changes = 200, -- Increased debounce time for diagnostics
-          -- },
+          flags = {
+            debounce_text_changes = 200, -- Increased debounce time for diagnostics
+          },
           filetypes = {
-            'javascript',
-            'javascriptreact',
-            'javascript.jsx',
-            'typescript',
-            'typescriptreact',
-            'typescript.tsx',
-            "vue", "svelte", "astro",
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+            "vue",
+            "svelte",
+            "astro",
           },
           settings = {
             complete_function_calls = true,
@@ -39,16 +46,15 @@ return {
               experimental = {
                 -- maxInlayHintLength = 30,
                 completion = {
-                  enableServerSideFuzzyMatch    = true,
-                  entriesLimit                  = 3000,
-                  includePackageJsonAutoImports = 'off',
-                  autoImportFileExcludePatterns = { 'node_modules/*' },
-
+                  enableServerSideFuzzyMatch = true,
+                  entriesLimit = 3000,
+                  includePackageJsonAutoImports = "off",
+                  autoImportFileExcludePatterns = { "node_modules/*" },
                 },
               },
             },
             typescript = {
-              updateImportsOnFileMove = { enabled = 'always' },
+              updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
                 -- Disable all inlay hints
@@ -69,28 +75,26 @@ return {
               -- Additional settings you can disable for performance
               suggest = {
                 -- todo: it's should be false i think
-                autoImports = true,           -- Disable automatic import suggestions
+                autoImports = true, -- Disable automatic import suggestions
                 completeFunctionCalls = true, -- Disable auto-completion of function arguments
-                names = true,                 -- Disable name suggestions
-                paths = true,                 -- Disable path suggestions
+                names = true, -- Disable name suggestions
+                paths = true, -- Disable path suggestions
               },
-              
+
               format = {
                 enable = false,
-                insertSpaceAfterOpeningAndBeforeClosingEmptyBraces       = false,
-                insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces    = false,
+                insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = false,
               },
               preferences = {
                 -- importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                importModuleSpecifier =
-                os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
-                and "project-relative"
-                or "auto",
+                importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
+                    and "project-relative"
+                  or "auto",
                 -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
-                disableSuggestions              = false,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
-                quoteStyle                      = "single",
-
-
+                -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
+                disableSuggestions = false, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                quoteStyle = "single",
               },
             },
             -- javascript = ts_settings,
@@ -133,7 +137,7 @@ return {
                   context = { only = { "source.organizeImports" }, diagnostics = {} },
                 })
               end,
-              desc = ("Organize imports"),
+              desc = "Organize imports",
             },
             {
               "<leader>ta",
@@ -143,7 +147,7 @@ return {
                   context = { only = { "source.addMissingImports" }, diagnostics = {} },
                 })
               end,
-              desc = ("Add missing imports"),
+              desc = "Add missing imports",
             },
             {
               "<leader>tr",
@@ -153,7 +157,7 @@ return {
                   context = { only = { "source.removeUnused" }, diagnostics = {} },
                 })
               end,
-              desc = ("Remove unused imports"),
+              desc = "Remove unused imports",
             },
             {
               "<leader>tf",
@@ -163,21 +167,20 @@ return {
                   context = { only = { "source.fixAll" }, diagnostics = {} },
                 })
               end,
-              desc = ("Fix all"),
+              desc = "Fix all",
             },
             {
               "<leader>tt",
               "<cmd>TypescriptSelectTypeScriptVersion<cr>",
-              desc = ("Select TypeScript version"),
+              desc = "Select TypeScript version",
             },
-
 
             ---  end
             {
-              'gR',
+              "gR",
               function()
                 local params = {
-                  command = 'typescript.findAllFileReferences',
+                  command = "typescript.findAllFileReferences",
                   arguments = { vim.uri_from_bufnr(0) },
                 }
                 require("trouble").open({
@@ -185,7 +188,7 @@ return {
                   params = params,
                 })
               end,
-              desc = 'File References',
+              desc = "File References",
             },
             {
               "<leader>ct",
@@ -225,12 +228,12 @@ return {
               desc = "Sort Imports (vtsls)",
             },
             {
-              '<leader>gdd',
+              "<leader>gdd",
               function()
                 -- 1. Open the diagnostic float for the current line
                 local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
-                  scope = 'line',
-                  border = 'rounded',
+                  scope = "line",
+                  border = "rounded",
                   focus = true, -- Let the float take focus so we can map Esc, n, p, etc.
                 })
                 if not float_winnr then
@@ -243,10 +246,10 @@ return {
                     vim.api.nvim_win_close(float_winnr, true)
                   end
                   -- Remove our ephemeral keymaps
-                  vim.keymap.del('n', 'n', { buffer = 0 })
-                  vim.keymap.del('n', 'p', { buffer = 0 })
-                  vim.keymap.del('n', 'N', { buffer = 0 })
-                  vim.keymap.del('n', '<esc>', { buffer = 0 })
+                  vim.keymap.del("n", "n", { buffer = 0 })
+                  vim.keymap.del("n", "p", { buffer = 0 })
+                  vim.keymap.del("n", "N", { buffer = 0 })
+                  vim.keymap.del("n", "<esc>", { buffer = 0 })
                 end
 
                 -- 3. Jump to next diagnostic, refresh the float
@@ -257,8 +260,8 @@ return {
                     vim.api.nvim_win_close(float_winnr, true)
                   end
                   float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
-                    scope = 'line',
-                    border = 'rounded',
+                    scope = "line",
+                    border = "rounded",
                     focus = true,
                   })
                 end
@@ -271,23 +274,22 @@ return {
                     vim.api.nvim_win_close(float_winnr, true)
                   end
                   float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
-                    scope = 'line',
-                    border = 'rounded',
+                    scope = "line",
+                    border = "rounded",
                     focus = true,
                   })
                 end
 
                 -- 5. Set up ephemeral keymaps *in this buffer* while the float is open
-                vim.keymap.set('n', 'n', goto_next_diag, { buffer = 0, nowait = true, silent = true })
-                vim.keymap.set('n', 'N', goto_prev_diag, { buffer = 0, nowait = true, silent = true })
-                vim.keymap.set('n', 'p', goto_prev_diag, { buffer = 0, nowait = true, silent = true })
-                vim.keymap.set('n', '<esc>', close_float, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set("n", "n", goto_next_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set("n", "N", goto_prev_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set("n", "p", goto_prev_diag, { buffer = 0, nowait = true, silent = true })
+                vim.keymap.set("n", "<esc>", close_float, { buffer = 0, nowait = true, silent = true })
               end,
-              desc = 'Sticky diagnostics float (next/prev with n/p, close with Esc)',
+              desc = "Sticky diagnostics float (next/prev with n/p, close with Esc)",
             },
           },
         },
-
       },
       setup = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
@@ -302,48 +304,45 @@ return {
         end,
         vtsls = function(_, opts)
           local on_attach = function(client, _)
-            client.commands['_typescript.moveToFileRefactoring'] = function(
-                command,
-                _
-            )
+            client.commands["_typescript.moveToFileRefactoring"] = function(command, _)
               ---@type string, string, lsp.Range
               local action, uri, range = unpack(command.arguments)
 
               local function move(newf)
-                client.request('workspace/executeCommand', {
+                client.request("workspace/executeCommand", {
                   command = command.command,
                   arguments = { action, uri, range, newf },
                 })
               end
 
               local fname = vim.uri_to_fname(uri)
-              client.request('workspace/executeCommand', {
-                command = 'typescript.tsserverRequest',
+              client.request("workspace/executeCommand", {
+                command = "typescript.tsserverRequest",
                 arguments = {
-                  'getMoveToRefactoringFileSuggestions',
+                  "getMoveToRefactoringFileSuggestions",
                   {
                     file = fname,
                     startLine = range.start.line + 1,
                     startOffset = range.start.character + 1,
-                    endLine = range['end'].line + 1,
-                    endOffset = range['end'].character + 1,
+                    endLine = range["end"].line + 1,
+                    endOffset = range["end"].character + 1,
                   },
                 },
               }, function(_, result)
                 ---@type string[]
                 local files = result.body.files
-                table.insert(files, 1, 'Enter new path...')
+                table.insert(files, 1, "Enter new path...")
                 vim.ui.select(files, {
-                  prompt = 'Select move destination:',
+                  prompt = "Select move destination:",
                   format_item = function(f)
-                    return vim.fn.fnamemodify(f, ':~:.')
+                    return vim.fn.fnamemodify(f, ":~:.")
                   end,
                 }, function(f)
-                  if f and f:find '^Enter new path' then
+                  if f and f:find("^Enter new path") then
                     vim.ui.input({
-                      prompt = 'Enter move destination:',
-                      default = vim.fn.fnamemodify(fname, ':h') .. '/',
-                      completion = 'file',
+                      prompt = "Enter move destination:",
+                      default = vim.fn.fnamemodify(fname, ":h") .. "/",
+                      completion = "file",
                     }, function(newf)
                       return newf and move(newf)
                     end)
@@ -354,7 +353,7 @@ return {
               end)
             end
           end
-          local name = 'vtsls'
+          local name = "vtsls"
           vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
               local buffer = args.buf ---@type number
@@ -365,12 +364,8 @@ return {
             end,
           })
           -- copy typescript settings to javascript
-          opts.settings.javascript = vim.tbl_deep_extend(
-            'force',
-            {},
-            opts.settings.typescript,
-            opts.settings.javascript or {}
-          )
+          opts.settings.javascript =
+            vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
         end,
       },
     },
