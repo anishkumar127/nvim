@@ -75,5 +75,3 @@ autocmd("BufWritePost", {
       end
   end,
 })
-
-

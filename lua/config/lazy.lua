@@ -7,13 +7,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     lazypath })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
-
+-- vim.cmd.colorscheme("rose-pine")
+-- vim.cmd("colorscheme rose-pine")
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",                         import = "lazyvim.plugins" },
     -- My new import
     -- custom
+    { import = 'plugins.colorscheme' },
     { import = 'plugins.editor' },
     { import = "plugins.ui"},
     { import = 'plugins.old' },
@@ -25,7 +27,6 @@ require("lazy").setup({
 
     -- import/override with your plugins
     { import = "plugins" },
-    { import = 'plugins.colorscheme' },
 
   },
   defaults = {
@@ -38,7 +39,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   --
-  install = { colorscheme = { "rose-pine" } },
+  install = { colorscheme = { "rose-pine-moon" } },
   -- install = { colorscheme = { "kanagawa" }},
   -- install = {
   --   -- missing = true,

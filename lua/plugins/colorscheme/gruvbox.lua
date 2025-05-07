@@ -1,3 +1,4 @@
+if true then return {} end
 return {
     "sainnhe/gruvbox-material",
     lazy = true,

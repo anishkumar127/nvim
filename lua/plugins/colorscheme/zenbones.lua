@@ -1,3 +1,4 @@
+if true then return {} end
 ---@class ColorSet
 ---@field bg string
 ---@field bg1 string

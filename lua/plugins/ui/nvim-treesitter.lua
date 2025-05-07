@@ -46,9 +46,6 @@ return {
                 "diff",
                 "dockerfile",
                 "go",
-                "gomod",
-                "gowork",
-                "graphql",
                 "html",
                 "javascript",
                 "jsdoc",
@@ -57,11 +54,8 @@ return {
                 "lua",
                 "markdown",
                 "markdown_inline",
-                "php",
-                "prisma",
                 "python",
                 "regex",
-                "rust",
                 "scss",
                 "sql",
                 "tsx",
@@ -70,7 +64,9 @@ return {
                 "vimdoc",
                 "yaml",
             },
-            highlight = { enable = true },
+            highlight = { enable = true 
+        
+        },
             indent = { enable = true },
             context_commentstring = {
                 enable = true,
