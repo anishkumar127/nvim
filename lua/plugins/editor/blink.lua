@@ -13,7 +13,7 @@ return {
   --       and vim.b.completion ~= false
   -- end,
   opts_extend = { "sources.default" },
-  version = '1.*',
+  version = "1.*",
   event = "InsertEnter",
   enabled = vim.g.blink_enabled,
   ---@module 'blink.cmp'
@@ -37,7 +37,7 @@ return {
       -- -- even when sources request it. The following are the defaults:
       -- show_on_blocked_trigger_characters = { ' ', '\n', '\t' }
       --       },
-      
+
       accept = {
         auto_brackets = {
           enabled = true,
@@ -45,7 +45,7 @@ return {
       },
       trigger = {
         -- show_on_accept_on_trigger_character = false,
-        show_on_keyword           = true,  -- <-- important for `bg-`
+        show_on_keyword = true, -- <-- important for `bg-`
         show_on_trigger_character = true,
         show_on_insert_on_trigger_character = true,
       },
@@ -53,8 +53,8 @@ return {
         border = "single",
         draw = {
           columns = {
-            { "kind_icon",        gap = 1 },
-            { "label",            gap = 10 },
+            { "kind_icon", gap = 1 },
+            { "label", gap = 10 },
             { "kind" },
             { "label_description" },
           },
@@ -90,7 +90,7 @@ return {
     --   },
     --   default = { "lsp", "path", "snippets", "buffer" },
     -- },
-    
+
     sources = {
       default = { "lsp", "path", "snippets", "buffer", "lazydev" },
       providers = {
@@ -100,7 +100,7 @@ return {
           score_offset = 100, -- show at a higher priority than lsp
         },
         lsp = {
-          min_keyword_length = 0,      -- ← allow `bg-`, `text-`, …
+          min_keyword_length = 0, -- ← allow `bg-`, `text-`, …
           fallbacks = { "buffer", "path" },
         },
         -- snippets = {
@@ -139,9 +139,12 @@ return {
         end
         return {}
       end,
+      -- keymap = {
+      --   ["<Down>"] = { "select_next", "fallback" },
+      --   ["<Up>"] = { "select_prev", "fallback" },
+      -- },
       keymap = {
-        ["<Down>"] = { "select_next", "fallback" },
-        ["<Up>"] = { "select_prev", "fallback" },
+        preset = "super-tab",
       },
       completion = {
         menu = {
@@ -153,7 +156,7 @@ return {
       },
     },
     appearance = {
-           -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
       kind_icons = {

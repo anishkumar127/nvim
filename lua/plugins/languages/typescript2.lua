@@ -9,12 +9,27 @@ return {
       flags = { allow_incremental_sync = false },
       -- Diagnostic settings
       diagnostics = {
-        virtual_text = true, -- no inline text
-        signs = true, -- show left gutter icons
+        -- virtual_text = true, -- no inline text
+        virtual_text = {
+          prefix = "",
+        },
+        update_in_insert = false,
+        -- signs = true, -- show left gutter icons
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "󰅚",
+            [vim.diagnostic.severity.WARN] = "󰀪",
+            [vim.diagnostic.severity.INFO] = "󰋽",
+            [vim.diagnostic.severity.HINT] = "󰌶",
+          },
+        },
         underline = false,
         -- update_in_insert = false,
-        severity_sort = false,
+        severity_sort = true,
       },
+      -- inlay_hints = {
+      --   enabled = false,
+      -- },
       servers = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
@@ -34,9 +49,6 @@ return {
             "typescript",
             "typescriptreact",
             "typescript.tsx",
-            "vue",
-            "svelte",
-            "astro",
           },
           settings = {
             complete_function_calls = true,
@@ -47,13 +59,17 @@ return {
                 -- maxInlayHintLength = 30,
                 completion = {
                   enableServerSideFuzzyMatch = true,
-                  entriesLimit = 3000,
+                  -- entriesLimit = 3000,
+                  entriesLimit = 20,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
               },
             },
             typescript = {
+              tsserver = {
+                maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
+              },
               updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
@@ -87,13 +103,13 @@ return {
                 insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = false,
               },
               preferences = {
-                -- importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
+                importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
                 importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
                     and "project-relative"
                   or "auto",
+                -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
                 -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
-                -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
-                disableSuggestions = false, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
                 quoteStyle = "single",
               },
             },
@@ -193,7 +209,7 @@ return {
             {
               "<leader>ct",
               function()
-                vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })
+                vim.lsp.buf.execute_command({ command = "typescript.restartTsServer" })
               end,
               desc = "Reload TS Projects",
             },
