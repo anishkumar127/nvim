@@ -40,7 +40,7 @@ return {
         },
         vtsls = { -- TypeScript server configuration
           flags = {
-            debounce_text_changes = 200, -- Increased debounce time for diagnostics
+            debounce_text_changes = 300, -- Increased debounce time for diagnostics
           },
           filetypes = {
             "javascript",
