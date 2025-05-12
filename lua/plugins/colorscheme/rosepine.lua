@@ -54,6 +54,13 @@
 --         vim.cmd.colorscheme("rose-pine")   -- activate the theme here
 --       end,
 -- }
+-- return {
+--   "webhooked/kanso.nvim",
+--   lazy = false,
+--   priority = 1000,
+-- }
+--
+-- if true then return {} end;
 
 	return {
 		{
