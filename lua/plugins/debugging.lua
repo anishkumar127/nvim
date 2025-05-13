@@ -183,7 +183,7 @@ return {
 
 		dap.adapters.coreclr = {
 			type = "executable",
-			command = "C:/Users/sfree/AppData/Local/nvim-data/mason/packages/netcoredbg/netcoredbg/netcoredbg.exe",
+			command = "C:/Users/AnishKumar/AppData/Local/nvim-data/mason/packages/netcoredbg/netcoredbg/netcoredbg.exe",
 			args = { "--interpreter=vscode" },
 		}
 
