@@ -1,4 +1,4 @@
-
+if true then return {} end;
 -- return {
 --   -- ➊ Pull in the adapter that makes nvim-dap speak js-debug
 --   {
