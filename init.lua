@@ -5,6 +5,39 @@ vim.env.CC = "clang"
 vim.env.CXX = "clang++"
 
 vim.g.blink_enabled = true
+
+-- vim.keymap.set("i", "<Tab>", function()
+--   require("blink.cmp").show()
+-- end, { silent = true, desc = "Open completion menu" })
+
+-- vim.keymap.set("i", "<C-Space>", function()
+--   require("blink.cmp").show()
+-- end, { silent = true, desc = "Trigger completion menu" })
+
+-- vim.keymap.set("i", "<Tab>", function(fallback)
+--   local col = vim.fn.col('.') - 1
+--   if col == 0 or vim.fn.getline('.'):sub(col, col):match("%s") then
+--     fallback()
+--   else
+--     require('blink.cmp').show()
+--   end
+-- end, { expr = true, silent = true, desc = "Smart Tab—indent or complete" })
+
+-- vim.keymap.set("i", "<Tab>", function()
+--   -- how many characters are before the cursor?
+--   local col = vim.fn.col('.') - 1
+--   -- if at start of line or preceded by whitespace, insert a real Tab
+--   if col == 0 or vim.fn.getline('.'):sub(col, col):match("%s") then
+--     return "\t"
+--   end
+--   -- otherwise, trigger Blink’s completion menu and insert nothing
+--   require('blink.cmp').show()
+--   return ""
+-- end, { expr = true, silent = true, desc = "Smart Tab: indent or complete" })
+vim.keymap.set("i", "<C-j>", function()
+  require('blink.cmp').show()
+end, { silent = true, desc = "Trigger Blink completion" })
+
 _G.Utils = require("utils")
 
 vim.g.clipboard = {
