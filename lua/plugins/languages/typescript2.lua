@@ -3,10 +3,14 @@
 return {
   {
     "neovim/nvim-lspconfig",
+     dependencies = { 'saghen/blink.cmp' },
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
     opts = {
-      flags = { allow_incremental_sync = false },
+      flags = { allow_incremental_sync = true,  -- send only diffs, not the whole buffer
+        debounce_text_changes = 600,     -- wait 500 ms of idle before sending edits
+    
+    },
       -- Diagnostic settings
       diagnostics = {
         -- virtual_text = true, -- no inline text
@@ -33,14 +37,16 @@ return {
       servers = {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
-
         eslint = {
           enabled = true,
           update_in_insert = false,
+            capabilities      = require("blink.cmp").get_lsp_capabilities(),
         },
         vtsls = { -- TypeScript server configuration
+           capabilities = require("blink.cmp").get_lsp_capabilities(),
           flags = {
-            debounce_text_changes = 300, -- Increased debounce time for diagnostics
+              -- allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+            debounce_text_changes = 800, -- Increased debounce time for diagnostics
           },
           filetypes = {
             "javascript",
@@ -60,16 +66,16 @@ return {
                 completion = {
                   enableServerSideFuzzyMatch = true,
                   -- entriesLimit = 3000,
-                  entriesLimit = 20,
+                  entriesLimit = 10,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
               },
             },
             typescript = {
-              tsserver = {
-                maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
-              },
+              -- tsserver = {
+              --   maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
+              -- },
               updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
@@ -91,10 +97,10 @@ return {
               -- Additional settings you can disable for performance
               suggest = {
                 -- todo: it's should be false i think
-                autoImports = true, -- Disable automatic import suggestions
-                completeFunctionCalls = true, -- Disable auto-completion of function arguments
-                names = true, -- Disable name suggestions
-                paths = true, -- Disable path suggestions
+                autoImports = false, -- Disable automatic import suggestions
+                completeFunctionCalls = false, -- Disable auto-completion of function arguments
+                names = false, -- Disable name suggestions
+                paths = false, -- Disable path suggestions
               },
 
               format = {
@@ -104,11 +110,11 @@ return {
               },
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
-                    and "project-relative"
-                  or "auto",
+                -- importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
+                --     and "project-relative"
+                --   or "auto",
                 -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
-                -- importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
+                importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
                 disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
                 quoteStyle = "single",
               },
@@ -318,147 +324,74 @@ return {
           -- disable tsserver
           return true
         end,
-        vtsls = function(_, opts)
-          local on_attach = function(client, _)
-            client.commands["_typescript.moveToFileRefactoring"] = function(command, _)
-              ---@type string, string, lsp.Range
-              local action, uri, range = unpack(command.arguments)
+        -- vtsls = function(_, opts)
+        --   -- local on_attach = function(client, _)
+        --   --   client.commands["_typescript.moveToFileRefactoring"] = function(command, _)
+        --   --     ---@type string, string, lsp.Range
+        --   --     local action, uri, range = unpack(command.arguments)
 
-              local function move(newf)
-                client.request("workspace/executeCommand", {
-                  command = command.command,
-                  arguments = { action, uri, range, newf },
-                })
-              end
+        --   --     local function move(newf)
+        --   --       client.request("workspace/executeCommand", {
+        --   --         command = command.command,
+        --   --         arguments = { action, uri, range, newf },
+        --   --       })
+        --   --     end
 
-              local fname = vim.uri_to_fname(uri)
-              client.request("workspace/executeCommand", {
-                command = "typescript.tsserverRequest",
-                arguments = {
-                  "getMoveToRefactoringFileSuggestions",
-                  {
-                    file = fname,
-                    startLine = range.start.line + 1,
-                    startOffset = range.start.character + 1,
-                    endLine = range["end"].line + 1,
-                    endOffset = range["end"].character + 1,
-                  },
-                },
-              }, function(_, result)
-                ---@type string[]
-                local files = result.body.files
-                table.insert(files, 1, "Enter new path...")
-                vim.ui.select(files, {
-                  prompt = "Select move destination:",
-                  format_item = function(f)
-                    return vim.fn.fnamemodify(f, ":~:.")
-                  end,
-                }, function(f)
-                  if f and f:find("^Enter new path") then
-                    vim.ui.input({
-                      prompt = "Enter move destination:",
-                      default = vim.fn.fnamemodify(fname, ":h") .. "/",
-                      completion = "file",
-                    }, function(newf)
-                      return newf and move(newf)
-                    end)
-                  elseif f then
-                    move(f)
-                  end
-                end)
-              end)
-            end
-          end
-          local name = "vtsls"
-          vim.api.nvim_create_autocmd("LspAttach", {
-            callback = function(args)
-              local buffer = args.buf ---@type number
-              local client = vim.lsp.get_client_by_id(args.data.client_id)
-              if client and (not name or client.name == name) then
-                return on_attach(client, buffer)
-              end
-            end,
-          })
-          -- copy typescript settings to javascript
-          opts.settings.javascript =
-            vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
-        end,
+        --   --     local fname = vim.uri_to_fname(uri)
+        --   --     client.request("workspace/executeCommand", {
+        --   --       command = "typescript.tsserverRequest",
+        --   --       arguments = {
+        --   --         "getMoveToRefactoringFileSuggestions",
+        --   --         {
+        --   --           file = fname,
+        --   --           startLine = range.start.line + 1,
+        --   --           startOffset = range.start.character + 1,
+        --   --           endLine = range["end"].line + 1,
+        --   --           endOffset = range["end"].character + 1,
+        --   --         },
+        --   --       },
+        --   --     }, function(_, result)
+        --   --       ---@type string[]
+        --   --       local files = result.body.files
+        --   --       table.insert(files, 1, "Enter new path...")
+        --   --       vim.ui.select(files, {
+        --   --         prompt = "Select move destination:",
+        --   --         format_item = function(f)
+        --   --           return vim.fn.fnamemodify(f, ":~:.")
+        --   --         end,
+        --   --       }, function(f)
+        --   --         if f and f:find("^Enter new path") then
+        --   --           vim.ui.input({
+        --   --             prompt = "Enter move destination:",
+        --   --             default = vim.fn.fnamemodify(fname, ":h") .. "/",
+        --   --             completion = "file",
+        --   --           }, function(newf)
+        --   --             return newf and move(newf)
+        --   --           end)
+        --   --         elseif f then
+        --   --           move(f)
+        --   --         end
+        --   --       end)
+        --   --     end)
+        --   --   end
+        --   -- end
+        -- --   local name = "vtsls"
+        -- --   vim.api.nvim_create_autocmd("LspAttach", {
+        -- --     callback = function(args)
+        -- --       local buffer = args.buf ---@type number
+        -- --       local client = vim.lsp.get_client_by_id(args.data.client_id)
+        -- --       if client and (not name or client.name == name) then
+        -- --         return on_attach(client, buffer)
+        -- --       end
+        -- --     end,
+        -- --   })
+        -- --   -- copy typescript settings to javascript
+        -- --   opts.settings.javascript =
+        -- --     vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
+        -- end,
       },
     },
   },
-
-  -- {
-  --   'mfussenegger/nvim-dap',
-  --   optional = true,
-  --   dependencies = {
-  --     {
-  --       'williamboman/mason.nvim',
-  --       opts = function(_, opts)
-  --         opts.ensure_installed = opts.ensure_installed or {}
-  --         table.insert(opts.ensure_installed, 'js-debug-adapter')
-  --       end,
-  --     },
-  --   },
-  --   opts = function()
-  --     local dap = require 'dap'
-  --     if not dap.adapters['pwa-node'] then
-  --       require('dap').adapters['pwa-node'] = {
-  --         type = 'server',
-  --         host = 'localhost',
-  --         port = '${port}',
-  --         executable = {
-  --           command = 'node',
-  --           args = {
-  --             vim.env.MASON
-  --             .. '/packages/'
-  --             .. 'js-debug-adapter'
-  --             .. '/js-debug/src/dapDebugServer.js',
-  --             '${port}',
-  --           },
-  --         },
-  --       }
-  --     end
-  --     if not dap.adapters['node'] then
-  --       dap.adapters['node'] = function(cb, config)
-  --         if config.type == 'node' then
-  --           config.type = 'pwa-node'
-  --         end
-  --         local nativeAdapter = dap.adapters['pwa-node']
-  --         if type(nativeAdapter) == 'function' then
-  --           nativeAdapter(cb, config)
-  --         else
-  --           cb(nativeAdapter)
-  --         end
-  --       end
-  --     end
-
-  --     local js_filetypes =
-  --     { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
-
-  --     local vscode = require 'dap.ext.vscode'
-  --     vscode.type_to_filetypes['node'] = js_filetypes
-  --     vscode.type_to_filetypes['pwa-node'] = js_filetypes
-
-  --     for _, language in ipairs(js_filetypes) do
-  --       if not dap.configurations[language] then
-  --         dap.configurations[language] = {
-  --           {
-  --             type = 'pwa-node',
-  --             request = 'launch',
-  --             name = 'Launch file',
-  --             program = '${file}',
-  --             cwd = '${workspaceFolder}',
-  --           },
-  --           {
-  --             type = 'pwa-node',
-  --             request = 'attach',
-  --             name = 'Attach',
-  --             processId = require('dap.utils').pick_process,
-  --             cwd = '${workspaceFolder}',
-  --           },
-  --         }
-  --       end
-  --     end
-  --   end,
-  -- },
+ 
+ 
 }

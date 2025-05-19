@@ -15,11 +15,13 @@ return {
   opts_extend = { "sources.default" },
   version = "1.*",
   event = "InsertEnter",
-  enabled = vim.g.blink_enabled,
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-
+        -- 1) Force the Rust fuzzy matcher (or at least warn if it can't download)
+   fuzzy = {
+      implementation = "prefer_rust_with_warning",
+    },
     completion = {
       --      trigger = {
       --         -- show the completion menu when you *enter insert mode*
@@ -64,6 +66,8 @@ return {
         },
       },
       list = {
+              -- 2) throttle the number of items in the menu
+         max_items = 20,
         selection = { preselect = false, auto_insert = false },
       },
       documentation = {
@@ -77,6 +81,10 @@ return {
       },
       ghost_text = {
         enabled = true,
+         show_with_selection   = true,   -- keep this
+      show_without_selection = true,  -- <<–– important!
+      show_with_menu        = true,
+      show_without_menu     = true,
       },
     },
     signature = { enabled = false, window = { border = "single" } },
@@ -144,7 +152,12 @@ return {
       --   ["<Up>"] = { "select_prev", "fallback" },
       -- },
       keymap = {
-        preset = "super-tab",
+        -- preset = "super-tab",
+            -- keep the `enter` preset (so `<CR>` accepts)…
+      preset = "enter",
+      -- but re-add the ctrl-space mapping in case it was overridden:
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-y>"]     = { "select_and_accept" },
       },
       completion = {
         menu = {
@@ -192,8 +205,13 @@ return {
       },
     },
     keymap = {
+      -- preset = "enter",
+      -- ["<C-y>"] = { "select_and_accept" },
+          -- keep the `enter` preset (so `<CR>` accepts)…
       preset = "enter",
-      ["<C-y>"] = { "select_and_accept" },
+      -- but re-add the ctrl-space mapping in case it was overridden:
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-y>"]     = { "select_and_accept" },
     },
   },
 }

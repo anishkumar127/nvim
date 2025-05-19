@@ -9,6 +9,7 @@ return {
       diagnostics = {
         -- virtual_text = false, -- no inline text
         signs = true,         -- show left gutter icons
+        virtual_lines = true, -- show inline text
         
         underline = false,
         -- update_in_insert = false,
