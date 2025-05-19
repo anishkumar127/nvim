@@ -12,7 +12,6 @@ return {
   --       and vim.bo.buftype ~= "prompt"
   --       and vim.b.completion ~= false
   -- end,
-  opts_extend = { "sources.default" },
   version = "1.*",
   event = "InsertEnter",
   ---@module 'blink.cmp'
@@ -147,18 +146,6 @@ return {
         end
         return {}
       end,
-      -- keymap = {
-      --   ["<Down>"] = { "select_next", "fallback" },
-      --   ["<Up>"] = { "select_prev", "fallback" },
-      -- },
-      keymap = {
-        -- preset = "super-tab",
-            -- keep the `enter` preset (so `<CR>` accepts)…
-      preset = "enter",
-      -- but re-add the ctrl-space mapping in case it was overridden:
-      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-      ["<C-y>"]     = { "select_and_accept" },
-      },
       completion = {
         menu = {
           auto_show = true,

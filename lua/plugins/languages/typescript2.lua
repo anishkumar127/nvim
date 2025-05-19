@@ -3,14 +3,15 @@
 return {
   {
     "neovim/nvim-lspconfig",
-     dependencies = { 'saghen/blink.cmp' },
+    dependencies = { 'saghen/blink.cmp' },
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
     opts = {
-      flags = { allow_incremental_sync = true,  -- send only diffs, not the whole buffer
-        debounce_text_changes = 600,     -- wait 500 ms of idle before sending edits
-    
-    },
+      flags = {
+        allow_incremental_sync = false,         -- send only diffs, not the whole buffer
+        debounce_text_changes = 600,           -- wait 500 ms of idle before sending edits
+
+      },
       -- Diagnostic settings
       diagnostics = {
         -- virtual_text = true, -- no inline text
@@ -38,14 +39,14 @@ return {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
-          enabled = true,
+          enabled          = true,
           update_in_insert = false,
-            capabilities      = require("blink.cmp").get_lsp_capabilities(),
+          capabilities     = require("blink.cmp").get_lsp_capabilities(),
         },
         vtsls = { -- TypeScript server configuration
-           capabilities = require("blink.cmp").get_lsp_capabilities(),
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
           flags = {
-              -- allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+            -- allow_incremental_sync = true,   -- send only diffs, not the whole buffer
             debounce_text_changes = 800, -- Increased debounce time for diagnostics
           },
           filetypes = {
@@ -73,9 +74,9 @@ return {
               },
             },
             typescript = {
-              -- tsserver = {
-              --   maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
-              -- },
+              tsserver = {
+                maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
+              },
               updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
@@ -97,10 +98,10 @@ return {
               -- Additional settings you can disable for performance
               suggest = {
                 -- todo: it's should be false i think
-                autoImports = false, -- Disable automatic import suggestions
+                autoImports = false,           -- Disable automatic import suggestions
                 completeFunctionCalls = false, -- Disable auto-completion of function arguments
-                names = false, -- Disable name suggestions
-                paths = false, -- Disable path suggestions
+                names = false,                 -- Disable name suggestions
+                paths = false,                 -- Disable path suggestions
               },
 
               format = {
@@ -114,10 +115,18 @@ return {
                 --     and "project-relative"
                 --   or "auto",
                 -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
-                importModuleSpecifierEnding     = "minimal",  -- Avoid extra file extensions
-                disableSuggestions = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
-                quoteStyle = "single",
+                importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
+                disableSuggestions              = true,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                quoteStyle                      = "single",
               },
+            },
+            javascript = {       -- copy same settings to JS
+              tsserver                = { maxTsServerMemory = 8192 },
+              suggest                 = { autoImports = false, names = false, paths = false },
+              experimental            = {
+                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 15 },
+              },
+              updateImportsOnFileMove = { enabled = "always" },
             },
             -- javascript = ts_settings,
             -- typescript = ts_settings,
@@ -392,6 +401,6 @@ return {
       },
     },
   },
- 
- 
+
+
 }
