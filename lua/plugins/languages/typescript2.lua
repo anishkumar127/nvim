@@ -101,7 +101,7 @@ return {
                 autoImports = false,           -- Disable automatic import suggestions
                 completeFunctionCalls = false, -- Disable auto-completion of function arguments
                 names = false,                 -- Disable name suggestions
-                paths = false,                 -- Disable path suggestions
+                paths = true,                 -- Disable path suggestions
               },
 
               format = {
@@ -111,9 +111,9 @@ return {
               },
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                -- importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
-                --     and "project-relative"
-                --   or "auto",
+                importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
+                    and "project-relative"
+                  or "auto",
                 -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
                 importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
                 disableSuggestions              = true,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
