@@ -111,11 +111,11 @@ return {
               },
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
-                    and "project-relative"
-                  or "auto",
+                -- importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
+                --     and "project-relative"
+                --   or "auto",
                 -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
-                importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
+                -- importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
                 disableSuggestions              = true,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
                 quoteStyle                      = "single",
               },
