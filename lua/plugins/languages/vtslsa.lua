@@ -1,3 +1,5 @@
+if vim.g.vscode then return end;
+
 -- if true then return {} end ;
 -- local Util = require("utils")
 -- local desc = Util.plugin_keymap_desc("typescript")

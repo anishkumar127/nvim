@@ -1,3 +1,4 @@
+if vim.g.vscode then return end;
 -- -- if true then return {} end;
 -- return {
 -- 	"mfussenegger/nvim-dap",
@@ -191,7 +192,7 @@ return {
   dependencies = {
     "nvim-neotest/nvim-nio",
     "rcarriga/nvim-dap-ui",
-    {  -- build debugger from source
+    { -- build debugger from source
       "microsoft/vscode-js-debug",
       version = "1.x",
       build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
@@ -200,14 +201,14 @@ return {
   keys = {
     { "<leader>du", function() require("dapui").toggle() end },
     { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-    { "<leader>dw", function() require("dap").run_to_cursor()   end, desc = "Run to cursor" },
-    { "<leader>dc", function() require("dap").continue()        end, desc = "Continue" },
-    { "<leader>dj", function() require("dap").step_over()       end, desc = "Step over" },
-    { "<leader>di", function() require("dap").step_into()       end, desc = "Step into" },
-    { "<leader>do", function() require("dap").step_out()        end, desc = "Step out" },
-    { "<leader>dp", function() require("dap").pause()           end, desc = "Pause" },
-    { "<leader>dt", function() require("dap").terminate()       end, desc = "Terminate" },
-    { "<leader>dr", function() require("dap").restart()         end, desc = "Restart"  },
+    { "<leader>dw", function() require("dap").run_to_cursor() end,     desc = "Run to cursor" },
+    { "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
+    { "<leader>dj", function() require("dap").step_over() end,         desc = "Step over" },
+    { "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
+    { "<leader>do", function() require("dap").step_out() end,          desc = "Step out" },
+    { "<leader>dp", function() require("dap").pause() end,             desc = "Pause" },
+    { "<leader>dt", function() require("dap").terminate() end,         desc = "Terminate" },
+    { "<leader>dr", function() require("dap").restart() end,           desc = "Restart" },
   },
 
   config = function()
@@ -246,16 +247,16 @@ return {
     for _, language in ipairs(js_based_languages) do
       dap.configurations[language] = {
         -- 1. launch current file
-          {
-    type = "pwa-node",
-    request = "launch",
-    name = "Launch TS file (ts-node)",
-    program = "${file}",
-    cwd = vim.fn.getcwd(),
-    runtimeExecutable = "node",
-    runtimeArgs = { "--loader", "ts-node/esm" },
-    sourceMaps = true,
-  },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch TS file (ts-node)",
+          program = "${file}",
+          cwd = vim.fn.getcwd(),
+          runtimeExecutable = "node",
+          runtimeArgs = { "--loader", "ts-node/esm" },
+          sourceMaps = true,
+        },
         {
           type = "pwa-node",
           request = "launch",
