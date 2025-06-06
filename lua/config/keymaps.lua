@@ -98,3 +98,8 @@ vim.keymap.set("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous d
 keyset("x", "<leader>pp", '"_dP')
 -- Save without formatting
 keyset("n", "<leader>wf", ":noautocmd w<CR>", { desc = "Save without formatting" })
+
+
+vim.keymap.set("n", "<leader>tA", function()
+	require("tiny-code-action").code_action()
+end, { noremap = true, silent = true })
