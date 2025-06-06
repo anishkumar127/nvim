@@ -1,5 +1,5 @@
 if vim.g.vscode then return end;
--- -- if true then return {} end;
+if true then return {} end;
 -- return {
 -- 	"mfussenegger/nvim-dap",
 -- 	dependencies = {

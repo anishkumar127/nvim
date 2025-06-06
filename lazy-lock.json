@@ -35,6 +35,7 @@
   "nui.nvim": { "branch": "main", "commit": "7cd18e73cfbd70e1546931b7268b3eebaeff9391" },
   "numb.nvim": { "branch": "master", "commit": "7f564e638d3ba367abf1ec91181965b9882dd509" },
   "nvim-dap": { "branch": "master", "commit": "ea82027c3447dc1a022be9a9884de276c05cd33a" },
+  "nvim-dap-go": { "branch": "main", "commit": "8763ced35b19c8dc526e04a70ab07c34e11ad064" },
   "nvim-dap-ui": { "branch": "master", "commit": "73a26abf4941aa27da59820fd6b028ebcdbcf932" },
   "nvim-dap-virtual-text": { "branch": "master", "commit": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6" },
   "nvim-lint": { "branch": "master", "commit": "cc26ae6a620298bb3f33b0e0681f99a10ae57781" },
@@ -57,7 +58,6 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "ts-comments.nvim": { "branch": "main", "commit": "1bd9d0ba1d8b336c3db50692ffd0955fe1bb9f0c" },
   "vim-visual-multi": { "branch": "master", "commit": "a6975e7c1ee157615bbc80fc25e4392f71c344d4" },
-  "vscode-js-debug": { "branch": "main", "commit": "a3279c2abc1162069b0f5c014542b8b849cefa70" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" }
 }
