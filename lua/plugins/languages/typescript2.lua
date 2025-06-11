@@ -1,5 +1,5 @@
 -- if true then return {} end
-if vim.g.vscode then return end;
+-- if vim.g.vscode then return end;
 
 return {
   {
@@ -9,8 +9,8 @@ return {
     --- @class lspconfig
     opts = {
       flags = {
-        allow_incremental_sync = false,         -- send only diffs, not the whole buffer
-        debounce_text_changes = 600,           -- wait 500 ms of idle before sending edits
+        allow_incremental_sync = false, -- send only diffs, not the whole buffer
+        debounce_text_changes = 600,    -- wait 500 ms of idle before sending edits
 
       },
       -- Diagnostic settings
@@ -75,9 +75,9 @@ return {
               },
             },
             typescript = {
-              tsserver = {
-                maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
-              },
+              -- tsserver = {
+              --   maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
+              -- },
               updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
@@ -99,16 +99,22 @@ return {
               -- Additional settings you can disable for performance
               suggest = {
                 -- todo: it's should be false i think
-                autoImports = false,           -- Disable automatic import suggestions
-                completeFunctionCalls = false, -- Disable auto-completion of function arguments
-                names = false,                 -- Disable name suggestions
-                paths = true,                 -- Disable path suggestions
+                autoImports = false,                -- Disable automatic import suggestions
+                completeFunctionCalls = false,      -- Disable auto-completion of function arguments
+                names = false,                      -- Disable name suggestions
+                paths = false,                      -- Disable path suggestions
+                includeCompletionsForModuleExports = false, -- Suggest exported members from modules
+                includeCompletionsWithInsertText = false, -- Use insert text in completions (improves UX)
+                includeAutomaticOptionalChainCompletions = false, -- Suggest `?.` when applicable
+                classMemberSnippets = false,        -- Enable class member snippet completions
+                objectLiteralMethodSnippets = false, -- Enable method snippets inside object literals
               },
 
               format = {
                 enable = false,
                 insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
                 insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = false,
+
               },
               preferences = {
                 importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
@@ -117,12 +123,12 @@ return {
                 --   or "auto",
                 -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
                 -- importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
-                disableSuggestions              = true,      -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                disableSuggestions              = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
                 quoteStyle                      = "single",
               },
             },
-            javascript = {       -- copy same settings to JS
-              tsserver                = { maxTsServerMemory = 8192 },
+            javascript = { -- copy same settings to JS
+              -- tsserver                = { maxTsServerMemory = 8192 },
               suggest                 = { autoImports = false, names = false, paths = false },
               experimental            = {
                 completion = { enableServerSideFuzzyMatch = true, entriesLimit = 15 },
