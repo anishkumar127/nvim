@@ -1,4 +1,4 @@
-if vim.g.vscode then return end;
+-- if vim.g.vscode then return end;
 
 return {
     "nvim-neo-tree/neo-tree.nvim",
