@@ -60,7 +60,7 @@ require("config.lazy")
 
 -- TODO: Neovide settings
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font:h10" -- Change font as needed
+  vim.o.guifont = "JetBrainsMono Nerd Font:h9" -- Change font as needed
   -- vim.g.neovide_transparency = 0.8
   -- vim.g.neovide_cursor_animation_length = 0.1
   -- vim.g.neovide_window_blurred = true
