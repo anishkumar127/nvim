@@ -75,3 +75,37 @@ autocmd("BufWritePost", {
       end
   end,
 })
+
+
+-- Remove trailing whitespace on save
+autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    vim.cmd([[silent! %s/\s\+$//e]])
+  end,
+})
+
+
+-- Auto save buffer on leave
+-- autocmd("BufLeave", {
+--   pattern = "*",
+--   callback = function()
+--     vim.cmd("silent! wa")
+--   end,
+-- })
+
+
+
+  -- Automatically sort classes in a .tsx file on save
+-- autocmd("BufWritePost", {
+--   pattern = { "*.tsx", "*.vue" },
+--   callback = function()
+--     local clients = vim.lsp.get_clients({ name = "tailwindcss" })
+--     if #clients > 0 then
+--       local ok, lsp = pcall(require, "tailwind-tools.lsp")
+--       if ok and lsp.sort_classes then
+--         pcall(lsp.sort_classes, true)
+--       end
+--     end
+--   end,
+-- })
