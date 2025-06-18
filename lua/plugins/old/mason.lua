@@ -27,6 +27,7 @@ return {
    {
     "neovim/nvim-lspconfig",
     opts = {
+      
       servers = {
         tailwindcss = {
           -- optional tweaks: widen the root-dir search so it
