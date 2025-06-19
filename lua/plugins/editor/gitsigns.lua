@@ -3,7 +3,7 @@
 --    require('gitsigns').setup({ ... })
 --
 -- See `:help gitsigns` to understand what the configuration keys do
-if vim.g.vscode then return end;
+-- if vim.g.vscode then return end;
 
 return {
   { -- Adds git related signs to the gutter, as well as utilities for managing changes

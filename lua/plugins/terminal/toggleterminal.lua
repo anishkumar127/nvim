@@ -1,5 +1,5 @@
 
-if vim.g.vscode then return end;
+-- if vim.g.vscode then return end;
 -- return {
 --   "akinsho/toggleterm.nvim",
 --   version = "*",
