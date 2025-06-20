@@ -106,7 +106,7 @@
 
 
 -- lua/plugins/typescript_and_eslint.lua
-local Util = require("utils")
+local Util = require("unused.utils.init")
 local desc = Util.plugin_keymap_desc("typescript")
 
 -- shared JS/TS language-specific settings
@@ -158,7 +158,7 @@ return {
     ---------------------------------------------------------------------------
     -- 2.  ESLint language-server
     ---------------------------------------------------------------------------
-    require("lspconfig").eslint.setup({
+    require("unused.lang.lspconfig").eslint.setup({
       filetypes = {
         "javascript", "javascriptreact",
         "typescript", "typescriptreact",

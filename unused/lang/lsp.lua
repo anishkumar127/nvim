@@ -224,7 +224,7 @@ function M.setup_server(server, config)
         capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
     end
 
-    require("lspconfig")[server].setup(
+    require("unused.lang.lspconfig")[server].setup(
         vim.tbl_deep_extend("error", { capabilities = capabilities, silent = true }, config or {})
     )
 
