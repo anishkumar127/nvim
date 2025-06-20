@@ -172,8 +172,8 @@ return {
 
             -- If nvim-dap is loaded and has status text, display it
             local dap_status = ""
-            if package.loaded["dap"] and require("dap").status() ~= "" then
-              dap_status = "  " .. require("dap").status()
+            if package.loaded["dap"] and require("unused.dap.dap").status() ~= "" then
+              dap_status = "  " .. require("unused.dap.dap").status()
             end
 
             return statusline.combine_groups {

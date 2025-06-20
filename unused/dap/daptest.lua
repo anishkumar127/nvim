@@ -4,7 +4,7 @@ return {
   "mfussenegger/nvim-dap",
   dependencies = { "mxsdev/nvim-dap-vscode-js" },
   config = function()
-    local dap, dapjs = require("dap"), require("dap-vscode-js")
+    local dap, dapjs = require("unused.dap.dap"), require("dap-vscode-js")
     dapjs.setup({ adapters = { "pwa-node", "pwa-chrome" } })
     for _, language in ipairs({ "javascript", "typescript" }) do
       dap.configurations[language] = {

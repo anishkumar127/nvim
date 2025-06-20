@@ -200,19 +200,19 @@ return {
   },
   keys = {
     { "<leader>du", function() require("dapui").toggle() end },
-    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-    { "<leader>dw", function() require("dap").run_to_cursor() end,     desc = "Run to cursor" },
-    { "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
-    { "<leader>dj", function() require("dap").step_over() end,         desc = "Step over" },
-    { "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
-    { "<leader>do", function() require("dap").step_out() end,          desc = "Step out" },
-    { "<leader>dp", function() require("dap").pause() end,             desc = "Pause" },
-    { "<leader>dt", function() require("dap").terminate() end,         desc = "Terminate" },
-    { "<leader>dr", function() require("dap").restart() end,           desc = "Restart" },
+    { "<leader>db", function() require("unused.dap.dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    { "<leader>dw", function() require("unused.dap.dap").run_to_cursor() end,     desc = "Run to cursor" },
+    { "<leader>dc", function() require("unused.dap.dap").continue() end,          desc = "Continue" },
+    { "<leader>dj", function() require("unused.dap.dap").step_over() end,         desc = "Step over" },
+    { "<leader>di", function() require("unused.dap.dap").step_into() end,         desc = "Step into" },
+    { "<leader>do", function() require("unused.dap.dap").step_out() end,          desc = "Step out" },
+    { "<leader>dp", function() require("unused.dap.dap").pause() end,             desc = "Pause" },
+    { "<leader>dt", function() require("unused.dap.dap").terminate() end,         desc = "Terminate" },
+    { "<leader>dr", function() require("unused.dap.dap").restart() end,           desc = "Restart" },
   },
 
   config = function()
-    local dap, dapui = require("dap"), require("dapui")
+    local dap, dapui = require("unused.dap.dap"), require("dapui")
 
     -- helper: absolute path inside Mason’s registry
     local function get_pkg_path(pkg, path)

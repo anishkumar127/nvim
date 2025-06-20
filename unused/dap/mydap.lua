@@ -150,7 +150,7 @@ return {
       ---------------------------------------------------------------------
       -- 3. (optional) Copy the two launch configs from launch.json
       ---------------------------------------------------------------------
-      local dap = require("dap")
+      local dap = require("unused.dap.dap")
       for _, lang in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
         dap.configurations[lang] = {
           {
