@@ -5,7 +5,7 @@ vim.env.CC = "clang"
 vim.env.CXX = "clang++"
 
 vim.g.blink_enabled = true
-
+-- vim.lsp.enable('tsgo')
 -- vim.keymap.set("i", "<Tab>", function()
 --   require("blink.cmp").show()
 -- end, { silent = true, desc = "Open completion menu" })
