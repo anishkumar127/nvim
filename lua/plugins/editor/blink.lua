@@ -70,7 +70,7 @@ return {
         selection = { preselect = false, auto_insert = false },
       },
       documentation = {
-        auto_show = false,
+        auto_show = true,
         auto_show_delay_ms = 200,
         window = {
           border = "single",
@@ -99,15 +99,15 @@ return {
     -- },
 
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "lazydev" },
+      default = { "lsp", "path", "snippets", "buffer"  },
       providers = {
-        lazydev = {
-          name = "LazyDev",
-          module = "lazydev.integrations.blink",
-          score_offset = 100, -- show at a higher priority than lsp
-        },
+        -- lazydev = {
+        --   name = "LazyDev",
+        --   module = "lazydev.integrations.blink",
+        --   score_offset = 100, -- show at a higher priority than lsp
+        -- },
         lsp = {
-          min_keyword_length = 0, -- ← allow `bg-`, `text-`, …
+          -- min_keyword_length = 0, -- ← allow `bg-`, `text-`, …
           fallbacks = { "buffer", "path" },
         },
         -- snippets = {
@@ -197,8 +197,10 @@ return {
           -- keep the `enter` preset (so `<CR>` accepts)…
       preset = "enter",
       -- but re-add the ctrl-space mapping in case it was overridden:
-      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+     -- ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C><leader>"] = { "show",  },
       ["<C-y>"]     = { "select_and_accept" },
+      ["<CR>"]     = { "accept","fallback" },
     },
   },
 }
