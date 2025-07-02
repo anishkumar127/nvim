@@ -53,15 +53,14 @@ return {
       menu = {
         border = "single",
         draw = {
+          treesitter = { "lsp" },
           columns = {
             { "kind_icon", gap = 1 },
             { "label", gap = 10 },
             { "kind" },
             { "label_description" },
           },
-
           gap = 1,
-          treesitter = { "lsp" },
         },
       },
       list = {

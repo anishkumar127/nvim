@@ -31,7 +31,7 @@ return {
         },
         underline = false,
         -- update_in_insert = false,
-        severity_sort = true,
+        severity_sort = false,
       },
       -- inlay_hints = {
       --   enabled = false,
@@ -47,8 +47,8 @@ return {
         vtsls = { -- TypeScript server configuration
           capabilities = require("blink.cmp").get_lsp_capabilities(),
           flags = {
-            -- allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-            debounce_text_changes = 800, -- Increased debounce time for diagnostics
+            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+            debounce_text_changes = 300, -- Increased debounce time for diagnostics
           },
           filetypes = {
             "javascript",
@@ -68,7 +68,7 @@ return {
                 completion = {
                   enableServerSideFuzzyMatch = true,
                   -- entriesLimit = 3000,
-                  entriesLimit = 10,
+                  entriesLimit = 1000,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
@@ -101,13 +101,13 @@ return {
                 -- todo: it's should be false i think
                 autoImports = false,                -- Disable automatic import suggestions
                 completeFunctionCalls = false,      -- Disable auto-completion of function arguments
-                names = false,                      -- Disable name suggestions
+                names = true,                      -- Disable name suggestions
                 paths = false,                      -- Disable path suggestions
                 includeCompletionsForModuleExports = false, -- Suggest exported members from modules
-                includeCompletionsWithInsertText = false, -- Use insert text in completions (improves UX)
+                includeCompletionsWithInsertText = true, -- Use insert text in completions (improves UX)
                 includeAutomaticOptionalChainCompletions = false, -- Suggest `?.` when applicable
                 classMemberSnippets = false,        -- Enable class member snippet completions
-                objectLiteralMethodSnippets = false, -- Enable method snippets inside object literals
+                objectLiteralMethodSnippets = true, -- Enable method snippets inside object literals
               },
 
               format = {
@@ -117,13 +117,13 @@ return {
 
               },
               preferences = {
-                importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
-                -- importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
-                --     and "project-relative"
-                --   or "auto",
-                -- importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
+                -- importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
+                importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
+                    and "project-relative"
+                  or "auto",
+                importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
                 -- importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
-                disableSuggestions              = true, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
+                disableSuggestions              = false, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
                 quoteStyle                      = "single",
               },
             },
@@ -131,7 +131,7 @@ return {
               -- tsserver                = { maxTsServerMemory = 8192 },
               suggest                 = { autoImports = false, names = false, paths = false },
               experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 15 },
+                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 1000 },
               },
               updateImportsOnFileMove = { enabled = "always" },
             },

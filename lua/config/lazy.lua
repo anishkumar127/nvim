@@ -23,7 +23,7 @@ require("lazy").setup({
     { import = 'plugins.formatting.conform' },
     { import = 'plugins.terminal.toggleterminal' },
     { import = 'plugins.languages.typescript2' },
-    { import = 'plugins.util.mini-hipatterns' },
+    -- { import = 'plugins.util.mini-hipatterns' },
 
     -- import/override with your plugins
     { import = "plugins" },
