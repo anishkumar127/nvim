@@ -22,8 +22,8 @@ return {
 				["<Down>"]  = {},
 				["<Left>"]  = {},
 				["<Right>"] = {},
-				["<C-n>"]   = { "n", "x", "o" },
-				["<C-p>"]   = { "n", "x", "o" },
+				-- ["<C-n>"]   = { "n", "x", "o" },
+				-- ["<C-p>"]   = { "n", "x", "o" },
 				-- ["<C-n>"]   = false,
 				-- ["<C-p>"]   = false,
 				-- ["<C-N>"]   = false,
@@ -32,8 +32,8 @@ return {
 				-- ["CTRL-P"]  = false,
 				-- ["<C-n>"] = { "n", "x" },
 				-- ["<C-p>"] = { "n", "x" },
-				-- ["<C-n>"]   = false,   -- allow Ctrl-n :contentReference[oaicite:0]{index=0}
-				-- ["<C-p>"]   = false,   -- allow Ctrl-p :contentReference[oaicite:1]{index=1}
+				["<C-n>"]   = false,   -- allow Ctrl-n :contentReference[oaicite:0]{index=0}
+				["<C-p>"]   = false,   -- allow Ctrl-p :contentReference[oaicite:1]{index=1}
 				--    ["<C-n>"] = { "n" },
 				-- ["<C-p>"] = { "n" },
 			},
