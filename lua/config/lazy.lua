@@ -23,6 +23,8 @@ require("lazy").setup({
     { import = 'plugins.formatting.conform' },
     { import = 'plugins.terminal.toggleterminal' },
     { import = 'plugins.languages.typescript2' },
+    -- { import = 'plugins.languages.better-type-hover' },
+    { import = 'plugins.languages.pretty_hover' },
     -- { import = 'plugins.util.mini-hipatterns' },
 
     -- import/override with your plugins

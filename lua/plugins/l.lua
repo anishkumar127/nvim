@@ -1,34 +1,53 @@
 if true then return {} end
-return {
-	{
-		"mason-org/mason-lspconfig.nvim",
-		dependencies = {
-			"mason-org/mason.nvim",
-			"neovim/nvim-lspconfig",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
-		},
-		config = function()
-			vim.lsp.config("*", {
-				on_attach = function(client, bufnr)
-					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
-				end,
-			})
+-- return {
+-- 	{
+-- 		"mason-org/mason-lspconfig.nvim",
+-- 		dependencies = {
+-- 			"mason-org/mason.nvim",
+-- 			"neovim/nvim-lspconfig",
+-- 			"WhoIsSethDaniel/mason-tool-installer.nvim",
+-- 		},
+-- 		config = function()
+-- 			vim.lsp.config("*", {
+-- 				on_attach = function(client, bufnr)
+-- 					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+-- 				end,
+-- 			})
 
-			require("mason").setup()
-			require("mason-lspconfig").setup()
-			require("mason-tool-installer").setup({
-				ensure_installed = {
-					"stylua",
-					"prettierd",
-					"eslint_d",
-					"lua_ls",
-					"tailwindcss-language-server",
-					"ts_ls",
-					"gopls",
-				},
-				auto_update = false,
-				run_on_start = true,
-			})
-		end,
-	},
-}
+-- 			require("mason").setup()
+-- 			require("mason-lspconfig").setup()
+-- 			require("mason-tool-installer").setup({
+-- 				ensure_installed = {
+-- 					"stylua",
+-- 					"prettierd",
+-- 					"eslint_d",
+-- 					"lua_ls",
+-- 					"tailwindcss-language-server",
+-- 					"ts_ls",
+-- 					"gopls",
+-- 				},
+-- 				auto_update = false,
+-- 				run_on_start = true,
+-- 			})
+-- 		end,
+-- 	},
+-- }
+
+-- fix below 
+
+-- require('mason-lspconfig').setup {
+-- 	ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+-- 	automatic_installation = false,
+-- 	handlers = {
+-- 	  function(server_name)
+-- 		if server_name == 'tsserver' or server_name == 'ts_ls' then
+-- 		  return -- Skip tsserver setup (handled by typescript.nvim)
+-- 		end
+-- 		local server = servers[server_name] or {}
+-- 		-- This handles overriding only values explicitly passed
+-- 		-- by the server configuration above. Useful when disabling
+-- 		-- certain features of an LSP (for example, turning off formatting for ts_ls)
+-- 		server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+-- 		require('lspconfig')[server_name].setup(server)
+-- 	  end,
+-- 	},
