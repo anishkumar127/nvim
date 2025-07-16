@@ -1,6 +1,6 @@
 -- if true then return {} end
 -- if vim.g.vscode then return end;
-
+-- make whole thing better and fast speed 
 return {
   {
     "neovim/nvim-lspconfig",
@@ -9,13 +9,14 @@ return {
     --- @class lspconfig
     opts = {
       flags = {
-        allow_incremental_sync = false, -- send only diffs, not the whole buffer
+        allow_incremental_sync = true, -- send only diffs, not the whole buffer
         debounce_text_changes = 600,    -- wait 500 ms of idle before sending edits
 
       },
       -- Diagnostic settings
       diagnostics = {
-        -- virtual_text = true, -- no inline text
+
+        -- virtual_text = true, - no inline text
         virtual_text = {
           prefix = "",
         },
@@ -29,9 +30,20 @@ return {
             [vim.diagnostic.severity.HINT] = "󰌶",
           },
         },
-        underline = false,
+        underline = {
+          severity = {
+            min = vim.diagnostic.severity.HINT,
+          },
+        },
         -- update_in_insert = false,
         severity_sort = false,
+        float = {
+          border = "rounded",
+          focusable = false,
+          style = "minimal",
+          source = "always",
+          
+        },
       },
       -- inlay_hints = {
       --   enabled = false,
@@ -41,6 +53,10 @@ return {
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
           enabled          = true,
+          flags = {
+            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+          },
+          debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
           update_in_insert = false,
           capabilities     = require("blink.cmp").get_lsp_capabilities(),
         },
@@ -67,6 +83,7 @@ return {
                 -- maxInlayHintLength = 30,
                 completion = {
                   enableServerSideFuzzyMatch = true,
+                  debounce_text_changes = 300, -- Increased debounce time for diagnostics
                   -- entriesLimit = 3000,
                   entriesLimit = 1000,
                   includePackageJsonAutoImports = "off",
