@@ -29,6 +29,7 @@ vim.g.clipboard = {
 -- vim.g.mapleader = ","
 -- vim.g.maplocalleader = "\\"
 require("config.lazy")
+-- vim.lsp.enable("tsgo")
 -- require("lspconfig").clangd.setup({})
 
 -- vim.o.shell = "C:\\Program Files\\Git\\bin\\bash.exe"

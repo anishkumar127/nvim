@@ -8,11 +8,11 @@ return {
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
     opts = {
-      flags = {
-        allow_incremental_sync = true, -- send only diffs, not the whole buffer
-        debounce_text_changes = 600,    -- wait 500 ms of idle before sending edits
+      -- flags = {
+      --   allow_incremental_sync = true, -- send only diffs, not the whole buffer
+      --   debounce_text_changes = 600,    -- wait 500 ms of idle before sending edits
 
-      },
+      -- },
       -- Diagnostic settings
       diagnostics = {
 
@@ -53,19 +53,19 @@ return {
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
           enabled          = true,
-          flags = {
-            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-          },
-          debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
+          -- flags = {
+          --   allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+          -- },
+          -- debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
           update_in_insert = false,
           capabilities     = require("blink.cmp").get_lsp_capabilities(),
         },
         vtsls = { -- TypeScript server configuration
           capabilities = require("blink.cmp").get_lsp_capabilities(),
-          flags = {
-            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-            debounce_text_changes = 300, -- Increased debounce time for diagnostics
-          },
+          -- flags = {
+          --   allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+          --   debounce_text_changes = 300, -- Increased debounce time for diagnostics
+          -- },
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -83,9 +83,9 @@ return {
                 -- maxInlayHintLength = 30,
                 completion = {
                   enableServerSideFuzzyMatch = true,
-                  debounce_text_changes = 300, -- Increased debounce time for diagnostics
+                  -- debounce_text_changes = 300, -- Increased debounce time for diagnostics
                   -- entriesLimit = 3000,
-                  entriesLimit = 1000,
+                  entriesLimit = 50,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
@@ -148,7 +148,7 @@ return {
               -- tsserver                = { maxTsServerMemory = 8192 },
               suggest                 = { autoImports = false, names = false, paths = false },
               experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 1000 },
+                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 50 },
               },
               updateImportsOnFileMove = { enabled = "always" },
             },
