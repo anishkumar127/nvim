@@ -80,9 +80,9 @@ return {
       ghost_text = {
         enabled = true,
          show_with_selection   = true,   -- keep this
-      show_without_selection = true,  -- <<–– important!
+      show_without_selection = false,  -- <<–– important!
       show_with_menu        = true,
-      show_without_menu     = true,
+      show_without_menu     = false,
       },
     },
     signature = { enabled = false, window = { border = "single" } },
