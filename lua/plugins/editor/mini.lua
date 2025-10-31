@@ -107,7 +107,8 @@
 
 return {
   {
-    "echasnovski/mini.nvim",
+    -- "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     config = function()
       -- 1. Mini modules configuration
 

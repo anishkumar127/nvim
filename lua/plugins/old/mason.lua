@@ -2,7 +2,8 @@
 -- it think i need to find the alternative for this.
 return {
   {
-    "williamboman/mason.nvim",
+    -- "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         -- "bash-language-server",

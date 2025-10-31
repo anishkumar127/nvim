@@ -1,14 +1,27 @@
 -- if true then return {} end
 return {
-  {
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = function()
+  --     local Keys = require("lazyvim.plugins.lsp.keymaps").get()
+  --     vim.list_extend(Keys, {
+  --       { "K", false },
+  --     })
+  --   end,
+  -- },
+    {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    opts = function()
-      local Keys = require("lazyvim.plugins.lsp.keymaps").get()
-      vim.list_extend(Keys, {
-        { "K", false },
-      })
-    end,
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            { "K", false },
+          },
+        },
+      },
+    },
   },
   {
     "nvimdev/lspsaga.nvim",
