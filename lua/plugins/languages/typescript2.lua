@@ -53,12 +53,24 @@ return {
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
           enabled          = true,
-          -- flags = {
-          --   allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-          -- },
+          flags = {
+            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
+          },
           -- debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
           update_in_insert = false,
           capabilities     = require("blink.cmp").get_lsp_capabilities(),
+        },
+             tsserver = {
+          enabled = false,
+        },
+        ts_ls = {
+          enabled = false,
+        },
+        denols = {
+          enabled = false,
+        },
+        angularls = {
+          enabled = false,
         },
         vtsls = { -- TypeScript server configuration
           capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -84,17 +96,17 @@ return {
                 completion = {
                   enableServerSideFuzzyMatch = true,
                   -- debounce_text_changes = 300, -- Increased debounce time for diagnostics
-                  -- entriesLimit = 3000,
-                  entriesLimit = 50,
+                  entriesLimit = 3000,
+                  -- entriesLimit = 50,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
               },
             },
             typescript = {
-              -- tsserver = {
-              --   maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
-              -- },
+              tsserver = {
+                maxTsServerMemory = 4192, -- Increase memory limit (e.g., 8GB)
+              },
               updateImportsOnFileMove = { enabled = "always" },
 
               inlayHints = {
@@ -145,10 +157,10 @@ return {
               },
             },
             javascript = { -- copy same settings to JS
-              -- tsserver                = { maxTsServerMemory = 8192 },
+              tsserver                = { maxTsServerMemory = 4192 },
               suggest                 = { autoImports = false, names = false, paths = false },
               experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 50 },
+                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 3000 },
               },
               updateImportsOnFileMove = { enabled = "always" },
             },
@@ -356,6 +368,79 @@ return {
         ts_ls = function()
           -- disable tsserver
           return true
+        end,
+          vtsls = function(_, opts)
+          local on_attach = function(client, _)
+            client.commands['_typescript.moveToFileRefactoring'] = function(
+                command,
+                _
+            )
+              ---@type string, string, lsp.Range
+              local action, uri, range = unpack(command.arguments)
+
+              local function move(newf)
+                client.request('workspace/executeCommand', {
+                  command = command.command,
+                  arguments = { action, uri, range, newf },
+                })
+              end
+
+              local fname = vim.uri_to_fname(uri)
+              client.request('workspace/executeCommand', {
+                command = 'typescript.tsserverRequest',
+                arguments = {
+                  'getMoveToRefactoringFileSuggestions',
+                  {
+                    file = fname,
+                    startLine = range.start.line + 1,
+                    startOffset = range.start.character + 1,
+                    endLine = range['end'].line + 1,
+                    endOffset = range['end'].character + 1,
+                  },
+                },
+              }, function(_, result)
+                ---@type string[]
+                local files = result.body.files
+                table.insert(files, 1, 'Enter new path...')
+                vim.ui.select(files, {
+                  prompt = 'Select move destination:',
+                  format_item = function(f)
+                    return vim.fn.fnamemodify(f, ':~:.')
+                  end,
+                }, function(f)
+                  if f and f:find '^Enter new path' then
+                    vim.ui.input({
+                      prompt = 'Enter move destination:',
+                      default = vim.fn.fnamemodify(fname, ':h') .. '/',
+                      completion = 'file',
+                    }, function(newf)
+                      return newf and move(newf)
+                    end)
+                  elseif f then
+                    move(f)
+                  end
+                end)
+              end)
+            end
+          end
+          local name = 'vtsls'
+          vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+              local buffer = args.buf ---@type number
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and (not name or client.name == name) then
+                return on_attach(client, buffer)
+              end
+            end,
+          })
+          -- copy typescript settings to javascript
+          opts.settings.javascript = vim.tbl_deep_extend(
+            'force',
+            {},
+            opts.settings.typescript,
+            opts.settings.javascript or {}
+          )
+          
         end,
       },
     },
