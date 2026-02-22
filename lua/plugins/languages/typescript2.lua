@@ -52,13 +52,9 @@ return {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
-          enabled          = true,
-          flags = {
-            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-          },
-          -- debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
-          update_in_insert = false,
-          capabilities     = require("blink.cmp").get_lsp_capabilities(),
+          -- Disabled: Running ESLint as an active LSP server is a massive performance bottleneck on large projects.
+          -- We will handle linting asynchronously via `nvim-lint` with oxlint/eslint instead.
+          enabled = false,
         },
              tsserver = {
           enabled = false,
@@ -96,8 +92,9 @@ return {
                 completion = {
                   enableServerSideFuzzyMatch = true,
                   -- debounce_text_changes = 300, -- Increased debounce time for diagnostics
-                  entriesLimit = 3000,
-                  -- entriesLimit = 50,
+                  -- Limit to 100: Since enableServerSideFuzzyMatch is true, we don't need the server to send us 3000 items!
+                  -- Small entry limits drastically speed up the autocomplete menu rendering in large projects.
+                  entriesLimit = 100,
                   includePackageJsonAutoImports = "off",
                   autoImportFileExcludePatterns = { "node_modules/*" },
                 },
@@ -105,7 +102,7 @@ return {
             },
             typescript = {
               tsserver = {
-                maxTsServerMemory = 4192, -- Increase memory limit (e.g., 8GB)
+                maxTsServerMemory = 8192, -- 8GB: Prevents 'tsserver crashed' errors on massive Next.js/React monorepos
               },
               updateImportsOnFileMove = { enabled = "always" },
 
@@ -160,7 +157,7 @@ return {
               tsserver                = { maxTsServerMemory = 4192 },
               suggest                 = { autoImports = false, names = false, paths = false },
               experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 3000 },
+                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 100 },
               },
               updateImportsOnFileMove = { enabled = "always" },
             },

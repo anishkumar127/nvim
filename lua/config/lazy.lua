@@ -20,6 +20,7 @@ require("lazy").setup({
     { import = 'plugins.editor' },
     { import = "plugins.ui"},
     { import = 'plugins.old' },
+    { import = 'plugins.linters' },
     { import = 'plugins.coding.inc-rename' },
     { import = 'plugins.formatting.conform' },
     { import = 'plugins.terminal.toggleterminal' },
