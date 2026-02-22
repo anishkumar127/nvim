@@ -78,12 +78,12 @@ autocmd("BufWritePost", {
 
 
 -- Remove trailing whitespace on save
-autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    vim.cmd([[silent! %s/\s\+$//e]])
-  end,
-})
+-- autocmd("BufWritePre", {
+--   pattern = "*",
+--   callback = function()
+--     vim.cmd([[silent! %s/\s\+$//e]])
+--   end,
+-- })
 
 
 -- Auto save buffer on leave
