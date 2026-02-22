@@ -7,24 +7,10 @@ vim.g.autoformat = false
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- 1. Create an autocmd group just for these toggles
-local group = vim.api.nvim_create_augroup("DisableDiagnosticsInsertMode", {})
-
--- 2. Disable diagnostics on InsertEnter
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = group,
-  callback = function()
-    vim.diagnostic.disable()
-  end,
-})
-
--- 3. Enable diagnostics on InsertLeave
-vim.api.nvim_create_autocmd("InsertLeave", {
-  group = group,
-  callback = function()
-    vim.diagnostic.enable()
-  end,
-})
+-- 1. [REMOVED LAGGY MACRO] Removed manual 'InsertEnter' and 'InsertLeave' diagnostic toggles.
+-- Reason: You already have `update_in_insert = false` in your LSP configuration! 
+-- Manually calling `vim.diagnostic.disable()` and `enable()` on every single keystroke mode-switch 
+-- forces Neovim to recalculate and redraw the entire screen, causing MASSSIVE lag spikes on large files.
 
 -- Highlight yanked text
 autocmd("TextYankPost", {
@@ -34,12 +20,15 @@ autocmd("TextYankPost", {
       vim.highlight.on_yank()
   end,
 })
--- Disable eslint on node_modules
+-- Disable diagnostics ONLY inside node_modules buffers
 autocmd({"BufNewFile", "BufRead"}, {
   pattern = {"**/node_modules/**", "node_modules", "/node_modules/*"},
   group = augroup("DisableEslintOnNodeModules", {}),
-  callback = function()
-      vim.diagnostic.enable(false)
+  callback = function(args)
+      -- HUGE LAG FIX: You MUST specify the buffer! 
+      -- If you just run `vim.diagnostic.enable(false)`, Neovim completely shuts down 
+      -- diagnostics GLOBALLY across all tabs the moment you open any node_modules file!
+      vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
 })
 
