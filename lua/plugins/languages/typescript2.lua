@@ -1,9 +1,19 @@
 -- if true then return {} end
 -- if vim.g.vscode then return end;
--- make whole thing better and fast speed 
+
+-- ============================================================================
+-- TOGGLE THIS TO SWITCH BETWEEN `vtsls` AND `typescript-tools.nvim`
+-- true = Use typescript-tools (blazing fast, lightweight, great for huge projects)
+-- false = Use vtsls (standard VS Code typescript server ported to Neovim)
+-- ============================================================================
+local use_ts_tools = true
+
 return {
+  -- Option A: nvim-lspconfig (for vtsls or default tsserver)
   {
     "neovim/nvim-lspconfig",
+    -- Only load this specific config block if we are NOT using ts-tools
+    enabled = not use_ts_tools,
     dependencies = { 'saghen/blink.cmp' },
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
@@ -422,5 +432,72 @@ return {
     },
   },
 
-
+  -- Option B: typescript-tools.nvim (Blazing Fast TS Server Alternative)
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    enabled = use_ts_tools,
+    opts = {
+      -- Ensure blink.cmp autocompletion capabilities are passed perfectly!
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
+      
+      settings = {
+        -- spawn additional tsserver instance to calculate diagnostics on it
+        separate_diagnostic_server = true,
+        -- "change"|"insert_leave" determine when the server updates diagnostics
+        publish_diagnostic_on = "insert_leave",
+        -- Specify a complete list of triggers
+        tsserver_logs = "off",
+        
+        -- Support for large projects (8GB Heap Limit just like vtsls)
+        tsserver_max_memory = 8192,
+        
+        -- Code Lens / Inlay Hints are historically slow, keeping them disabled
+        code_lens = "off",
+        disable_member_code_lens = true,
+        
+        jsx_close_tag = {
+          enable = true,
+          filetypes = { "javascriptreact", "typescriptreact" },
+        },
+        
+        -- To use the fastest settings:
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = "none",
+          includeCompletionsForModuleExports = true,
+          quotePreference = "single",
+        },
+      },
+      
+      -- Add similar keymaps for typescript-tools context actions
+      on_attach = function(client, bufnr)
+        local wk = require("which-key")
+        
+        wk.add({
+          { "<leader>t", group = "+typescript" },
+          { "<leader>to", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize Imports", buffer = bufnr },
+          { "<leader>ta", "<cmd>TSToolsAddMissingImports<cr>", desc = "Add Missing Imports", buffer = bufnr },
+          { "<leader>tr", "<cmd>TSToolsRemoveUnusedImports<cr>", desc = "Remove Unused Imports", buffer = bufnr },
+          { "<leader>ti", "<cmd>TSToolsSortImports<cr>", desc = "Sort Imports", buffer = bufnr },
+          { "<leader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix All", buffer = bufnr },
+          { "<leader>gR", "<cmd>TSToolsFileReferences<cr>", desc = "File References", buffer = bufnr },
+          { "<leader>tR", "<cmd>TSToolsRenameFile<cr>", desc = "Rename File", buffer = bufnr },
+        })
+      end,
+    },
+    config = function(_, opts)
+      -- Force Neovim to show virtual_text (inline errors) exactly like vtsls did
+      vim.diagnostic.config({
+        virtual_text = {
+          prefix = "", -- the dot or arrow prefix
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
+      
+      require("typescript-tools").setup(opts)
+    end,
+  },
 }

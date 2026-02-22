@@ -16,9 +16,8 @@ return {
         end
         
         -- You could also check package.json for "oxlint" here if needed
-        return { "eslint" }
+        return { "eslint_d" }
       end
-
       -- Hook into BufEnter to dynamically swap between oxlint and eslint per project
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
@@ -28,6 +27,15 @@ return {
           require("lint").linters_by_ft["javascriptreact"] = linters
           require("lint").linters_by_ft["typescript"] = linters
           require("lint").linters_by_ft["typescriptreact"] = linters
+        end,
+      })
+
+      -- ACTUALLY TRIGGER LINTING ON FILE EVENTS
+      -- If we don't call `try_lint()`, nvim-lint never runs!
+      vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+        group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
+        callback = function()
+          require("lint").try_lint()
         end,
       })
     end,
