@@ -100,14 +100,20 @@ return {
     sources = {
       default = { "lsp", "path", "snippets", "buffer"  },
       providers = {
-        -- lazydev = {
-        --   name = "LazyDev",
-        --   module = "lazydev.integrations.blink",
-        --   score_offset = 100, -- show at a higher priority than lsp
-        -- },
         lsp = {
-          -- min_keyword_length = 0, -- ← allow `bg-`, `text-`, …
-          fallbacks = { "buffer", "path" },
+          -- By removing `fallbacks = { "buffer", "path" }`, we allow the `buffer` source
+          -- to run IN PARALLEL with the LSP. This means local words in your file will show up
+          -- instantly (0ms latency) while providing the TypeScript LSP time to load in the background!
+          name = "LSP",
+          score_offset = 100, -- Ensure LSP results are prioritized when they arrive
+        },
+        snippets = {
+          name = "Snippets",
+          score_offset = 200, -- Snippets should always be at the very top
+        },
+        buffer = {
+          name = "Buffer",
+          score_offset = 0, -- Buffer words are lowest priority, but load instantly
         },
         -- snippets = {
         --   min_keyword_length = 1,
