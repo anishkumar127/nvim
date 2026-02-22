@@ -30,57 +30,8 @@ return {
     opts = {
       
       servers = {
-        tailwindcss = {
-          -- optional tweaks: widen the root-dir search so it
-          -- still attaches in monorepos or when the config file
-          -- lives higher up than usual
-          root_dir = require("lspconfig.util").root_pattern(
-            "tailwind.config.js",
-            "tailwind.config.ts",
-            "postcss.config.js",
-            "postcss.config.ts",
-            "package.json",
-            "node_modules",
-            ".git"
-          ),
-
-          -- you can trim the filetype list if you like;
-          -- these are the ones you said you’re editing:
-          filetypes = {
-            "typescriptreact", "javascriptreact",
-            "typescript",      "javascript",
-            "css", "scss", "sass", "postcss",
-            "html", "svelte", "vue", "astro","tsx", "jsx"
-          },
-          settings = {
-            tailwindCSS = {
-              includeLanguages = {
-                typescript = "javascript",
-                typescriptreact = "javascriptreact",
-                javascriptreact = "javascriptreact",
-                html = "html",
-                ["html-eex"] = "html",
-                ["凤凰"] = "html",
-                heex = "html",
-                elm = "html",
-                erb = "html",
-                svelte = "html",
-                vue = "html",
-                rust = "html",
-              },
-              experimental = {
-                classRegex = {
-                  { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                  { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                  { "classnames\\(([^)]*)\\)", "'([^']*)'" },
-                  { "clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                  { "class[:]\\s*[\"'`]([^\"'`]*).*?[\"'`]" },
-                  { "className[:]\\s*[\"'`]([^\"'`]*).*?[\"'`]" },
-                },
-              },
-            },
-          },
-        },
+        -- tailwindcss is now fully handled by LazyVim's extras module
+        -- no need to duplicate it here
       },
     },
   },

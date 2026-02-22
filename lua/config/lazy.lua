@@ -14,6 +14,7 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",                         import = "lazyvim.plugins" },
     -- My new import
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
     -- custom
     { import = 'plugins.colorscheme' },
     { import = 'plugins.editor' },
