@@ -64,8 +64,8 @@ return {
         },
       },
       list = {
-              -- 2) throttle the number of items in the menu
-         max_items = 20,
+              -- Increased from 20 to 100 to ensure TS methods aren't truncated by snippets
+         max_items = 100,
         selection = { preselect = false, auto_insert = false },
       },
       documentation = {
@@ -79,8 +79,9 @@ return {
       },
       ghost_text = {
         enabled = true,
-         show_with_selection   = true,   -- keep this
-      show_without_selection = false,  -- <<–– important!
+         show_with_selection   = true,
+      -- VERY IMPORTANT: if false, ghost text logic can sometimes interfere with menu popup on trigger chars like `.`
+      show_without_selection = true,
       show_with_menu        = true,
       show_without_menu     = false,
       },
@@ -101,15 +102,16 @@ return {
       default = { "lsp", "path", "snippets", "buffer"  },
       providers = {
         lsp = {
-          -- By removing `fallbacks = { "buffer", "path" }`, we allow the `buffer` source
-          -- to run IN PARALLEL with the LSP. This means local words in your file will show up
-          -- instantly (0ms latency) while providing the TypeScript LSP time to load in the background!
           name = "LSP",
-          score_offset = 100, -- Ensure LSP results are prioritized when they arrive
+          -- Snippets must not completely crush LSP results on empty queries
+          score_offset = 100, 
+          -- Force the LSP to trigger even if we haven't typed a full word yet (e.g. just `.`)
+          min_keyword_length = 0,
         },
         snippets = {
           name = "Snippets",
-          score_offset = 200, -- Snippets should always be at the very top
+          -- Drop the score so that pure object properties from LSP can float above snippets
+          score_offset = 90, 
         },
         buffer = {
           name = "Buffer",

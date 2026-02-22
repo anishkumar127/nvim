@@ -90,13 +90,8 @@ return {
               experimental = {
                 -- maxInlayHintLength = 30,
                 completion = {
-                  enableServerSideFuzzyMatch = true,
-                  -- debounce_text_changes = 300, -- Increased debounce time for diagnostics
-                  -- Limit to 100: Since enableServerSideFuzzyMatch is true, we don't need the server to send us 3000 items!
-                  -- Small entry limits drastically speed up the autocomplete menu rendering in large projects.
-                  entriesLimit = 100,
-                  includePackageJsonAutoImports = "off",
-                  autoImportFileExcludePatterns = { "node_modules/*" },
+                  -- Server-side fuzzy match is known to bug out on empty queries (e.g. typing `name.`) with blink.cmp.
+                  enableServerSideFuzzyMatch = false,
                 },
               },
             },
@@ -122,20 +117,8 @@ return {
                 -- functionLikeReturnTypes   = { enabled = true },
                 -- enumMemberValues          = { enabled = true },
               },
-              -- Additional settings you can disable for performance
-              suggest = {
-                -- todo: it's should be false i think
-                autoImports = false,                -- Disable automatic import suggestions
-                completeFunctionCalls = false,      -- Disable auto-completion of function arguments
-                names = true,                      -- Disable name suggestions
-                paths = false,                      -- Disable path suggestions
-                includeCompletionsForModuleExports = false, -- Suggest exported members from modules
-                includeCompletionsWithInsertText = true, -- Use insert text in completions (improves UX)
-                includeAutomaticOptionalChainCompletions = false, -- Suggest `?.` when applicable
-                classMemberSnippets = false,        -- Enable class member snippet completions
-                objectLiteralMethodSnippets = true, -- Enable method snippets inside object literals
-              },
-
+              -- Removed restrictive `suggest` block to restore standard TypeScript behavior
+              -- (auto-imports, object methods, and string functions will now work!).
               format = {
                 enable = false,
                 insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
@@ -155,10 +138,6 @@ return {
             },
             javascript = { -- copy same settings to JS
               tsserver                = { maxTsServerMemory = 4192 },
-              suggest                 = { autoImports = false, names = false, paths = false },
-              experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 100 },
-              },
               updateImportsOnFileMove = { enabled = "always" },
             },
             -- javascript = ts_settings,
