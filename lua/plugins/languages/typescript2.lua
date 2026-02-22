@@ -6,7 +6,7 @@
 -- true = Use typescript-tools (blazing fast, lightweight, great for huge projects)
 -- false = Use vtsls (standard VS Code typescript server ported to Neovim)
 -- ============================================================================
-local use_ts_tools = true
+local use_ts_tools = false
 
 return {
   -- Option A: nvim-lspconfig (for vtsls or default tsserver)
