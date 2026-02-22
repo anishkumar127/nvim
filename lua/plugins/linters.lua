@@ -1,3 +1,7 @@
+-- VS Code Guard: Do not load background linters if running inside VS Code!
+-- VS Code has its own native ESLint extensions that handle this correctly.
+if vim.g.vscode then return {} end
+
 return {
   {
     "mfussenegger/nvim-lint",

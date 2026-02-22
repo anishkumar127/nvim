@@ -1,5 +1,6 @@
--- if true then return {} end
--- if vim.g.vscode then return end;
+-- VS Code Guard: Do not load Neovim's TypeScript LSP server if running inside VS Code!
+-- VS Code already runs its own internal TypeScript server. Running it twice will cause extreme lag.
+if vim.g.vscode then return {} end
 
 -- ============================================================================
 -- TOGGLE THIS TO SWITCH BETWEEN `vtsls` AND `typescript-tools.nvim`

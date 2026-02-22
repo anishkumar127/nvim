@@ -1,4 +1,6 @@
--- if true then return {} end
+-- VS Code Guard: Do not load blink.cmp if running inside VS Code!
+-- VS Code already provides native intellisense and autocompletion popups.
+if vim.g.vscode then return {} end
 return {
   "saghen/blink.cmp",
   -- opts_extend = {
