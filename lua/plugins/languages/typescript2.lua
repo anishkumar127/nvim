@@ -1,9 +1,19 @@
 -- if true then return {} end
 -- if vim.g.vscode then return end;
--- make whole thing better and fast speed 
+
+-- ============================================================================
+-- TOGGLE THIS TO SWITCH BETWEEN `vtsls` AND `typescript-tools.nvim`
+-- true = Use typescript-tools (blazing fast, lightweight, great for huge projects)
+-- false = Use vtsls (standard VS Code typescript server ported to Neovim)
+-- ============================================================================
+local use_ts_tools = false
+
 return {
+  -- Option A: nvim-lspconfig (for vtsls or default tsserver)
   {
     "neovim/nvim-lspconfig",
+    -- Only load this specific config block if we are NOT using ts-tools
+    enabled = not use_ts_tools,
     dependencies = { 'saghen/blink.cmp' },
     event = "VeryLazy", -- Load LSP on demand to improve startup time
     --- @class lspconfig
@@ -52,13 +62,9 @@ return {
         --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
         --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         eslint = {
-          enabled          = true,
-          flags = {
-            allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-          },
-          -- debounce_text_changes = 600, -- wait 500 ms of idle before sending edits
-          update_in_insert = false,
-          capabilities     = require("blink.cmp").get_lsp_capabilities(),
+          -- Disabled: Running ESLint as an active LSP server is a massive performance bottleneck on large projects.
+          -- We will handle linting asynchronously via `nvim-lint` with oxlint/eslint instead.
+          enabled = false,
         },
              tsserver = {
           enabled = false,
@@ -94,18 +100,14 @@ return {
               experimental = {
                 -- maxInlayHintLength = 30,
                 completion = {
-                  enableServerSideFuzzyMatch = true,
-                  -- debounce_text_changes = 300, -- Increased debounce time for diagnostics
-                  entriesLimit = 3000,
-                  -- entriesLimit = 50,
-                  includePackageJsonAutoImports = "off",
-                  autoImportFileExcludePatterns = { "node_modules/*" },
+                  -- Server-side fuzzy match is known to bug out on empty queries (e.g. typing `name.`) with blink.cmp.
+                  enableServerSideFuzzyMatch = false,
                 },
               },
             },
             typescript = {
               tsserver = {
-                maxTsServerMemory = 4192, -- Increase memory limit (e.g., 8GB)
+                maxTsServerMemory = 8192, -- 8GB: Prevents 'tsserver crashed' errors on massive Next.js/React monorepos
               },
               updateImportsOnFileMove = { enabled = "always" },
 
@@ -125,20 +127,8 @@ return {
                 -- functionLikeReturnTypes   = { enabled = true },
                 -- enumMemberValues          = { enabled = true },
               },
-              -- Additional settings you can disable for performance
-              suggest = {
-                -- todo: it's should be false i think
-                autoImports = false,                -- Disable automatic import suggestions
-                completeFunctionCalls = false,      -- Disable auto-completion of function arguments
-                names = true,                      -- Disable name suggestions
-                paths = false,                      -- Disable path suggestions
-                includeCompletionsForModuleExports = false, -- Suggest exported members from modules
-                includeCompletionsWithInsertText = true, -- Use insert text in completions (improves UX)
-                includeAutomaticOptionalChainCompletions = false, -- Suggest `?.` when applicable
-                classMemberSnippets = false,        -- Enable class member snippet completions
-                objectLiteralMethodSnippets = true, -- Enable method snippets inside object literals
-              },
-
+              -- Removed restrictive `suggest` block to restore standard TypeScript behavior
+              -- (auto-imports, object methods, and string functions will now work!).
               format = {
                 enable = false,
                 insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
@@ -158,10 +148,6 @@ return {
             },
             javascript = { -- copy same settings to JS
               tsserver                = { maxTsServerMemory = 4192 },
-              suggest                 = { autoImports = false, names = false, paths = false },
-              experimental            = {
-                completion = { enableServerSideFuzzyMatch = true, entriesLimit = 3000 },
-              },
               updateImportsOnFileMove = { enabled = "always" },
             },
             -- javascript = ts_settings,
@@ -446,5 +432,72 @@ return {
     },
   },
 
-
+  -- Option B: typescript-tools.nvim (Blazing Fast TS Server Alternative)
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    enabled = use_ts_tools,
+    opts = {
+      -- Ensure blink.cmp autocompletion capabilities are passed perfectly!
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
+      
+      settings = {
+        -- spawn additional tsserver instance to calculate diagnostics on it
+        separate_diagnostic_server = true,
+        -- "change"|"insert_leave" determine when the server updates diagnostics
+        publish_diagnostic_on = "insert_leave",
+        -- Specify a complete list of triggers
+        tsserver_logs = "off",
+        
+        -- Support for large projects (8GB Heap Limit just like vtsls)
+        tsserver_max_memory = 8192,
+        
+        -- Code Lens / Inlay Hints are historically slow, keeping them disabled
+        code_lens = "off",
+        disable_member_code_lens = true,
+        
+        jsx_close_tag = {
+          enable = true,
+          filetypes = { "javascriptreact", "typescriptreact" },
+        },
+        
+        -- To use the fastest settings:
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = "none",
+          includeCompletionsForModuleExports = true,
+          quotePreference = "single",
+        },
+      },
+      
+      -- Add similar keymaps for typescript-tools context actions
+      on_attach = function(client, bufnr)
+        local wk = require("which-key")
+        
+        wk.add({
+          { "<leader>t", group = "+typescript" },
+          { "<leader>to", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize Imports", buffer = bufnr },
+          { "<leader>ta", "<cmd>TSToolsAddMissingImports<cr>", desc = "Add Missing Imports", buffer = bufnr },
+          { "<leader>tr", "<cmd>TSToolsRemoveUnusedImports<cr>", desc = "Remove Unused Imports", buffer = bufnr },
+          { "<leader>ti", "<cmd>TSToolsSortImports<cr>", desc = "Sort Imports", buffer = bufnr },
+          { "<leader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix All", buffer = bufnr },
+          { "<leader>gR", "<cmd>TSToolsFileReferences<cr>", desc = "File References", buffer = bufnr },
+          { "<leader>tR", "<cmd>TSToolsRenameFile<cr>", desc = "Rename File", buffer = bufnr },
+        })
+      end,
+    },
+    config = function(_, opts)
+      -- Force Neovim to show virtual_text (inline errors) exactly like vtsls did
+      vim.diagnostic.config({
+        virtual_text = {
+          prefix = "", -- the dot or arrow prefix
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
+      
+      require("typescript-tools").setup(opts)
+    end,
+  },
 }
