@@ -18,12 +18,10 @@ return {
         return { "eslint_d" }
       end
 
-      -- Fixed: BufEnter → BufReadPost
-      -- BufEnter fires on EVERY window switch which is wasteful.
-      -- BufReadPost fires only when a file is first read.
-      vim.api.nvim_create_autocmd("BufReadPost", {
+      -- Reverted back to BufEnter: this fires BEFORE BufReadPost in Neovim's
+      -- event sequence, ensuring linters_by_ft is configured before try_lint() runs.
+      vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
-        group = vim.api.nvim_create_augroup("nvim-lint-detect", { clear = true }),
         callback = function()
           local linters = get_js_linter()
           require("lint").linters_by_ft["javascript"] = linters

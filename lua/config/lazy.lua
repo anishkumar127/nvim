@@ -9,50 +9,28 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 -- =============================================================================
--- Build the plugin spec dynamically based on environment
--- =============================================================================
-local is_embedded = _G.Utils and _G.Utils.is_embedded or vim.g.vscode ~= nil
-
-local spec = {
-  -- Core LazyVim framework (always loaded)
-  { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-}
-
-if not is_embedded then
-  -- These plugins need a real Neovim UI (terminal or Neovide).
-  -- They break, crash, or conflict inside VS Code/Antigravity/Cursor/Windsurf.
-  local ui_plugins = {
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "plugins.colorscheme" },
-    { import = "plugins.ui" },
-    { import = "plugins.terminal.toggleterminal" },
-    { import = "plugins.formatting.conform" },
-    { import = "plugins.linters" },
-  }
-  for _, p in ipairs(ui_plugins) do
-    spec[#spec + 1] = p
-  end
-end
-
--- These plugins work fine in all environments
-local universal_plugins = {
-  { import = "plugins.editor" },
-  { import = "plugins.old" },
-  { import = "plugins.coding.inc-rename" },
-  { import = "plugins.languages.typescript2" },
-  { import = "plugins.languages.pretty_hover" },
-  -- import/override with your plugins (top-level plugins/ directory)
-  { import = "plugins" },
-}
-for _, p in ipairs(universal_plugins) do
-  spec[#spec + 1] = p
-end
-
--- =============================================================================
--- Lazy.nvim setup
+-- Plugin spec — each file has its own `is_embedded` guard, so we keep
+-- the spec flat and in the EXACT same order as the original config.
 -- =============================================================================
 require("lazy").setup({
-  spec = spec,
+  spec = {
+    -- Core LazyVim framework
+    { "LazyVim/LazyVim",                         import = "lazyvim.plugins" },
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    -- Custom plugins (each file guards itself for embedded environments)
+    { import = "plugins.colorscheme" },
+    { import = "plugins.editor" },
+    { import = "plugins.ui" },
+    { import = "plugins.old" },
+    { import = "plugins.linters" },
+    { import = "plugins.coding.inc-rename" },
+    { import = "plugins.formatting.conform" },
+    { import = "plugins.terminal.toggleterminal" },
+    { import = "plugins.languages.typescript2" },
+    { import = "plugins.languages.pretty_hover" },
+    -- import/override with your plugins (top-level plugins/ directory)
+    { import = "plugins" },
+  },
   defaults = {
     lazy = false,
     version = false, -- always use the latest git commit
@@ -69,15 +47,13 @@ require("lazy").setup({
         "tohtml",
         "tutor",
         "zipPlugin",
-        -- Additional disabled plugins for faster startup
+        -- Additional safe disabled plugins for faster startup
         "2html_plugin",
         "getscript",
         "getscriptPlugin",
         "logipat",
         "vimball",
         "vimballPlugin",
-        "rplugin",
-        "rrhelper",
         "spellfile_plugin",
       },
     },
