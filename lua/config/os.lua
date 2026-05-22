@@ -1,7 +1,6 @@
-
 -- ~/.config/nvim/lua/config/os.lua
-local uv     = vim.loop
-local uname  = uv.os_uname()
+local uv    = vim.uv or vim.loop
+local uname = uv.os_uname()
 
 local M = {}
 

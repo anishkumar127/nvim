@@ -1,26 +1,29 @@
+-- nvim-lint — async linting
+-- Disabled in embedded environments (VS Code runs its own linters)
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
 return {
   {
     "mfussenegger/nvim-lint",
     event = "LazyFile",
     opts = function(_, opts)
       opts.linters_by_ft = opts.linters_by_ft or {}
-      
-      -- Dynamic function to pick oxlint if available, else eslint
+
+      -- Dynamic function: pick oxlint if config exists, else eslint_d
       local function get_js_linter()
-        local cwd = vim.uv.cwd() or ""
-        -- Check for oxlint config file
-        local has_oxlint_json = vim.fn.filereadable(cwd .. "/oxlint.json") == 1
-        
-        if has_oxlint_json then
+        local cwd = (vim.uv or vim.loop).cwd() or ""
+        if vim.fn.filereadable(cwd .. "/oxlint.json") == 1 then
           return { "oxlint" }
         end
-        
-        -- You could also check package.json for "oxlint" here if needed
         return { "eslint_d" }
       end
-      -- Hook into BufEnter to dynamically swap between oxlint and eslint per project
-      vim.api.nvim_create_autocmd("BufEnter", {
+
+      -- Fixed: BufEnter → BufReadPost
+      -- BufEnter fires on EVERY window switch which is wasteful.
+      -- BufReadPost fires only when a file is first read.
+      vim.api.nvim_create_autocmd("BufReadPost", {
         pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
+        group = vim.api.nvim_create_augroup("nvim-lint-detect", { clear = true }),
         callback = function()
           local linters = get_js_linter()
           require("lint").linters_by_ft["javascript"] = linters
@@ -30,8 +33,7 @@ return {
         end,
       })
 
-      -- ACTUALLY TRIGGER LINTING ON FILE EVENTS
-      -- If we don't call `try_lint()`, nvim-lint never runs!
+      -- Trigger linting on file events
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
         group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
         callback = function()
