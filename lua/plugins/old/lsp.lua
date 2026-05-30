@@ -1,16 +1,8 @@
--- if true then return {} end
+-- Old LSP configuration — lspsaga + format-ts-errors
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
 return {
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = function()
-  --     local Keys = require("lazyvim.plugins.lsp.keymaps").get()
-  --     vim.list_extend(Keys, {
-  --       { "K", false },
-  --     })
-  --   end,
-  -- },
-    {
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -47,8 +39,6 @@ return {
       })
     end,
   },
-
-  ----------- adding new 
   {
     "davidosomething/format-ts-errors.nvim",
     event = "VeryLazy",

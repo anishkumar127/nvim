@@ -6,95 +6,69 @@ vim.g.autoformat = false
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local is_embedded = _G.Utils and _G.Utils.is_embedded or vim.g.vscode ~= nil
 
--- 1. [REMOVED LAGGY MACRO] Removed manual 'InsertEnter' and 'InsertLeave' diagnostic toggles.
--- Reason: You already have `update_in_insert = false` in your LSP configuration! 
--- Manually calling `vim.diagnostic.disable()` and `enable()` on every single keystroke mode-switch 
--- forces Neovim to recalculate and redraw the entire screen, causing MASSSIVE lag spikes on large files.
+-- =============================================================================
+-- Universal Autocmds (work in ALL environments)
+-- =============================================================================
 
 -- Highlight yanked text
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("YankHighlight", {}),
   callback = function()
-      vim.highlight.on_yank()
+    vim.highlight.on_yank()
   end,
 })
+
 -- Disable diagnostics ONLY inside node_modules buffers
-autocmd({"BufNewFile", "BufRead"}, {
-  pattern = {"**/node_modules/**", "node_modules", "/node_modules/*"},
+autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "**/node_modules/**", "node_modules", "/node_modules/*" },
   group = augroup("DisableEslintOnNodeModules", {}),
+  desc = "Disable diagnostics for node_modules files",
   callback = function(args)
-      -- HUGE LAG FIX: You MUST specify the buffer! 
-      -- If you just run `vim.diagnostic.enable(false)`, Neovim completely shuts down 
-      -- diagnostics GLOBALLY across all tabs the moment you open any node_modules file!
-      vim.diagnostic.enable(false, { bufnr = args.buf })
+    vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
 })
 
-
-autocmd("FileType", {
-  pattern = "*",
-  group = augroup("diable-new-line-comments", {}),
-  callback = function()
-      vim.opt_local.formatoptions:remove("o")
-      vim.opt_local.formatoptions:remove("r")
-      vim.opt_local.formatoptions:remove("c")
-  end,
-})
-
-
-
-autocmd("ColorScheme", {
-  group = augroup("cursor-highlight", {}),
-  callback = function()
-      if vim.o.background == "light" then
-          vim.cmd("highlight! clear Cursor")
-      end
-  end,
-})
-
+-- Detect filetype on files with no extension after saving
 autocmd("BufWritePost", {
   pattern = "*",
   group = augroup("FileDetect", {}),
-  desc = "Detect filetype on files with on extension after saving the file",
+  desc = "Detect filetype on files with no extension after saving",
   callback = function()
-      if vim.bo.filetype == "" then
-          vim.cmd("filetype detect")
-      end
+    if vim.bo.filetype == "" then
+      vim.cmd("filetype detect")
+    end
   end,
 })
 
+-- =============================================================================
+-- Neovim-only Autocmds (NOT for VS Code/Antigravity/Cursor/Windsurf)
+-- =============================================================================
+if not is_embedded then
 
--- Remove trailing whitespace on save
--- autocmd("BufWritePre", {
---   pattern = "*",
---   callback = function()
---     vim.cmd([[silent! %s/\s\+$//e]])
---   end,
--- })
+  -- Disable auto-comment continuation on new lines
+  autocmd("FileType", {
+    pattern = "*",
+    group = augroup("disable-new-line-comments", {}),
+    desc = "Disable auto-comment on new lines",
+    callback = function()
+      vim.opt_local.formatoptions:remove("o")
+      vim.opt_local.formatoptions:remove("r")
+      vim.opt_local.formatoptions:remove("c")
+    end,
+  })
 
+  -- Fix cursor highlight in light mode
+  autocmd("ColorScheme", {
+    group = augroup("cursor-highlight", {}),
+    desc = "Clear cursor highlight in light backgrounds",
+    callback = function()
+      if vim.o.background == "light" then
+        vim.cmd("highlight! clear Cursor")
+      end
+    end,
+  })
 
--- Auto save buffer on leave
--- autocmd("BufLeave", {
---   pattern = "*",
---   callback = function()
---     vim.cmd("silent! wa")
---   end,
--- })
-
-
-
-  -- Automatically sort classes in a .tsx file on save
--- autocmd("BufWritePost", {
---   pattern = { "*.tsx", "*.vue" },
---   callback = function()
---     local clients = vim.lsp.get_clients({ name = "tailwindcss" })
---     if #clients > 0 then
---       local ok, lsp = pcall(require, "tailwind-tools.lsp")
---       if ok and lsp.sort_classes then
---         pcall(lsp.sort_classes, true)
---       end
---     end
---   end,
--- })
+end

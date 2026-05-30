@@ -3,6 +3,20 @@ local M = {
     icons = require("utils.icons"),
     lsp = require("utils.lsp"),
 }
+
+-- =============================================================================
+-- Environment Detection
+-- =============================================================================
+-- VS Code, Antigravity, Cursor, Windsurf all set `vim.g.vscode = true`
+-- when they embed Neovim as a headless backend.
+M.is_vscode   = vim.g.vscode ~= nil
+M.is_neovide  = vim.g.neovide == true
+-- "Embedded" means any GUI IDE embedding Neovim (no real TUI).
+-- Plugins that need a terminal UI (floats, dashboard, neo-tree, etc.) MUST
+-- be disabled in embedded environments.
+M.is_embedded = M.is_vscode
+-- "Terminal" means raw terminal Neovim (not Neovide, not embedded).
+M.is_terminal = not M.is_embedded and not M.is_neovide
 -- Merge two tables
 ---@param t1 table
 ---@param t2 table

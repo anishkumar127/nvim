@@ -1,25 +1,26 @@
--- if vim.g.vscode then return end;
+-- Grug-far — search and replace
+if _G.Utils and _G.Utils.is_embedded then return {} end
 
 return {
   {
-    'MagicDuck/grug-far.nvim',
+    "MagicDuck/grug-far.nvim",
     opts = { headerMaxWidth = 80 },
-    cmd = 'GrugFar',
+    cmd = "GrugFar",
     keys = {
       {
-        '<leader>sr',
+        "<leader>sr",
         function()
-          local grug = require 'grug-far'
-          local ext = vim.bo.buftype == '' and vim.fn.expand '%:e'
+          local grug = require("grug-far")
+          local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
           grug.open {
             transient = true,
             prefills = {
-              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
+              filesFilter = ext and ext ~= "" and "*." .. ext or nil,
             },
           }
         end,
-        mode = { 'n', 'v' },
-        desc = 'Replace',
+        mode = { "n", "v" },
+        desc = "Search and Replace",
       },
     },
   },

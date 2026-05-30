@@ -1,8 +1,3 @@
-if true then return {} end
-return {
-
-    {
-      "folke/noice.nvim",
-      enabled = false,
-    },
-  }
+-- This file is intentionally empty.
+-- Noice is managed by LazyVim defaults.
+return {}
