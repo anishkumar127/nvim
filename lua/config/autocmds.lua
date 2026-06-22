@@ -17,19 +17,25 @@ autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("YankHighlight", {}),
   callback = function()
-    vim.highlight.on_yank()
+    if vim.hl and vim.hl.on_yank then
+      vim.hl.on_yank()
+    else
+      vim.highlight.on_yank()
+    end
   end,
 })
 
--- Disable diagnostics ONLY inside node_modules buffers
-autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = { "**/node_modules/**", "node_modules", "/node_modules/*" },
-  group = augroup("DisableEslintOnNodeModules", {}),
-  desc = "Disable diagnostics for node_modules files",
-  callback = function(args)
-    vim.diagnostic.enable(false, { bufnr = args.buf })
-  end,
-})
+-- Disable diagnostics ONLY inside node_modules buffers (standalone Neovim)
+if not is_embedded then
+  autocmd({ "BufNewFile", "BufRead" }, {
+    pattern = { "**/node_modules/**", "node_modules", "/node_modules/*" },
+    group = augroup("DisableEslintOnNodeModules", {}),
+    desc = "Disable diagnostics for node_modules files",
+    callback = function(args)
+      vim.diagnostic.enable(false, { bufnr = args.buf })
+    end,
+  })
+end
 
 -- Detect filetype on files with no extension after saving
 autocmd("BufWritePost", {

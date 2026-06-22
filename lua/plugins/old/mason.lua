@@ -1,5 +1,6 @@
--- if true then return {} end
--- it think i need to find the alternative for this.
+-- Mason — LSP/tool installer (standalone Neovim only)
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
 return {
   {
     -- "williamboman/mason.nvim",
@@ -13,6 +14,7 @@ return {
         -- "json-lsp",
         -- "lua-language-server",
         "prettierd",
+        "tsgo",
         -- "ruff",
         -- "ruff-lsp",
         -- "shellcheck",

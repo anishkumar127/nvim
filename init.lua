@@ -5,6 +5,8 @@ _G.Utils = require("utils")
 
 -- =============================================================================
 -- Settings that ONLY apply in real Neovim (not VS Code/Antigravity/Cursor/Windsurf)
+-- In Cursor: native Tab completion, LSP, diagnostics, and formatting are used.
+-- blink.cmp, NeoCodeium, and other completion plugins are disabled via disable.lua.
 -- =============================================================================
 if not Utils.is_embedded then
   vim.env.CC = "clang"

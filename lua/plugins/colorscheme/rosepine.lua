@@ -5,10 +5,11 @@ return {
   {
     "rose-pine/neovim",
     priority = 1000,
+    lazy = false,
     config = function()
       require("rose-pine").setup({
-        variant = "auto",
-        dark_variant = "main",
+        variant = "moon",
+        dark_variant = "moon",
         dim_inactive_windows = false,
         extend_background_behind_borders = false,
 
@@ -60,7 +61,7 @@ return {
         },
       })
 
-      vim.cmd("colorscheme rose-pine")
+      vim.cmd("colorscheme rose-pine-moon")
     end,
   },
   {

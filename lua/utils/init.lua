@@ -9,6 +9,7 @@ local M = {
 -- =============================================================================
 -- VS Code, Antigravity, Cursor, Windsurf all set `vim.g.vscode = true`
 -- when they embed Neovim as a headless backend.
+-- Cursor uses native Tab completion — blink.cmp and NeoCodeium are disabled in embedded mode.
 M.is_vscode   = vim.g.vscode ~= nil
 M.is_neovide  = vim.g.neovide == true
 -- "Embedded" means any GUI IDE embedding Neovim (no real TUI).

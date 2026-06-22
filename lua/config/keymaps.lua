@@ -24,9 +24,11 @@ map("n", "<Leader>j", "mzyyjp`z", dup_opts)
 map("v", "<Leader>k", "yP", dup_opts)
 map("v", "<Leader>j", "yp", dup_opts)
 
--- Split window
-map("n", "<leader>ss", ":split<Return><C-w>w", { desc = "Split window horizontally" })
-map("n", "<leader>sv", ":vsplit<Return><C-w>w", { desc = "Split window vertically" })
+-- Split window (standalone only — Cursor maps <leader>ss to symbol search)
+if not (_G.Utils and _G.Utils.is_embedded) then
+  map("n", "<leader>ss", ":split<Return><C-w>w", { desc = "Split window horizontally" })
+  map("n", "<leader>sv", ":vsplit<Return><C-w>w", { desc = "Split window vertically" })
+end
 
 -- Move between quickfix items
 map("n", "<C-p>", "<cmd>cprev<CR>zz", { desc = "Previous quickfix item" })

@@ -4,6 +4,7 @@ if _G.Utils and _G.Utils.is_embedded then return {} end
 return {
   {
     "nvim-mini/mini.nvim",
+    event = "VeryLazy",
     config = function()
       -- mini.ai — enhanced text objects
       require("mini.ai").setup {

@@ -14,9 +14,8 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 -- =============================================================================
 require("lazy").setup({
   spec = {
-    -- Core LazyVim framework
-    { "LazyVim/LazyVim",                         import = "lazyvim.plugins" },
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    -- Core LazyVim framework (auto-loads vscode extra when vim.g.vscode is set)
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- Custom plugins (each file guards itself for embedded environments)
     { import = "plugins.colorscheme" },
     { import = "plugins.editor" },
@@ -32,11 +31,11 @@ require("lazy").setup({
     { import = "plugins" },
   },
   defaults = {
-    lazy = false,
+    lazy = true,
     version = false, -- always use the latest git commit
   },
   install = { colorscheme = { "rose-pine-moon" } },
-  checker = { enabled = true, notify = false },
+  checker = { enabled = not vim.g.vscode, notify = false },
   performance = {
     cache = { enabled = true },
     rtp = {

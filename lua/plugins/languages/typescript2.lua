@@ -2,12 +2,31 @@
 -- VS Code/Antigravity/Cursor/Windsurf have their own TS server — skip this entirely.
 if _G.Utils and _G.Utils.is_embedded then return {} end
 
+-- tsgo (fast diagnostics) + vtsls (code actions, refactors, inlay hints, etc.)
+-- https://github.com/sergiornelas/nvim/tree/main/lua/plugins/lsp
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  if client and client.name == "vtsls" then
+    return
+  end
+  vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+end
+
 -- ============================================================================
 -- TOGGLE THIS TO SWITCH BETWEEN `vtsls` AND `typescript-tools.nvim`
 -- true = Use typescript-tools (blazing fast, lightweight, great for huge projects)
--- false = Use vtsls (standard VS Code typescript server ported to Neovim)
+-- false = Use vtsls + tsgo dual-server setup (recommended)
 -- ============================================================================
 local use_ts_tools = false
+
+local ts_filetypes = {
+  "javascript",
+  "javascriptreact",
+  "javascript.jsx",
+  "typescript",
+  "typescriptreact",
+  "typescript.tsx",
+}
 
 return {
   -- Option A: nvim-lspconfig (for vtsls)
@@ -51,14 +70,7 @@ return {
         angularls = { enabled = false },
         vtsls = {
           capabilities = require("blink.cmp").get_lsp_capabilities(),
-          filetypes = {
-            "javascript",
-            "javascriptreact",
-            "javascript.jsx",
-            "typescript",
-            "typescriptreact",
-            "typescript.tsx",
-          },
+          filetypes = ts_filetypes,
           settings = {
             complete_function_calls = true,
             vtsls = {
@@ -76,12 +88,12 @@ return {
               },
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
-                enumMemberValues = { enabled = false },
-                functionLikeReturnTypes = { enabled = false },
-                parameterNames = { enabled = false },
-                parameterTypes = { enabled = false },
-                propertyDeclarationTypes = { enabled = false },
-                variableTypes = { enabled = false },
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = true },
               },
               format = {
                 enable = false,
@@ -277,6 +289,10 @@ return {
             },
           },
         },
+        tsgo = {
+          enabled = true,
+          filetypes = ts_filetypes,
+        },
       },
       setup = {
         tsserver = function()
@@ -355,8 +371,27 @@ return {
             opts.settings.javascript or {}
           )
         end,
+        tsgo = function()
+          require("utils.lsp").on_attach(function(client)
+            require("plugins.languages.tsgo_capabilities").apply(client)
+          end, "tsgo")
+        end,
       },
     },
+  },
+
+  -- Keep both tsgo + vtsls enabled (LazyVim typescript extra enables only one)
+  {
+    "neovim/nvim-lspconfig",
+    enabled = not use_ts_tools,
+    opts = function(_, opts)
+      opts.servers = opts.servers or {}
+      opts.servers.tsserver = vim.tbl_extend("force", opts.servers.tsserver or {}, { enabled = false })
+      opts.servers.ts_ls = vim.tbl_extend("force", opts.servers.ts_ls or {}, { enabled = false })
+      opts.servers.vtsls = vim.tbl_extend("force", opts.servers.vtsls or {}, { enabled = true })
+      opts.servers.tsgo = vim.tbl_extend("force", opts.servers.tsgo or {}, { enabled = true })
+      return opts
+    end,
   },
 
   -- Option B: typescript-tools.nvim (Blazing Fast TS Server Alternative)

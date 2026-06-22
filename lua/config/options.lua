@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 local opt = vim.opt
-local is_embedded = vim.g.vscode ~= nil
+local is_embedded = _G.Utils and _G.Utils.is_embedded or vim.g.vscode ~= nil
 
 -- =============================================================================
 -- Universal Options (work in ALL environments)
@@ -16,7 +16,9 @@ vim.g.loaded_perl_provider = 0
 
 -- Disable SQL completion default maps (prevents <C-c> hijacking)
 vim.g.omni_sql_no_default_maps = 1
-vim.g.lazygit_config = true
+if not is_embedded then
+  vim.g.lazygit_config = true
+end
 
 -- Wildignore — stuff to ignore when tab completing
 opt.wildignore = {
@@ -44,13 +46,15 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 
 -- General
+opt.mouse = "a"
 opt.scrolloff = 8
 opt.linebreak = true
-opt.mouse = "a"
-opt.clipboard = "unnamedplus"
+if not is_embedded then
+  opt.clipboard = "unnamedplus"
+end
 opt.breakindent = true
 opt.formatoptions = vim.o.formatoptions:gsub("cro1", "")
-opt.updatetime = 50 -- Super fast diagnostic updates (default is 4000)
+opt.updatetime = is_embedded and 250 or 100
 
 -- =============================================================================
 -- Neovim-only Options (NOT for VS Code/Antigravity/Cursor/Windsurf)

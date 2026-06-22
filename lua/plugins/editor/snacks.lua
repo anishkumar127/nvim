@@ -1,62 +1,66 @@
 -- Snacks.nvim — picker, dashboard, terminal, indent, etc.
 local is_embedded = _G.Utils and _G.Utils.is_embedded or vim.g.vscode ~= nil
 
+-- Cursor/VS Code: keep snacks on the whitelist but disable all UI modules.
+-- LazyVim's vscode extra does this too; we repeat it so later opts merges don't re-enable features.
+if is_embedded then
+  return {
+    "folke/snacks.nvim",
+    opts = {
+      bigfile = { enabled = false },
+      dashboard = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = false },
+      notifier = { enabled = false },
+      picker = { enabled = false },
+      profiler = { enabled = false },
+      quickfile = { enabled = false },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+    },
+  }
+end
+
 local uv = vim.uv or vim.loop
 local uname = uv.os_uname()
 local is_win = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 local is_wsl = vim.fn.has("wsl") == 1 or (uname.release and uname.release:match("Microsoft"))
 
 local default_shell = vim.env.SHELL or vim.fn.expand("$SHELL") or vim.o.shell
-local opts = {}
-
--- =============================================================================
--- Features that work in ALL environments
--- =============================================================================
 
 ---@class snacks.indent.Config
-opts.indent = {
-  enabled = true,
-  chunk = {
+local opts = {
+  indent = {
     enabled = true,
-    only_current = false,
-    hl = "SnacksIndentChunk",
-    char = {
-      corner_top = "┌",
-      corner_bottom = "└",
-      horizontal = "─",
-      vertical = "│",
-      arrow = "─",
+    chunk = {
+      enabled = true,
+      only_current = false,
+      hl = "SnacksIndentChunk",
+      char = {
+        corner_top = "┌",
+        corner_bottom = "└",
+        horizontal = "─",
+        vertical = "│",
+        arrow = "─",
+      },
     },
   },
-}
-
----@class snacks.bigfile.Config
-opts.bigfile = { enabled = true }
-
-opts.quickfile = { enabled = true }
-opts.words = { enabled = true }
-opts.scroll = { enabled = false }
-
--- =============================================================================
--- Features that ONLY work in real Neovim (not embedded)
--- =============================================================================
-if not is_embedded then
-  opts.terminal = {
+  bigfile = { enabled = true },
+  quickfile = { enabled = true },
+  words = { enabled = true },
+  scroll = { enabled = false },
+  profiler = { enabled = false },
+  terminal = {
     win = {
       wo = { winbar = "" },
     },
-  }
-
-  ---@class snacks.image.Config
-  opts.image = {
+  },
+  image = {
     enabled = true,
     doc = { inline = false },
-  }
-
-  opts.profiler = { enabled = true }
-
-  ---@class snacks.picker.Config
-  opts.picker = {
+  },
+  picker = {
     ignored = true,
     exclude = { ".git/**", "node_modules/**", "dist/**", "drizzle/**", "migrations/**" },
     layout = {
@@ -76,10 +80,8 @@ if not is_embedded then
         { win = "preview", title = "{preview}", border = "single", width = 0.6 },
       },
     },
-  }
-
-  ---@class snacks.dashboard.Config
-  opts.dashboard = {
+  },
+  dashboard = {
     width = 60,
     row = nil,
     col = nil,
@@ -118,9 +120,7 @@ if not is_embedded then
       {
         pane = 2,
         section = "terminal",
-        cmd = (is_win and not is_wsl)
-          and "Get-Date"
-          or default_shell,
+        cmd = (is_win and not is_wsl) and "Get-Date" or default_shell,
         height = 3,
         padding = 2,
       },
@@ -141,16 +141,13 @@ if not is_embedded then
       },
       { section = "startup" },
     },
-  }
-
-  opts.notifier = {
+  },
+  notifier = {
     enabled = true,
     timeout = 3000,
-  }
-
-  opts.statuscolumn = { enabled = true }
-
-  opts.styles = {
+  },
+  statuscolumn = { enabled = true },
+  styles = {
     notification = {
       border = "single",
       wo = { wrap = false },
@@ -169,12 +166,12 @@ if not is_embedded then
       col = 1,
       b = { completion = false },
     },
-  }
-end -- end of is_embedded guard
+  },
+}
 
 return {
   "folke/snacks.nvim",
   priority = 1000,
-  lazy = false,
+  event = "VimEnter",
   opts = opts,
 }

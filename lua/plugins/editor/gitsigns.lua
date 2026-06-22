@@ -1,4 +1,6 @@
--- Gitsigns — git decorations in the sign column
+-- Gitsigns — git decorations in the sign column (standalone Neovim only)
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
 return {
   {
     "lewis6991/gitsigns.nvim",
