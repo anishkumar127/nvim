@@ -1,0 +1,16 @@
+---
+description: Read teach.md for Neovim keymaps, Cursor shortcuts, and environment-specific behavior
+alwaysApply: true
+---
+
+# Neovim config reference
+
+When the user asks about keymaps, shortcuts, hotkeys, Cursor/VS Code Neovim integration, or "how do I…" in this config:
+
+1. **Read `teach.md`** at the repo root first — it is the source of truth for shortcuts.
+2. Cross-check live mappings in `lua/config/keymaps.lua` and `lua/config/vscode-keymaps.lua` if something may have changed.
+3. Remember: **Cursor insert-mode `jj`** uses `vscode-neovim.compositeKeys` in Cursor settings, not a normal Neovim map.
+4. **Cursor/VS Code** (`vim.g.vscode`): use `vscode.call()` maps; native Tab completion; blink.cmp disabled.
+5. **Standalone Neovim/Neovide**: `jj` in insert mode; blink.cmp on `<C-j>`; full plugin stack.
+
+When adding or changing keymaps, update `teach.md` in the same change.

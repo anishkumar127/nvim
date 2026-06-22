@@ -1,12 +1,21 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
+-- Keymap cheat sheet: teach.md
 vim.lsp.log.set_level("off")
 
 _G.Utils = require("utils")
+
+-- Cursor / VS Code embedded Neovim keymaps (vscode.call wrappers)
+if Utils.is_embedded then
+  require("config.vscode-keymaps")
+end
 
 -- =============================================================================
 -- Settings that ONLY apply in real Neovim (not VS Code/Antigravity/Cursor/Windsurf)
 -- In Cursor: native Tab completion, LSP, diagnostics, and formatting are used.
 -- blink.cmp, NeoCodeium, and other completion plugins are disabled via disable.lua.
+--
+-- "jj" to exit insert mode in Cursor requires vscode-neovim.compositeKeys in
+-- Cursor settings.json (normal Neovim insert mappings do not work in insert mode).
 -- =============================================================================
 if not Utils.is_embedded then
   vim.env.CC = "clang"

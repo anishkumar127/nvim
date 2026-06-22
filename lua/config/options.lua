@@ -73,3 +73,6 @@ if not is_embedded then
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 end
+
+-- Quick open cheat sheet from anywhere
+vim.api.nvim_create_user_command("Teach", "edit " .. vim.fn.stdpath("config") .. "/teach.md", { desc = "Open keymap cheat sheet" })
