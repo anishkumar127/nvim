@@ -1,5 +1,4 @@
 -- Main harpoon configuration with custom status UI
--- (editor/harpoon.lua is disabled to avoid duplicate keymaps)
 if _G.Utils and _G.Utils.is_embedded then return {} end
 
 local status_timer
