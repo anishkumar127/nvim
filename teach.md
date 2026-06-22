@@ -16,7 +16,7 @@ Your personal reference for shortcuts in **Cursor / VS Code** (embedded Neovim) 
 | `jj` | Exit insert (via `vscode-neovim.compositeKeys` in Cursor settings) | Exit insert |
 | `Esc` | Exit insert (built-in) | Exit insert |
 
-**Cursor setup** (already in your `settings.json`):
+**Cursor setup** — copy into your **Cursor User settings** (`%APPDATA%\Cursor\User\settings.json`), not just this repo. Reference copy: `.vscode/settings.json`.
 
 ```json
 "vscode-neovim.compositeKeys": {
@@ -134,7 +134,7 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | Key | Action |
 |-----|--------|
 | `<leader>w` | Save |
-| `<leader>wf` | Save (same as save in Cursor) |
+| `<leader>wf` | Save **without** formatting |
 | `<leader>q` | Close file |
 | `<leader>qq` | Close all editors |
 | `<leader>fn` | New untitled file |
@@ -144,17 +144,15 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | `<leader>xx` | Problems panel |
 | `<leader>xq` | Output panel |
 
-### Plugins still active in Cursor (LazyVim whitelist)
+### LazyVim plugins in Cursor (whitelist)
+
+Custom `mini.lua` (gza / HJKL move) does **not** load in Cursor. LazyVim's vscode extra keeps a small subset with **default** LazyVim mappings:
 
 | Key | Action |
 |-----|--------|
-| `gcc` | Toggle comment (mini.comment) |
-| `gza` + motion | Add surrounding (e.g. quotes, parens) |
-| `gzd` + motion | Delete surrounding |
-| `gzr` + motion | Replace surrounding |
-| `gzf` / `gzF` | Find surrounding forward / backward |
-| `H` / `J` / `K` / `L` | Move line/selection left/down/up/right (mini.move) |
-| `>` / `<` (visual) | Indent with selection kept |
+| `gcc` / `gbc` | Toggle / line comment (`mini.comment`) |
+| `sa` / `sd` / `sr` / `sf` | Surround add / delete / replace / find (LazyVim defaults) |
+| `>` / `<` (visual) | Indent with selection kept (universal map) |
 
 ---
 
@@ -203,9 +201,8 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | `Alt-f` | Accept full suggestion |
 | `Alt-w` | Accept word |
 | `Alt-a` | Accept line |
-| `Alt-e` | Clear suggestion |
-| `Alt-]` | Next suggestion |
-| `Alt-[` | Previous suggestion |
+| `Alt-e` | Cycle suggestions |
+| `Alt-c` | Clear suggestion |
 
 ### Git (gitsigns — standalone only)
 
@@ -224,6 +221,16 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | `<leader>gdi` | Diff against index |
 | `<leader>gdc` | Diff against commit |
 | `<leader>gds` | Toggle deleted lines |
+
+### Harpoon (standalone only)
+
+| Key | Action |
+|-----|--------|
+| `s7` | Add current file |
+| `s8` | Remove current file |
+| `s9` | Toggle quick menu |
+| `su` / `si` / `so` / `sp` | Jump to slot 1–4 |
+| `s[` / `s]` | Jump to slot 5–6 |
 
 ### Surround & move (mini.nvim — standalone only)
 
@@ -255,7 +262,7 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | `:LazyExtras` | Enable/disable LazyVim extras |
 | `:checkhealth` | Diagnose issues |
 | `:messages` | Show recent errors/warnings |
-| `:Teach` | Open this file (if you add the command below) |
+| `:Teach` | Open this cheat sheet |
 
 ---
 
@@ -268,6 +275,7 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 | `lua/config/vscode-keymaps.lua` | Cursor / VS Code maps |
 | `lua/plugins/editor/mini.lua` | Surround, move, statusline |
 | `lua/plugins/editor/gitsigns.lua` | Git hunk maps (standalone) |
+| `lua/plugins/harpoon.lua` | Harpoon marks (standalone) |
 | `init.lua` | Bootstrap, loads vscode-keymaps in Cursor |
 
 ---
@@ -281,4 +289,4 @@ Uses Cursor's built-in features (LSP, git, UI). **Use Tab for Cursor autocomplet
 
 ---
 
-*Last updated: config audit session — keep in sync when adding keymaps.*
+*Last updated: config cleanup — keep in sync when adding keymaps.*

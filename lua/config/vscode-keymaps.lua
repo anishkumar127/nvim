@@ -17,7 +17,14 @@ local function call(cmd, opts)
   end
 end
 
+local done = false
+
 local function setup()
+  if done then
+    return
+  end
+  done = true
+
   -- ===========================================================================
   -- LSP / diagnostics (leader c*)
   -- ===========================================================================
@@ -84,7 +91,7 @@ local function setup()
   -- Editing / buffers
   -- ===========================================================================
   map("n", "<leader>w", call("workbench.action.files.save"), { desc = "Save" })
-  map("n", "<leader>wf", call("workbench.action.files.save"), { desc = "Save (no format)" })
+  map("n", "<leader>wf", call("workbench.action.files.saveWithoutFormatting"), { desc = "Save without formatting" })
   map("n", "<leader>q", call("workbench.action.closeActiveEditor"), { desc = "Close file" })
   map("n", "<leader>qq", call("workbench.action.closeAllEditors"), { desc = "Close all" })
   map("n", "<leader>fn", call("workbench.action.files.newUntitledFile"), { desc = "New file" })

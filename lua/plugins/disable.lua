@@ -24,5 +24,5 @@ return {
   -- mini.statusline replaces lualine
   { "nvim-lualine/lualine.nvim", enabled = false },
   -- mini.lua configures surround; avoid double-setup from LazyVim extra
-  { "echasnovski/mini.surround", enabled = false },
+  { "nvim-mini/mini.surround", enabled = false },
 }
