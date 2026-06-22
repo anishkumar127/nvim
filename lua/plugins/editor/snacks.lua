@@ -119,7 +119,7 @@ if not is_embedded then
         pane = 2,
         section = "terminal",
         cmd = (is_win and not is_wsl)
-          and [[powershell -NoProfile -Command "Get-Date"]]
+          and "Get-Date"
           or default_shell,
         height = 3,
         padding = 2,

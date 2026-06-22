@@ -1,5 +1,5 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
-vim.lsp.set_log_level("off")
+vim.lsp.log.set_level("off")
 
 _G.Utils = require("utils")
 

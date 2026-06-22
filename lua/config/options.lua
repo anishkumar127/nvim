@@ -50,11 +50,14 @@ opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.breakindent = true
 opt.formatoptions = vim.o.formatoptions:gsub("cro1", "")
+opt.updatetime = 50 -- Super fast diagnostic updates (default is 4000)
 
 -- =============================================================================
 -- Neovim-only Options (NOT for VS Code/Antigravity/Cursor/Windsurf)
 -- =============================================================================
 if not is_embedded then
+  -- Resolve pwsh by full path before plugins (snacks dashboard, toggleterm, etc.)
+  require("config.os").setup_powershell()
   opt.showtabline = 0     -- Hide tab bar (LazyVim handles it)
   opt.cmdheight = 0       -- Hide cmdline unless needed
   opt.showmode = false    -- Statusline already shows mode

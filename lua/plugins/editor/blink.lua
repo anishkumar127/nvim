@@ -11,7 +11,8 @@ return {
   opts = {
     -- Rust fuzzy matcher for best performance
     fuzzy = {
-      implementation = "prefer_rust_with_warning",
+      -- Rust binary download can fail on Windows; use Lua matcher without startup warning
+      implementation = "lua",
     },
     completion = {
       accept = {
