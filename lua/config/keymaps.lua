@@ -1,105 +1,66 @@
 -- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-local keymap = vim.keymap
 local map = vim.keymap.set
-local keyset = vim.keymap.set
+local is_embedded = _G.Utils and _G.Utils.is_embedded
 
--- -- Borderless terminal
--- vim.keymap.set("n", "<C-/>", function()
---   Snacks.terminal.get(nil, { border = "none" })
--- end, { desc = "Term with border" })
+-- =============================================================================
+-- Universal keymaps (Cursor + standalone Neovim)
+-- =============================================================================
 
--- -- Borderless lazygit
--- vim.keymap.set("n", "<leader>gg", function()
---   Snacks.terminal.get("lazygit", { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false, border = "none" })
--- end, { desc = "Lazygit (root dir)" })
-
--- keymap.del({ "n", "i", "v" }, "<A-j>")
--- keymap.del({ "n", "i", "v" }, "<A-k>")
--- keymap.del("n", "<C-Left>")
--- keymap.del("n", "<C-Down>")
--- keymap.del("n", "<C-Up>")
--- keymap.del("n", "<C-Right>")
+-- Better indenting — keep selection after indent
+map("v", "<", "<gv", { desc = "Indent left, keep selection" })
+map("v", ">", ">gv", { desc = "Indent right, keep selection" })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
-keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 
--- IncRename
--- vim.keymap.set('n', '<leader>cr', function()
---   return ':IncRename ' .. vim.fn.expand '<cword>'
--- end, { desc = 'LSP Rename', expr = true })
+-- Duplicate line up/down
+local dup_opts = { noremap = true, silent = true, desc = "Duplicate line/selection" }
+map("n", "<Leader>k", "mzyyP`z", dup_opts)
+map("n", "<Leader>j", "mzyyjp`z", dup_opts)
+map("v", "<Leader>k", "yP", dup_opts)
+map("v", "<Leader>j", "yp", dup_opts)
 
--- Better indenting shit > left right move the indents
-keymap.set('v', '<', '<gv')
-keymap.set('v', '>', '>gv')
+-- Paste without yanking replaced text
+map("x", "<leader>pp", '"_dP', { desc = "Paste without yanking replaced text" })
 
+-- jj exit insert — standalone only (Cursor uses compositeKeys in settings.json)
+if not is_embedded then
+  map("i", "jj", "<Esc>", { noremap = true, silent = true, desc = "Exit insert mode" })
+end
 
--- Delete without copying to register in visual mode
--- map("v", "<Del>", '"_d', { noremap = true, silent = true })
+-- Embedded maps are in config/vscode-keymaps.lua (loaded from init.lua)
+if is_embedded then
+  return
+end
 
--- Exit insert mode with 'jj' in insert mode
-map("i", "jj", "<Esc>", { noremap = true, silent = true })
+-- =============================================================================
+-- Standalone Neovim / Neovide only
+-- =============================================================================
 
--- Exit with 'qq' in normal mode
--- map("n", "qq", ":q<CR>", { noremap = true, silent = true })
+map("n", "<leader>ss", ":split<Return><C-w>w", { desc = "Split window horizontally" })
+map("n", "<leader>sv", ":vsplit<Return><C-w>w", { desc = "Split window vertically" })
 
--- up down the line as a copy above or down.
+map("n", "<C-p>", "<cmd>cprev<CR>zz", { desc = "Previous quickfix item" })
+map("n", "<C-n>", "<cmd>cnext<CR>zz", { desc = "Next quickfix item" })
 
-local opts = { noremap = true, silent = true, desc = "Duplicate line/selection" }
+map("n", "<M-Left>", "<C-w>5>", { desc = "Resize window (wider)" })
+map("n", "<M-Right>", "<C-w>5<", { desc = "Resize window (narrower)" })
+map("n", "<M-Down>", "<C-w>5-", { desc = "Resize window (shorter)" })
+map("n", "<M-Up>", "<C-w>5+", { desc = "Resize window (taller)" })
 
--- Duplicate current line up (Normal mode)
-vim.keymap.set("n", "<Leader>k", "mzyyP`z", opts)
+map("n", "<leader>ci", vim.lsp.buf.hover, { desc = "Code info (hover)" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 
--- Duplicate current line down (Normal mode)
-vim.keymap.set("n", "<Leader>j", "mzyyjp`z", opts)
+if vim.diagnostic.jump then
+  map("n", "<leader>cn", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
+  map("n", "<leader>cp", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
+else
+  map("n", "<leader>cn", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+  map("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+end
 
--- Duplicate selection up (Visual mode)
-vim.keymap.set("v", "<Leader>k", "yP", opts)
+map("n", "<leader>wf", ":noautocmd w<CR>", { desc = "Save without formatting" })
 
--- Duplicate selection down (Visual mode)
-vim.keymap.set("v", "<Leader>j", "yp", opts)
-
-
--- Split window
-keyset('n', '<leader>ss', ':split<Return><C-w>w', { desc = 'Split window horizontally' }) -- Horizontal
-keyset('n', '<leader>sv', ':vsplit<Return><C-w>w', { desc = 'Split window vertically' })  -- Vertical
-
--- Move between qf items
-keyset('n', '<C-p>', '<cmd>cprev<CR>zz', { desc = 'Previous quickfix item' })
-keyset('n', '<C-n>', '<cmd>cnext<CR>zz', { desc = 'Next quickfix item' })
-
--- Resize splits
-keyset('n', '<M-Left>', '<C-w>5>', { desc = 'Resize window (left)' })
-keyset('n', '<M-Right>', '<C-w>5<', { desc = 'Resize window (right)' })
-keyset('n', '<M-Down>', '<C-w>5-', { desc = 'Resize window (down)' })
-keyset('n', '<M-Up>', '<C-w>5+', { desc = 'Resize window (up)' })
-
-
-
-
------------------- LSP ------------------
-
-vim.keymap.set("n", "<leader>ci", vim.lsp.buf.hover, { desc = "Code info" })
--- vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "Code definition" })
--- vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, { desc = "Code references" })
--- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
-vim.keymap.set("n", "<leader>cn", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.keymap.set("n", "<leader>cp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-
--- vim.keymap.set("v", "<leader>p", '"_dP', { desc = "Paste without yanking" })
-
--- -- In visual mode, remap `p` to paste without overwriting the default register
--- vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true, desc = "Visual paste without yank" })
-
-
----------------------
--- Pastes copied buffer and keeps it in the register
-keyset("x", "<leader>pp", '"_dP')
--- Save without formatting
-keyset("n", "<leader>wf", ":noautocmd w<CR>", { desc = "Save without formatting" })
-
-
-vim.keymap.set("n", "<leader>tA", function()
-	require("tiny-code-action").code_action()
-end, { noremap = true, silent = true })
+map("n", "<leader>tA", function()
+  require("tiny-code-action").code_action()
+end, { noremap = true, silent = true, desc = "Tiny code action" })

@@ -1,4 +1,5 @@
--- if vim.g.vscode then return end;
+-- Trouble — diagnostics list
+if _G.Utils and _G.Utils.is_embedded then return {} end
 
 return {
   {

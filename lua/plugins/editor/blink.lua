@@ -1,52 +1,25 @@
--- if true then return {} end
+-- Blink.cmp — fast completion engine
+-- VS Code/Antigravity/Cursor/Windsurf have their own completion
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
 return {
   "saghen/blink.cmp",
-  -- opts_extend = {
-  --   -- "sources.completion.enabled_providers",
-  --   "sources.compat",
-  --   "sources.default",
-  --   -- "ecolog",
-  -- },
-  -- enabled = function()
-  --   return not vim.tbl_contains({  "minifiles" }, vim.bo.filetype)
-  --       and vim.bo.buftype ~= "prompt"
-  --       and vim.b.completion ~= false
-  -- end,
   version = "1.*",
   event = "InsertEnter",
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-        -- 1) Force the Rust fuzzy matcher (or at least warn if it can't download)
-   fuzzy = {
-      implementation = "prefer_rust_with_warning",
+    -- Rust fuzzy matcher for best performance
+    fuzzy = {
+      -- Rust binary download can fail on Windows; use Lua matcher without startup warning
+      implementation = "lua",
     },
     completion = {
-      --      trigger = {
-      --         -- show the completion menu when you *enter insert mode*
-      --         -- and the cursor is just after a trigger character
-      --         -- show_on_insert_on_trigger_character = true,
-
-      --         -- characters that should *not* open the menu even
-      --         -- if a source asks for completion
-      --         -- show_on_x_blocked_trigger_characters = {
-      --         --   "'", '"', "(", "{", "[",
-      --         -- },
-      -- -- show_on_keyword = true
-      --         show_on_trigger_character = true,
-      -- -- Optionally, set a list of characters that will not trigger the completion window,
-      -- -- even when sources request it. The following are the defaults:
-      -- show_on_blocked_trigger_characters = { ' ', '\n', '\t' }
-      --       },
-
       accept = {
-        auto_brackets = {
-          enabled = true,
-        },
+        auto_brackets = { enabled = true },
       },
       trigger = {
-        -- show_on_accept_on_trigger_character = false,
-        show_on_keyword = true, -- <-- important for `bg-`
+        show_on_keyword = true,
         show_on_trigger_character = true,
         show_on_insert_on_trigger_character = true,
       },
@@ -64,8 +37,8 @@ return {
         },
       },
       list = {
-              -- Increased from 20 to 100 to ensure TS methods aren't truncated by snippets
-         max_items = 100,
+        -- Reduced from 100 to 50 — 100 causes noticeable lag on large projects
+        max_items = 50,
         selection = { preselect = false, auto_insert = false },
       },
       documentation = {
@@ -79,63 +52,29 @@ return {
       },
       ghost_text = {
         enabled = true,
-         show_with_selection   = true,
-      -- VERY IMPORTANT: if false, ghost text logic can sometimes interfere with menu popup on trigger chars like `.`
-      show_without_selection = true,
-      show_with_menu        = true,
-      show_without_menu     = false,
+        show_with_selection = true,
+        show_without_selection = true,
+        show_with_menu = true,
+        show_without_menu = false,
       },
     },
     signature = { enabled = false, window = { border = "single" } },
-    -- sources = {
-    --   providers = {
-    --     ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
-    --     codecompanion = {
-    --       name = "CodeCompanion",
-    --       module = "codecompanion.providers.completion.blink",
-    --     },
-    --   },
-    --   default = { "lsp", "path", "snippets", "buffer" },
-    -- },
-
     sources = {
-      default = { "lsp", "path", "snippets", "buffer"  },
+      default = { "lsp", "path", "snippets", "buffer" },
       providers = {
         lsp = {
           name = "LSP",
-          -- Snippets must not completely crush LSP results on empty queries
-          score_offset = 100, 
-          -- Force the LSP to trigger even if we haven't typed a full word yet (e.g. just `.`)
+          score_offset = 100,
           min_keyword_length = 0,
         },
         snippets = {
           name = "Snippets",
-          -- Drop the score so that pure object properties from LSP can float above snippets
-          score_offset = 90, 
+          score_offset = 90,
         },
         buffer = {
           name = "Buffer",
-          score_offset = 0, -- Buffer words are lowest priority, but load instantly
+          score_offset = 0,
         },
-        -- snippets = {
-        --   min_keyword_length = 1,
-        --   score_offset = 4,
-        -- },
-        -- lsp = {
-        --   min_keyword_length = 0,
-        --   score_offset = 3,
-        --   name = "LSP",
-        --   module = "blink.cmp.sources.lsp",
-        --   fallbacks = {},
-        -- },
-        -- path = {
-        --   min_keyword_length = 0,
-        --   score_offset = 2,
-        -- },
-        -- buffer = {
-        --   min_keyword_length = 1,
-        --   score_offset = 1,
-        -- },
       },
     },
     cmdline = {
@@ -143,11 +82,9 @@ return {
       ---@diagnostic disable-next-line: assign-type-mismatch
       sources = function()
         local type = vim.fn.getcmdtype()
-        -- Search forward and backward
         if type == "/" or type == "?" then
           return { "buffer" }
         end
-        -- Commands
         if type == ":" or type == "@" then
           return { "cmdline" }
         end
@@ -163,26 +100,24 @@ return {
       },
     },
     appearance = {
-      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
       kind_icons = {
         Text = "󰉿",
-        Method = "",
+        Method = "",
         Function = "󰊕",
         Constructor = "󰒓",
-        Field = "",
+        Field = "",
         Variable = "󰆦",
         Property = "󰖷",
-        Class = "",
-        Interface = "",
+        Class = "",
+        Interface = "",
         Struct = "󱡠",
         Module = "󰅩",
         Unit = "󰪚",
         Value = "󰫧",
-        Enum = "",
-        EnumMember = "",
-        Keyword = "",
+        Enum = "",
+        EnumMember = "",
+        Keyword = "",
         Constant = "󰏿",
         Snippet = "󱄽",
         Color = "󰏘",
@@ -193,21 +128,16 @@ return {
         Operator = "󰪚",
         TypeParameter = "󰬛",
         Error = "󰏭",
-        Warning = "",
+        Warning = "",
         Information = "󰋼",
-        Hint = "",
+        Hint = "",
       },
     },
     keymap = {
-      -- preset = "enter",
-      -- ["<C-y>"] = { "select_and_accept" },
-          -- keep the `enter` preset (so `<CR>` accepts)…
       preset = "enter",
-      -- but re-add the ctrl-space mapping in case it was overridden:
-     -- ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-      ["<C><leader>"] = { "show",  },
+      ["<C><leader>"] = { "show" },
       ["<C-y>"]     = { "select_and_accept" },
-      ["<CR>"]     = { "accept","fallback" },
+      ["<CR>"]      = { "accept", "fallback" },
     },
   },
 }

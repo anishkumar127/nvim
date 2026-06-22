@@ -1,37 +1,46 @@
--- if true then return {} end
--- if vim.g.vscode then return end;
+-- TypeScript / JavaScript LSP configuration
+-- VS Code/Antigravity/Cursor/Windsurf have their own TS server — skip this entirely.
+if _G.Utils and _G.Utils.is_embedded then return {} end
+
+-- tsgo (fast diagnostics) + vtsls (code actions, refactors, inlay hints, etc.)
+-- https://github.com/sergiornelas/nvim/tree/main/lua/plugins/lsp
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  if client and client.name == "vtsls" then
+    return
+  end
+  vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+end
 
 -- ============================================================================
 -- TOGGLE THIS TO SWITCH BETWEEN `vtsls` AND `typescript-tools.nvim`
 -- true = Use typescript-tools (blazing fast, lightweight, great for huge projects)
--- false = Use vtsls (standard VS Code typescript server ported to Neovim)
+-- false = Use vtsls + tsgo dual-server setup (recommended)
 -- ============================================================================
 local use_ts_tools = false
 
+local ts_filetypes = {
+  "javascript",
+  "javascriptreact",
+  "javascript.jsx",
+  "typescript",
+  "typescriptreact",
+  "typescript.tsx",
+}
+
 return {
-  -- Option A: nvim-lspconfig (for vtsls or default tsserver)
+  -- Option A: nvim-lspconfig (for vtsls)
   {
     "neovim/nvim-lspconfig",
-    -- Only load this specific config block if we are NOT using ts-tools
     enabled = not use_ts_tools,
-    dependencies = { 'saghen/blink.cmp' },
-    event = "VeryLazy", -- Load LSP on demand to improve startup time
-    --- @class lspconfig
+    dependencies = { "saghen/blink.cmp" },
+    event = "VeryLazy",
     opts = {
-      -- flags = {
-      --   allow_incremental_sync = true, -- send only diffs, not the whole buffer
-      --   debounce_text_changes = 600,    -- wait 500 ms of idle before sending edits
-
-      -- },
-      -- Diagnostic settings
       diagnostics = {
-
-        -- virtual_text = true, - no inline text
         virtual_text = {
-          prefix = "",
+          prefix = "",
         },
         update_in_insert = false,
-        -- signs = true, -- show left gutter icons
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = "󰅚",
@@ -45,129 +54,70 @@ return {
             min = vim.diagnostic.severity.HINT,
           },
         },
-        -- update_in_insert = false,
         severity_sort = false,
         float = {
           border = "rounded",
           focusable = false,
           style = "minimal",
           source = "always",
-          
         },
       },
-      -- inlay_hints = {
-      --   enabled = false,
-      -- },
       servers = {
-        --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
-        --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
-        eslint = {
-          -- Disabled: Running ESLint as an active LSP server is a massive performance bottleneck on large projects.
-          -- We will handle linting asynchronously via `nvim-lint` with oxlint/eslint instead.
-          enabled = false,
-        },
-             tsserver = {
-          enabled = false,
-        },
-        ts_ls = {
-          enabled = false,
-        },
-        denols = {
-          enabled = false,
-        },
-        angularls = {
-          enabled = false,
-        },
-        vtsls = { -- TypeScript server configuration
+        eslint = { enabled = false },
+        tsserver = { enabled = false },
+        ts_ls = { enabled = false },
+        denols = { enabled = false },
+        angularls = { enabled = false },
+        vtsls = {
           capabilities = require("blink.cmp").get_lsp_capabilities(),
-          -- flags = {
-          --   allow_incremental_sync = true,   -- send only diffs, not the whole buffer
-          --   debounce_text_changes = 300, -- Increased debounce time for diagnostics
-          -- },
-          filetypes = {
-            "javascript",
-            "javascriptreact",
-            "javascript.jsx",
-            "typescript",
-            "typescriptreact",
-            "typescript.tsx",
-          },
+          filetypes = ts_filetypes,
           settings = {
             complete_function_calls = true,
             vtsls = {
               enableMoveToFileCodeAction = true,
               autoUseWorkspaceTsdk = true,
               experimental = {
-                -- maxInlayHintLength = 30,
                 completion = {
-                  -- Server-side fuzzy match is known to bug out on empty queries (e.g. typing `name.`) with blink.cmp.
                   enableServerSideFuzzyMatch = false,
                 },
               },
             },
             typescript = {
               tsserver = {
-                maxTsServerMemory = 8192, -- 8GB: Prevents 'tsserver crashed' errors on massive Next.js/React monorepos
+                maxTsServerMemory = 8192,
               },
               updateImportsOnFileMove = { enabled = "always" },
-
               inlayHints = {
-                -- Disable all inlay hints
-                enumMemberValues = { enabled = false },
-                functionLikeReturnTypes = { enabled = false },
-                parameterNames = { enabled = false },
-                parameterTypes = { enabled = false },
-                propertyDeclarationTypes = { enabled = false },
-                variableTypes = { enabled = false },
-
-                -- parameterNames            = { enabled = "literals" },
-                -- parameterTypes            = { enabled = true },
-                -- variableTypes             = { enabled = true },
-                -- propertyDeclarationTypes  = { enabled = true },
-                -- functionLikeReturnTypes   = { enabled = true },
-                -- enumMemberValues          = { enabled = true },
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = true },
               },
-              -- Removed restrictive `suggest` block to restore standard TypeScript behavior
-              -- (auto-imports, object methods, and string functions will now work!).
               format = {
                 enable = false,
                 insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
                 insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = false,
-
               },
               preferences = {
-                -- importModuleSpecifierPreference = "relative", -- Simplify imports to relative paths
                 importModuleSpecifier = os.getenv("LSP_TS_IMPORT_MODULE_SPECIFIER_PROJECT_RELATIVE")
                     and "project-relative"
                   or "auto",
-                importModuleSpecifierEnding = "minimal", -- Avoid extra file extensions
-                -- importModuleSpecifierEnding     = "minimal", -- Avoid extra file extensions
-                disableSuggestions              = false, -- Disable TypeScript LSP suggestions (use a dedicated completion engine like `nvim-cmp`)
-                quoteStyle                      = "single",
+                importModuleSpecifierEnding = "minimal",
+                disableSuggestions = false,
+                quoteStyle = "single",
               },
             },
-            javascript = { -- copy same settings to JS
-              tsserver                = { maxTsServerMemory = 4192 },
+            javascript = {
+              tsserver = { maxTsServerMemory = 4192 },
               updateImportsOnFileMove = { enabled = "always" },
             },
-            -- javascript = ts_settings,
-            -- typescript = ts_settings,
           },
           keys = {
-
-            --- new
             {
               "<leader>tR",
-              function()
-                vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })
-              end,
-              desc = "Reload TS Projects",
-            },
-            {
-              "<leader>ct",
-              function()
-                vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" })
-              end,
+              function() vim.lsp.buf.execute_command({ command = "typescript.reloadProjects" }) end,
               desc = "Reload TS Projects",
             },
             {
@@ -180,8 +130,6 @@ return {
               end,
               desc = "Sort Imports (vtsls)",
             },
-
-            -- new end
             {
               "<leader>to",
               function()
@@ -227,8 +175,6 @@ return {
               "<cmd>TypescriptSelectTypeScriptVersion<cr>",
               desc = "Select TypeScript version",
             },
-
-            ---  end
             {
               "gR",
               function()
@@ -248,7 +194,7 @@ return {
               function()
                 vim.lsp.buf.execute_command({ command = "typescript.restartTsServer" })
               end,
-              desc = "Reload TS Projects",
+              desc = "Restart TS Server",
             },
             {
               "<leader>co",
@@ -283,32 +229,31 @@ return {
             {
               "<leader>gdd",
               function()
-                -- 1. Open the diagnostic float for the current line
                 local float_bufnr, float_winnr = vim.diagnostic.open_float(nil, {
                   scope = "line",
                   border = "rounded",
-                  focus = true, -- Let the float take focus so we can map Esc, n, p, etc.
+                  focus = true,
                 })
                 if not float_winnr then
                   return
                 end
 
-                -- 2. Helper function: close the float + clear these temporary mappings
                 local function close_float()
                   if vim.api.nvim_win_is_valid(float_winnr) then
                     vim.api.nvim_win_close(float_winnr, true)
                   end
-                  -- Remove our ephemeral keymaps
-                  vim.keymap.del("n", "n", { buffer = 0 })
-                  vim.keymap.del("n", "p", { buffer = 0 })
-                  vim.keymap.del("n", "N", { buffer = 0 })
-                  vim.keymap.del("n", "<esc>", { buffer = 0 })
+                  pcall(vim.keymap.del, "n", "n", { buffer = 0 })
+                  pcall(vim.keymap.del, "n", "p", { buffer = 0 })
+                  pcall(vim.keymap.del, "n", "N", { buffer = 0 })
+                  pcall(vim.keymap.del, "n", "<esc>", { buffer = 0 })
                 end
 
-                -- 3. Jump to next diagnostic, refresh the float
                 local function goto_next_diag()
-                  vim.diagnostic.goto_next()
-                  -- close + reopen float at the new position
+                  if vim.diagnostic.jump then
+                    vim.diagnostic.jump({ count = 1 })
+                  else
+                    vim.diagnostic.goto_next()
+                  end
                   if vim.api.nvim_win_is_valid(float_winnr) then
                     vim.api.nvim_win_close(float_winnr, true)
                   end
@@ -319,10 +264,12 @@ return {
                   })
                 end
 
-                -- 4. Jump to previous diagnostic, refresh the float
                 local function goto_prev_diag()
-                  vim.diagnostic.goto_prev()
-                  -- close + reopen float at the new position
+                  if vim.diagnostic.jump then
+                    vim.diagnostic.jump({ count = -1 })
+                  else
+                    vim.diagnostic.goto_prev()
+                  end
                   if vim.api.nvim_win_is_valid(float_winnr) then
                     vim.api.nvim_win_close(float_winnr, true)
                   end
@@ -333,72 +280,68 @@ return {
                   })
                 end
 
-                -- 5. Set up ephemeral keymaps *in this buffer* while the float is open
                 vim.keymap.set("n", "n", goto_next_diag, { buffer = 0, nowait = true, silent = true })
                 vim.keymap.set("n", "N", goto_prev_diag, { buffer = 0, nowait = true, silent = true })
                 vim.keymap.set("n", "p", goto_prev_diag, { buffer = 0, nowait = true, silent = true })
                 vim.keymap.set("n", "<esc>", close_float, { buffer = 0, nowait = true, silent = true })
               end,
-              desc = "Sticky diagnostics float (next/prev with n/p, close with Esc)",
+              desc = "Sticky diagnostics float (n/p to navigate, Esc to close)",
             },
           },
         },
+        tsgo = {
+          enabled = true,
+          filetypes = ts_filetypes,
+        },
       },
       setup = {
-        --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
-        --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
         tsserver = function()
-          -- disable tsserver
           return true
         end,
         ts_ls = function()
-          -- disable tsserver
           return true
         end,
-          vtsls = function(_, opts)
+        vtsls = function(_, opts)
           local on_attach = function(client, _)
-            client.commands['_typescript.moveToFileRefactoring'] = function(
-                command,
-                _
-            )
+            client.commands["_typescript.moveToFileRefactoring"] = function(command, _)
               ---@type string, string, lsp.Range
               local action, uri, range = unpack(command.arguments)
 
               local function move(newf)
-                client.request('workspace/executeCommand', {
+                client.request("workspace/executeCommand", {
                   command = command.command,
                   arguments = { action, uri, range, newf },
                 })
               end
 
               local fname = vim.uri_to_fname(uri)
-              client.request('workspace/executeCommand', {
-                command = 'typescript.tsserverRequest',
+              client.request("workspace/executeCommand", {
+                command = "typescript.tsserverRequest",
                 arguments = {
-                  'getMoveToRefactoringFileSuggestions',
+                  "getMoveToRefactoringFileSuggestions",
                   {
                     file = fname,
                     startLine = range.start.line + 1,
                     startOffset = range.start.character + 1,
-                    endLine = range['end'].line + 1,
-                    endOffset = range['end'].character + 1,
+                    endLine = range["end"].line + 1,
+                    endOffset = range["end"].character + 1,
                   },
                 },
               }, function(_, result)
                 ---@type string[]
                 local files = result.body.files
-                table.insert(files, 1, 'Enter new path...')
+                table.insert(files, 1, "Enter new path...")
                 vim.ui.select(files, {
-                  prompt = 'Select move destination:',
+                  prompt = "Select move destination:",
                   format_item = function(f)
-                    return vim.fn.fnamemodify(f, ':~:.')
+                    return vim.fn.fnamemodify(f, ":~:.")
                   end,
                 }, function(f)
-                  if f and f:find '^Enter new path' then
+                  if f and f:find("^Enter new path") then
                     vim.ui.input({
-                      prompt = 'Enter move destination:',
-                      default = vim.fn.fnamemodify(fname, ':h') .. '/',
-                      completion = 'file',
+                      prompt = "Enter move destination:",
+                      default = vim.fn.fnamemodify(fname, ":h") .. "/",
+                      completion = "file",
                     }, function(newf)
                       return newf and move(newf)
                     end)
@@ -409,7 +352,8 @@ return {
               end)
             end
           end
-          local name = 'vtsls'
+
+          local name = "vtsls"
           vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
               local buffer = args.buf ---@type number
@@ -419,17 +363,35 @@ return {
               end
             end,
           })
-          -- copy typescript settings to javascript
+          -- Copy typescript settings to javascript
           opts.settings.javascript = vim.tbl_deep_extend(
-            'force',
+            "force",
             {},
             opts.settings.typescript,
             opts.settings.javascript or {}
           )
-          
+        end,
+        tsgo = function()
+          require("utils.lsp").on_attach(function(client)
+            require("plugins.languages.tsgo_capabilities").apply(client)
+          end, "tsgo")
         end,
       },
     },
+  },
+
+  -- Keep both tsgo + vtsls enabled (LazyVim typescript extra enables only one)
+  {
+    "neovim/nvim-lspconfig",
+    enabled = not use_ts_tools,
+    opts = function(_, opts)
+      opts.servers = opts.servers or {}
+      opts.servers.tsserver = vim.tbl_extend("force", opts.servers.tsserver or {}, { enabled = false })
+      opts.servers.ts_ls = vim.tbl_extend("force", opts.servers.ts_ls or {}, { enabled = false })
+      opts.servers.vtsls = vim.tbl_extend("force", opts.servers.vtsls or {}, { enabled = true })
+      opts.servers.tsgo = vim.tbl_extend("force", opts.servers.tsgo or {}, { enabled = true })
+      return opts
+    end,
   },
 
   -- Option B: typescript-tools.nvim (Blazing Fast TS Server Alternative)
@@ -438,41 +400,26 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     enabled = use_ts_tools,
     opts = {
-      -- Ensure blink.cmp autocompletion capabilities are passed perfectly!
       capabilities = require("blink.cmp").get_lsp_capabilities(),
-      
       settings = {
-        -- spawn additional tsserver instance to calculate diagnostics on it
         separate_diagnostic_server = true,
-        -- "change"|"insert_leave" determine when the server updates diagnostics
         publish_diagnostic_on = "insert_leave",
-        -- Specify a complete list of triggers
         tsserver_logs = "off",
-        
-        -- Support for large projects (8GB Heap Limit just like vtsls)
         tsserver_max_memory = 8192,
-        
-        -- Code Lens / Inlay Hints are historically slow, keeping them disabled
         code_lens = "off",
         disable_member_code_lens = true,
-        
         jsx_close_tag = {
           enable = true,
           filetypes = { "javascriptreact", "typescriptreact" },
         },
-        
-        -- To use the fastest settings:
         tsserver_file_preferences = {
           includeInlayParameterNameHints = "none",
           includeCompletionsForModuleExports = true,
           quotePreference = "single",
         },
       },
-      
-      -- Add similar keymaps for typescript-tools context actions
       on_attach = function(client, bufnr)
         local wk = require("which-key")
-        
         wk.add({
           { "<leader>t", group = "+typescript" },
           { "<leader>to", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize Imports", buffer = bufnr },
@@ -486,17 +433,13 @@ return {
       end,
     },
     config = function(_, opts)
-      -- Force Neovim to show virtual_text (inline errors) exactly like vtsls did
       vim.diagnostic.config({
-        virtual_text = {
-          prefix = "", -- the dot or arrow prefix
-        },
+        virtual_text = { prefix = "" },
         signs = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,
       })
-      
       require("typescript-tools").setup(opts)
     end,
   },
